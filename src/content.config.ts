@@ -2,14 +2,11 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 const posts = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "src/data/posts" }),
+  loader: glob({ pattern: "**/*.md", base: "src/content/posts" }),
   schema: z.object({
-    id: z.string(),
     title: z.string(),
     slug: z.string(),
     lang: z.enum(["zh-tw", "en"]),
-    html: z.string(),
-    plaintext: z.string().nullable(),
     excerpt: z.string(),
     feature_image: z.string().nullable(),
     featured: z.boolean(),

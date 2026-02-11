@@ -3,9 +3,9 @@
 /**
  * Ghost to Astro migration script.
  * Reads a Ghost export JSON and generates:
- * - Individual JSON files per post in src/data/posts/
- * - Individual JSON files per page in src/data/pages/
- * - Downloads images to public/images/
+ * - Markdown files per post in src/content/posts/
+ * - JSON files per page in src/data/pages/
+ * - Downloads images to public/images/ghost/
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "fs";
@@ -20,7 +20,7 @@ if (!GHOST_EXPORT_PATH) {
 }
 
 const GHOST_URL = "https://reallyniceday.com";
-const OUT_POSTS = "src/data/posts";
+const OUT_POSTS = "src/content/posts";
 const OUT_PAGES = "src/data/pages";
 const OUT_IMAGES = "public/images/ghost";
 
@@ -116,27 +116,31 @@ for (const post of posts) {
   const html = replaceGhostUrls(post.html);
   const featureImage = replaceGhostUrls(post.feature_image);
 
-  const postData = {
-    id: post.id,
-    title: post.title,
-    slug: post.slug,
-    lang,
-    html,
-    plaintext: post.plaintext,
-    excerpt: post.custom_excerpt || post.plaintext?.slice(0, 160) || "",
-    feature_image: featureImage,
-    featured: post.featured === 1,
-    published_at: post.published_at,
-    updated_at: post.updated_at,
-    created_at: post.created_at,
-    tags: publicTags,
-    // Bilingual pair info
-    pair_slug: hasPair ? pairSlug : null,
-    pair_lang: hasPair ? (lang === "en" ? "zh-tw" : "en") : null,
-  };
+  const excerpt = post.custom_excerpt || post.plaintext?.slice(0, 160) || "";
+  const tagsYaml = publicTags
+    .map((t) => `  - name: "${t.name}"\n    slug: "${t.slug}"`)
+    .join("\n");
 
-  const filename = `${post.slug}.json`;
-  writeFileSync(join(OUT_POSTS, filename), JSON.stringify(postData, null, 2));
+  const frontmatter = [
+    `---`,
+    `title: "${post.title.replace(/"/g, '\\"')}"`,
+    `slug: ${post.slug}`,
+    `lang: ${lang}`,
+    `excerpt: "${excerpt.replace(/"/g, '\\"')}"`,
+    `feature_image: ${featureImage || "null"}`,
+    `featured: ${post.featured === 1}`,
+    `published_at: "${post.published_at}"`,
+    `updated_at: "${post.updated_at}"`,
+    `created_at: "${post.created_at}"`,
+    publicTags.length > 0 ? `tags:\n${tagsYaml}` : `tags: []`,
+    `pair_slug: ${hasPair ? pairSlug : "null"}`,
+    `pair_lang: ${hasPair ? (lang === "en" ? "zh-tw" : "en") : "null"}`,
+    `---`,
+  ].join("\n");
+
+  const markdown = `${frontmatter}\n\n${html}\n`;
+  const filename = `${post.slug}.md`;
+  writeFileSync(join(OUT_POSTS, filename), markdown);
   postCount++;
 }
 

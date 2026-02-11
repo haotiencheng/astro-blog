@@ -1,0 +1,103 @@
+---
+title: "/llms.txt → User Manual for Content in the AI Era"
+slug: llms-txt-user-manual-for-content-in-the-ai-era-en
+lang: en
+excerpt: "What does a content usage manual look like in the AI era?
+
+/llms.txt is the answer.
+
+By giving AI access to the latest technical knowledge, even complex interna"
+feature_image: /images/ghost/2025/04/---3-2.png
+featured: false
+published_at: "2025-04-01T10:02:50.000Z"
+updated_at: "2025-04-01T10:02:50.000Z"
+created_at: "2025-04-01T09:53:31.000Z"
+tags:
+  - name: "AI"
+    slug: "ai"
+  - name: "Development"
+    slug: "development"
+pair_slug: llms-txt-user-manual-for-content-in-the-ai-era
+pair_lang: zh-tw
+---
+
+<p>What does a content usage manual look like in the AI era?</p><p><code>/llms.txt</code> is the answer.</p><p>By giving AI access to the latest technical knowledge, even complex internal corporate procedures can be resolved with a single AI query, greatly improving work efficiency and unleashing team creativity.</p><p>All of this stems from <code>/llms.txt</code>, a standardization proposal for LLMs, aimed at enabling websites to provide refined and structured information so that LLMs can understand and reason more accurately.</p><p>This proposal is not only applicable to websites but can be widely applied to AI Coding, personal websites, education, and various other areas.</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://llmstxt.org/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">The /llms.txt file – llms-txt</div><div class="kg-bookmark-description">A proposal to standardise on using an /llms.txt file to provide information to help LLMs use a website at inference time.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="/images/ghost/icon/favicon-2.ico" alt=""><span class="kg-bookmark-author">llms-txt</span><span class="kg-bookmark-publisher">Jeremy Howard</span></div></div><div class="kg-bookmark-thumbnail"><img src="/images/ghost/thumbnail/sample-1.png" alt="" onerror="this.style.display = 'none'"></div></a></figure>
+<!--kg-card-begin: html-->
+<!-- Table of contents -->
+<div class="toc-placeholder"></div>
+<!--kg-card-end: html-->
+<h2 id="background">Background</h2><ul><li>LLMs have an increasing trend of relying on the latest website information</li><li>Important limitation: Context Windows cannot handle the entire content of most websites</li><li>In practice, converting complex HTML pages (including navigation bars, advertisements, JS, etc.) into LLM-friendly plain text is difficult and imprecise</li></ul><p>Having concise, professional-grade information concentrated in a single, easily accessible location would be very beneficial for LLMs.</p><p>Especially in development environments, LLMs can easily access development-related documentation and APIs.</p><h2 id="proposal">Proposal</h2><h3 id="llm-website-index">LLM Website Index</h3><p>Add a <code>/llms.txt</code> markdown file in the website's root folder, providing LLM-friendly content</p><ul><li>This file provides website background information, instructions, and links to various detailed markdown files.</li></ul><h3 id="key-webpages-provide-cleaned-llm-markdown-versions">Key Webpages: Provide Cleaned LLM Markdown Versions</h3><figure class="kg-card kg-image-card"><img src="/images/ghost/2025/04/---4.png" class="kg-image" alt="" loading="lazy" width="1839" height="465" srcset="/images/ghost/size/w600/2025/04/---4.png 600w, /images/ghost/size/w1000/2025/04/---4.png 1000w, /images/ghost/size/w1600/2025/04/---4.png 1600w, /images/ghost/2025/04/---4.png 1839w" sizes="(min-width: 720px) 720px"></figure><p>Pages on a website that may contain useful information for large language models (LLMs) should provide clean markdown versions of these pages at the same URL as the original page, but with .md appended.</p><ul><li>For example: <code>tutorial.html</code> should include <code>tutorial.html.md</code></li></ul><p>FastHTML has implemented both proposals:</p><ol><li>Website navigation: <a href="https://docs.fastht.ml/llms.txt">https://docs.fastht.ml/llms.txt</a></li><li>Key webpages:<ul><li><a href="https://answerdotai.github.io/fasthtml/tutorials/by_example.html">answerdotai.github.io/fasthtml/tutorials/by_example.html</a></li><li><a href="https://answerdotai.github.io/fasthtml/tutorials/by_example.html.md">answerdotai.github.io/fasthtml/tutorials/by_example.html.md</a></li></ul></li></ol><blockquote>Note: Since specific application scenarios vary, the proposal does not include how to handle the <code>llms.txt</code> file or provide specific suggestions.</blockquote><h3 id="format">Format</h3><ul><li>An H1 with the name of the project or site. This is the only required section</li><li>A blockquote with a short summary of the project, containing key information necessary for understanding the rest of the file</li><li>Zero or more markdown sections (e.g.&nbsp;paragraphs, lists, etc) of any type except headings, containing more detailed information about the project and how to interpret the provided files</li><li>Zero or more markdown sections delimited by H2 headers, containing “file lists” of URLs where further detail is available<ul><li>Each “file list” is a markdown list, containing a required markdown hyperlink <code>[name](url)</code>, then optionally a <code>:</code> and notes about the file.</li></ul></li></ul><p>daisyUI 5 example:</p><pre><code># daisyUI 5
+daisyUI 5 is a CSS library for Tailwind CSS
+daisyUI 5 provides class names for common UI components
+
+[docs](http://daisyui.com)
+
+## daisyUI 5 install notes
+[install guide](https://daisyui.com/docs/install/)
+1. daisyUI 5 requires Tailwind CSS v4
+2. `tailwind.config.js` file is deprecated in Tailwind CSS v4. do not use `tailwind.config.js`. Tailwind CSS v4 only needs `@import "tailwindcss";` in the CSS file if it's a node dependency.
+3. daisyUI 5 can be installed using `npm i -D daisyui@latest` and then adding `@plugin "daisyui";` to the CSS file
+4. daisyUI is suggested to be installed as a dependency but if you really want to use it from CDN, you can use Tailwind CSS and daisyUI CDN files:
+```html
+&lt;link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" /&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"&gt;&lt;/script&gt;
+5.	A CSS file with Tailwind CSS and daisyUI looks like this (if it's a node dependency)
+@import "tailwindcss";
+@plugin "daisyui";</code></pre><h2 id="application-scenarios">Application Scenarios</h2><h3 id="supporting-ai-coding-llms-can-read-the-latest-correct-documentation">Supporting AI Coding: LLMs can read the latest, correct documentation</h3><figure class="kg-card kg-image-card"><img src="/images/ghost/2025/04/---5.png" class="kg-image" alt="" loading="lazy" width="904" height="370" srcset="/images/ghost/size/w600/2025/04/---5.png 600w, /images/ghost/2025/04/---5.png 904w" sizes="(min-width: 720px) 720px"></figure><p>Recently, more and more websites are providing llms.txt for developers, such as:</p><ul><li><a href="https://supabase.com/llms.txt">Supabase</a></li><li><a href="https://www.prisma.io/docs/llms.txt">Prisma</a></li><li><a href="https://resend.com/docs/llms.txt">Resend</a></li><li><a href="https://svelte.dev/llms.txt">Svelte</a></li><li><a href="https://daisyui.com/llms.txt">daisyUI</a></li></ul><p>Whether adding <a href="https://docs.cursor.com/context/@-symbols/@-docs">doc</a> in Cursor or directly adding <code>llms.txt</code> to AI Chat conversations, you can enjoy the most complete information and the convenience and speed of LLMs.</p><p>If developers have already defined their tech stack, integrating the <code>llms.txt</code> from each stack and using Agents to generate code will greatly reduce the error rate and significantly increase speed due to the clear structure.</p><h3 id="personal-websites-answering-questions-about-personal-resumes-or-any-related-questions">Personal Websites: Answering questions about personal resumes or any related questions</h3><p>Imagine condensing all your experiences and information into an <code>llms.txt</code> file, then using AI to have a conversation with yourself - might you discover perspectives you hadn't seen before (the "can't see the forest for the trees" situation)?</p><p>Or place your contact information, pricing plans (if you freelance), etc., in your website's response bot, allowing it to have complete conversations with potential clients without requiring additional human resources or time for connections.</p><h3 id="enterprise-internal-knowledge-base-breaking-down-departmental-barriers-improving-information-flow-efficiency"><strong>Enterprise Internal Knowledge Base: Breaking Down Departmental Barriers, Improving Information Flow Efficiency</strong></h3><p>Apply the ⁠llms.txt concept to internal corporate knowledge bases, allowing employees to quickly find and utilize internal company information using LLMs.</p><p>Imagine a company organizing its API documentation, development standards, design guidelines, FAQs, and product information into structured llms.txt files. Employees can use LLMs to quickly obtain needed information through simple questions, such as: "Please give me the required processes for new employees." or "What are the company's best practices for Component naming?"</p><p>LLMs can read llms.txt, understand the structure of the corporate knowledge base, and extract answers from relevant documents. Additionally, companies can create customized llms-full.txt files for different departments or projects, integrating all relevant information into a single file for easy LLM access. This can greatly improve employee efficiency, reduce time spent searching for information, and ensure employees are using the most up-to-date corporate knowledge.</p><h3 id="education-field-modern-learning-accelerator"><strong>Education Field: Modern Learning Accelerator</strong></h3><p>Teachers can provide llms.txt for their courses, allowing students to more conveniently learn and review course content using LLMs.</p><p>For example, a Python teacher can create an llms.txt file for their course, including the course outline, assignment instructions, references, and links to example code.</p><p>Students can use LLMs to ask questions about the course content, such as: "What is recursion?" The LLM can read the llms.txt and extract answers from the relevant course materials.</p><p>Teachers can also create corresponding Markdown documents for each chapter or topic and create links in the llms.txt for students to learn in depth.</p><p>Additionally, students can use LLMs to summarize course content, review key points, and prepare for exams. Through llms.txt, students can more effectively use LLMs to assist in learning and improve learning outcomes. Furthermore, past exam questions, assignment examples, and common student mistakes can also be added to the llms.txt, allowing LLMs to more comprehensively assist students in learning.</p><h2 id="llmstxt-vs-llms-fulltxt"><code>llms.txt</code> vs. <code>llms-full.txt</code></h2><p><code>llms.txt</code> is an index file containing links and brief descriptions of content. LLMs or Agents must follow these links to access detailed information.</p><p><code>llms-full.txt</code> includes all detailed content directly in a single file, eliminating the need for additional navigation.</p><p>A key consideration when using <code>llms-full.txt</code> is its <strong>file size</strong>. For a large amount of documentation, this file may become too large to fit within an LLM's context window.</p><h3 id="small-projects-choose-llms-fulltxt">Small Projects: Choose <code>llms-full.txt</code></h3><p>If your project is still in its early stages and the architecture is not extensive, I would recommend choosing <code>llms-full.txt</code> for development and adjustments.</p><p>Because it contains all detailed content, your project can enjoy faster development speed and a lower error rate. For small projects, the content of <code>llms.txt</code> is too broad and would require additional searching, wasting time during the initial rapid iteration phase. Also, the quantity and content of <code>llms-full.txt</code> would not be too extensive to exceed the LLM's context window.</p><h3 id="medium-to-large-projects-llmstxt-as-the-main-approach-with-llms-fulltxt-for-key-content">Medium to Large Projects: <code>llms.txt</code> as the main approach, with <code>llms-full.txt</code> for key content</h3><p>Medium to large projects have extensive architectures, and the contained technical frameworks basically cannot fit all <code>llms-full.txt</code> under today's server environments. It is recommended to focus resources on key items, such as the latest technologies or those with the greatest impact. Other technical frameworks can be looked up using the indexing method of <code>llms.txt</code>.</p><h3 id="flexible-choice-modular-usage-method">Flexible Choice: Modular Usage Method</h3><p>This is actually the method I recommend most. Before using <code>llms.txt</code>, have you considered whether this code needs to use the entire tech stack for modification? Is it possible that this code only needs one or two technical frameworks to complete?</p><p>By pairing the code you're developing with the corresponding technology's <code>llms-full.txt</code>, you can achieve the advantages of customization without wasting any context window.</p><h2 id="llmstxt-vs-robotstxt-vs-sitemapxml"><code>llms.txt</code> vs. <code>robots.txt</code> vs. <code>sitemap.xml</code></h2><p>Imagine you're running a website; these three files are like maps for different audiences:</p><ul><li><code>llms.txt</code> is a concise website guide specially prepared for AI chatbots, helping them quickly understand the website's key points to provide more accurate information when answering questions</li><li><code>robots.txt</code> tells web crawlers which areas they can visit and which they should avoid, ensuring the website is not improperly crawled</li><li><code>sitemap.xml</code> is like a complete directory of the website, listing all pages to help search engines find and index the website's content.</li></ul><h3 id="table-comparison">Table Comparison</h3>
+<!--kg-card-begin: html-->
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">llms.txt</th>
+<th style="text-align:left">robots.txt</th>
+<th style="text-align:left">sitemap.xml</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Purpose</td>
+<td style="text-align:left">Provides a curated overview of the website for LLMs, used for inference.</td>
+<td style="text-align:left">Informs automated tools about acceptable website access.</td>
+<td style="text-align:left">Lists all indexable, human-readable information on a site.</td>
+</tr>
+<tr>
+<td style="text-align:left">Primary User</td>
+<td style="text-align:left">Large Language Models (LLMs)</td>
+<td style="text-align:left">Search engine bots and other automated tools</td>
+<td style="text-align:left">Search Engines</td>
+</tr>
+<tr>
+<td style="text-align:left">Content Included</td>
+<td style="text-align:left">Curated website information, links to external sites, structured data markup references.</td>
+<td style="text-align:left">Rules for allowing or disallowing crawling and indexing.</td>
+<td style="text-align:left">A list of all indexable pages on the website.</td>
+</tr>
+<tr>
+<td style="text-align:left">LLM Readability</td>
+<td style="text-align:left">Designed specifically for LLMs.</td>
+<td style="text-align:left">Not applicable.</td>
+<td style="text-align:left">Generally not in the optimal format for LLMs.</td>
+</tr>
+<tr>
+<td style="text-align:left">Amount of Information</td>
+<td style="text-align:left">Curated, less information but more relevant.</td>
+<td style="text-align:left">Not applicable.</td>
+<td style="text-align:left">Complete list of all indexable pages, large amount of information.</td>
+</tr>
+<tr>
+<td style="text-align:left">When to Use</td>
+<td style="text-align:left">When a user explicitly requests information about a topic.</td>
+<td style="text-align:left">When search engine bots crawl the website.</td>
+<td style="text-align:left">When search engines index the website.</td>
+</tr>
+<tr>
+<td style="text-align:left">Relationship to Others</td>
+<td style="text-align:left">Can complement robots.txt and reference structured data markup.</td>
+<td style="text-align:left">Complements llms.txt, used to control website access.</td>
+<td style="text-align:left">Not a replacement for llms.txt, as it lacks LLM-readable versions and external links.</td>
+</tr>
+</tbody>
+</table>
+<!--kg-card-end: html-->
+<h2 id="how-to-know-if-a-website-provides-llmstxt">How to know if a website provides llms.txt?</h2><p>Basically, websites now will clearly indicate if they provide <code>llms.txt</code>. If you don't want to waste time searching, <a href="https://llmstxthub.com/">llms.txt hub</a> is a convenient repository option.</p><figure class="kg-card kg-bookmark-card"><a class="kg-bookmark-container" href="https://llmstxthub.com/"><div class="kg-bookmark-content"><div class="kg-bookmark-title">llms.txt hub - Discover AI-Ready Documentation</div><div class="kg-bookmark-description">Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.</div><div class="kg-bookmark-metadata"><img class="kg-bookmark-icon" src="/images/ghost/icon/favicon-3.ico" alt=""><span class="kg-bookmark-author">llms.txt hub</span></div></div><div class="kg-bookmark-thumbnail"><img src="/images/ghost/thumbnail/opengraph-image-1.png" alt="" onerror="this.style.display = 'none'"></div></a></figure><p>The repository also offers a <a href="https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej">Chrome Extension</a>, <a href="https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt">VSCode plugin</a>, <a href="https://github.com/thedaviddias/mcp-llms-txt-explorer">MCP Server</a>, <a href="https://www.raycast.com/thedaviddias/llms-txt">Raycast plugin</a>, and other options - you can choose what works best for you!</p>

@@ -94,3 +94,174 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     </footer>
   </body>
 </html>
+
+<style is:global>
+  /* Ghost Bookmark Cards */
+  .kg-bookmark-card {
+    margin: 1.5em 0;
+    width: 100%;
+  }
+
+  .kg-bookmark-container {
+    display: flex;
+    text-decoration: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    color: inherit;
+    transition: box-shadow 0.2s;
+  }
+
+  .kg-bookmark-container:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .kg-bookmark-content {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .kg-bookmark-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 0.35em;
+  }
+
+  .kg-bookmark-description {
+    font-size: 0.8rem;
+    color: #6b7280;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.5em;
+  }
+
+  .kg-bookmark-metadata {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+
+  .kg-bookmark-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+    object-fit: cover;
+  }
+
+  .kg-bookmark-thumbnail {
+    flex-shrink: 0;
+    width: 160px;
+    position: relative;
+  }
+
+  .kg-bookmark-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .kg-bookmark-container {
+      flex-direction: column-reverse;
+    }
+    .kg-bookmark-thumbnail {
+      width: 100%;
+      height: 160px;
+    }
+  }
+
+  /* Ghost Callout Cards */
+  .kg-callout-card {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    margin: 1.5em 0;
+    background: #f3f4f6;
+  }
+
+  .kg-callout-card-blue {
+    background: #eff6ff;
+  }
+
+  .kg-callout-card-grey {
+    background: #f3f4f6;
+  }
+
+  .kg-callout-emoji {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .kg-callout-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* Ghost Image Cards */
+  .kg-image-card {
+    margin: 1.5em 0;
+  }
+
+  .kg-image-card img {
+    border-radius: 0.5rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .kg-image-card figcaption {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 0.5em;
+  }
+
+  /* Ghost Embed Cards (YouTube, etc.) */
+  .kg-embed-card {
+    margin: 1.5em 0;
+  }
+
+  .kg-embed-card iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 0.5rem;
+  }
+
+  /* Ghost Video Cards */
+  .kg-video-card {
+    margin: 1.5em 0;
+  }
+
+  .kg-video-container {
+    position: relative;
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .kg-video-container video {
+    width: 100%;
+    display: block;
+  }
+
+  /* Ghost Blockquote Alt */
+  .kg-blockquote-alt {
+    border-left: 3px solid #d1d5db;
+    padding-left: 1rem;
+    font-style: italic;
+    color: #6b7280;
+  }
+</style>

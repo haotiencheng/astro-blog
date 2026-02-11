@@ -8,7 +8,6 @@ interface Props {
   publishedAt: string;
   tags: { name: string; slug: string }[];
   lang: "zh-tw" | "en";
-  html: string;
   pairSlug: string | null;
   pairLang: "zh-tw" | "en" | null;
 }
@@ -20,7 +19,6 @@ const {
   publishedAt,
   tags,
   lang,
-  html,
   pairSlug,
   pairLang,
 } = Astro.props;
@@ -92,6 +90,8 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
       </div>
     </header>
 
-    <div class="prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold" set:html={html} />
+    <div class="prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">
+      <slot />
+    </div>
   </article>
 </BaseLayout>

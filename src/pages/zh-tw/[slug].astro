@@ -4,17 +4,38 @@ import PostLayout from "../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
+  const enSlugs = new Set(
+    posts.filter((p) => p.data.lang === "en").map((p) => p.data.slug)
+  );
+
   return posts
     .filter((p) => p.data.lang === "zh-tw")
-    .map((post) => ({
-      params: { slug: post.data.slug },
-      props: { post },
-    }));
+    .map((post) => {
+      // Auto-detect pair: same slug (new convention) or slug + "-en" (legacy)
+      let pairSlug: string | null = null;
+      let pairLang: "zh-tw" | "en" | null = null;
+      if (enSlugs.has(post.data.slug)) {
+        pairSlug = post.data.slug;
+        pairLang = "en";
+      } else if (enSlugs.has(post.data.slug + "-en")) {
+        pairSlug = post.data.slug + "-en";
+        pairLang = "en";
+      }
+      // Frontmatter pair_slug takes priority if explicitly set
+      if (post.data.pair_slug) {
+        pairSlug = post.data.pair_slug;
+        pairLang = post.data.pair_lang;
+      }
+
+      return {
+        params: { slug: post.data.slug },
+        props: { post, pairSlug, pairLang },
+      };
+    });
 }
 
-const { post } = Astro.props;
-const { title, excerpt, feature_image, published_at, tags, lang, pair_slug, pair_lang } =
-  post.data;
+const { post, pairSlug, pairLang } = Astro.props;
+const { title, excerpt, feature_image, published_at, tags, lang } = post.data;
 const { Content } = await render(post);
 ---
 
@@ -25,8 +46,8 @@ const { Content } = await render(post);
   publishedAt={published_at}
   tags={tags}
   lang={lang}
-  pairSlug={pair_slug}
-  pairLang={pair_lang}
+  pairSlug={pairSlug}
+  pairLang={pairLang}
 >
   <Content />
 </PostLayout>

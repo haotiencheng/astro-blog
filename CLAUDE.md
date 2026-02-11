@@ -10,7 +10,7 @@ Deployed to Cloudflare Pages. Content authored in Markdown files.
 - **Content**: Markdown files in `src/content/posts/` with frontmatter
 - **i18n**: File-based routing — `/zh-tw/[slug]/` and `/en/[slug]/`
 - **Language detection**: `lang` field in frontmatter (`zh-tw` or `en`)
-- **Bilingual pairs**: `pair_slug` in frontmatter links zh-tw ↔ en versions
+- **Bilingual pairs**: Auto-detected by matching slugs across languages. `pair_slug` in frontmatter as optional override.
 - **Images**: Static files in `public/images/ghost/` (migrated from Ghost)
 - **SEO**: OG/Twitter meta tags, `hreflang` alternates, sitemap via `@astrojs/sitemap`
 
@@ -43,7 +43,7 @@ title: "文章標題"
 slug: my-post-slug
 lang: zh-tw
 excerpt: "簡短描述"
-feature_image: /images/ghost/2025/03/cover.png
+feature_image: /images/my-cover.png
 featured: false
 published_at: "2025-03-01T00:00:00.000Z"
 updated_at: "2025-03-01T00:00:00.000Z"
@@ -51,19 +51,29 @@ created_at: "2025-03-01T00:00:00.000Z"
 tags:
   - name: AI
     slug: ai
-pair_slug: my-post-slug-en    # null if no translation
-pair_lang: en                  # null if no translation
+pair_slug: null
+pair_lang: null
 ---
 
 Your Markdown content here.
 ```
 
-For English version, set `lang: en` and `pair_slug` pointing back to the Chinese slug.
+For the English version, create a second file with the **same slug** but `lang: en`:
+- `my-post-slug.md` → `lang: zh-tw`, `slug: my-post-slug`
+- `my-post-slug.en.md` → `lang: en`, `slug: my-post-slug`
 
-## Slug Convention
-- Chinese posts: descriptive English slug (e.g., `the-mom-test`)
-- English posts: same slug + `-en` suffix (e.g., `the-mom-test-en`)
-- This convention is used to auto-detect bilingual pairs
+Pairs are auto-detected at build time by matching slugs across languages.
+No need to set `pair_slug` / `pair_lang` unless the slugs differ.
+
+## Slug Convention (New Posts)
+- Use the **same slug** for both languages (e.g., `the-mom-test`)
+- Filename: `the-mom-test.md` (zh-tw), `the-mom-test.en.md` (en)
+- Routes: `/zh-tw/the-mom-test/` and `/en/the-mom-test/`
+
+## Slug Convention (Legacy / Migrated Posts)
+- Chinese: `the-mom-test` → English: `the-mom-test-en`
+- The `-en` suffix convention is still supported for backward compatibility
+- Do NOT change old slugs — they are indexed by search engines
 
 ## Old URL Redirects
 Old Ghost URLs at `/[slug]/` are redirected to `/zh-tw/[slug]/` via meta refresh.

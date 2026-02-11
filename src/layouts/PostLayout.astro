@@ -53,6 +53,14 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   alternateUrl={alternateUrl}
   alternateLang={alternateLang}
 >
+  <!-- Reading progress bar -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-blue-500 z-50 transition-[width] duration-100" style="width: 0%"></div>
+
+  <!-- TOC sidebar — fixed left -->
+  <aside class="gh-sidebar">
+    <div class="gh-toc"></div>
+  </aside>
+
   <article class="mx-auto max-w-3xl px-4 py-8">
     <header class="mb-8">
       {
@@ -90,8 +98,94 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
       </div>
     </header>
 
-    <div class="prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">
+    <div class="gh-content prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">
       <slot />
     </div>
   </article>
 </BaseLayout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.36.4/tocbot.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Init tocbot
+    const content = document.querySelector('.gh-content');
+    if (content && typeof (window as any).tocbot !== 'undefined') {
+      (window as any).tocbot.init({
+        tocSelector: '.gh-toc',
+        contentSelector: '.gh-content',
+        headingSelector: 'h2, h3, h4',
+        hasInnerContainers: true,
+        headingsOffset: 40,
+        scrollSmoothOffset: -40,
+      });
+    }
+
+    // Reading progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+      window.addEventListener('scroll', () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (window.scrollY / docHeight) * 100;
+        progressBar.style.width = `${Math.min(scrolled, 100)}%`;
+      });
+    }
+  });
+</script>
+
+<style>
+  /* TOC sidebar — fixed on left, desktop only */
+  .gh-sidebar {
+    display: none;
+  }
+
+  @media (min-width: 1280px) {
+    .gh-sidebar {
+      display: block;
+      position: fixed;
+      top: 5rem;
+      left: max(1rem, calc((100vw - 48rem) / 2 - 16rem - 2rem));
+      width: 14rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+    }
+  }
+
+  /* tocbot link styles */
+  .gh-toc :global(.toc-list) {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .gh-toc :global(.toc-list-item) {
+    margin-bottom: 0.25rem;
+  }
+
+  .gh-toc :global(.toc-link) {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #9ca3af;
+    text-decoration: none;
+    padding: 0.15rem 0;
+    padding-left: 0.75rem;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .gh-toc :global(.toc-link:hover) {
+    color: #374151;
+  }
+
+  .gh-toc :global(.is-active-link) {
+    color: #111827;
+    font-weight: 500;
+    border-left-color: #3b82f6;
+  }
+
+  /* Nested levels — indent */
+  .gh-toc :global(.toc-list .toc-list) {
+    padding-left: 0.75rem;
+  }
+</style>

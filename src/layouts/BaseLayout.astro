@@ -267,6 +267,20 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     display: block;
   }
 
+  /* Inline code */
+  .prose :where(code):not(:where(pre code)) {
+    background: #f3f4f6;
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.85em;
+    font-weight: 400;
+  }
+
+  .prose :where(code):not(:where(pre code))::before,
+  .prose :where(code):not(:where(pre code))::after {
+    content: none;
+  }
+
   /* Ghost Blockquote Alt */
   .kg-blockquote-alt {
     border-left: 3px solid #d1d5db;

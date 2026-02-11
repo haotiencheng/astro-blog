@@ -232,12 +232,22 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
   /* Ghost Embed Cards (YouTube, etc.) */
   .kg-embed-card {
     margin: 1.5em 0;
+    position: relative;
   }
 
   .kg-embed-card iframe {
-    width: 100%;
+    width: 100% !important;
+    height: auto !important;
     aspect-ratio: 16 / 9;
     border-radius: 0.5rem;
+    border: none;
+  }
+
+  .kg-embed-card figcaption {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 0.5em;
   }
 
   /* Ghost Video Cards */

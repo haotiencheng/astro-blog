@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import PostLayout from "../../layouts/PostLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts
+    .filter((p) => p.data.lang === "zh-tw")
+    .map((post) => ({
+      params: { slug: post.data.slug },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { title, excerpt, feature_image, published_at, tags, lang, html, pair_slug, pair_lang } =
+  post.data;
+---
+
+<PostLayout
+  title={title}
+  excerpt={excerpt}
+  featureImage={feature_image}
+  publishedAt={published_at}
+  tags={tags}
+  lang={lang}
+  html={html}
+  pairSlug={pair_slug}
+  pairLang={pair_lang}
+/>

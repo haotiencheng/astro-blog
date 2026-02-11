@@ -1,0 +1,96 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string | null;
+  lang?: "zh-tw" | "en";
+  canonicalUrl?: string;
+  alternateUrl?: string;
+  alternateLang?: string;
+}
+
+const {
+  title,
+  description = "ReallyNiceDay - Indie Developer | Dancer | NTU FIN graduate",
+  ogImage,
+  lang = "zh-tw",
+  canonicalUrl,
+  alternateUrl,
+  alternateLang,
+} = Astro.props;
+
+const siteUrl = "https://reallyniceday.com";
+const fullOgImage = ogImage
+  ? ogImage.startsWith("http")
+    ? ogImage
+    : `${siteUrl}${ogImage}`
+  : `${siteUrl}/images/ghost/icon/R0000314-6.JPG`;
+const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:locale" content={lang === "zh-tw" ? "zh_TW" : "en_US"} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {
+      alternateUrl && alternateLang && (
+        <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+      )
+    }
+  </head>
+  <body class="bg-white text-gray-900 antialiased">
+    <nav class="border-b border-gray-200">
+      <div class="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
+        <a href={lang === "en" ? "/en/" : "/"} class="text-lg font-bold hover:text-gray-600 transition-colors">
+          ReallyNiceDay
+        </a>
+        <div class="flex items-center gap-4 text-sm">
+          <a href={lang === "en" ? "/en/" : "/"} class="hover:text-gray-600 transition-colors">
+            {lang === "en" ? "Home" : "首頁"}
+          </a>
+          <a href="/about/" class="hover:text-gray-600 transition-colors">
+            {lang === "en" ? "About" : "關於"}
+          </a>
+          <a
+            href={lang === "en" ? "/" : "/en/"}
+            class="px-2 py-1 rounded border border-gray-300 hover:bg-gray-100 transition-colors"
+          >
+            {lang === "en" ? "中文" : "EN"}
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="border-t border-gray-200 mt-16">
+      <div class="mx-auto max-w-3xl px-4 py-8 text-center text-sm text-gray-500">
+        &copy; {new Date().getFullYear()} ReallyNiceDay. Built with Astro.
+      </div>
+    </footer>
+  </body>
+</html>

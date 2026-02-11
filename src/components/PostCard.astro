@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  excerpt: string;
+  featureImage: string | null;
+  publishedAt: string;
+  tags: { name: string; slug: string }[];
+  lang: "zh-tw" | "en";
+  featured?: boolean;
+}
+
+const { title, slug, excerpt, featureImage, publishedAt, tags, lang, featured } = Astro.props;
+
+const url = lang === "en" ? `/en/${slug}/` : `/zh-tw/${slug}/`;
+const date = new Date(publishedAt);
+const formattedDate = date.toLocaleDateString(lang === "zh-tw" ? "zh-TW" : "en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<a href={url} class="group block">
+  <article class="flex gap-4 py-5 border-b border-gray-100">
+    {
+      featureImage && (
+        <img
+          src={featureImage}
+          alt={title}
+          class="w-24 h-24 md:w-32 md:h-32 object-cover rounded-lg flex-shrink-0"
+          loading="lazy"
+        />
+      )
+    }
+    <div class="flex-1 min-w-0">
+      <h2 class="text-lg font-semibold group-hover:text-blue-600 transition-colors leading-snug mb-1">
+        {title}
+      </h2>
+      <p class="text-sm text-gray-500 line-clamp-2 mb-2">{excerpt}</p>
+      <div class="flex items-center gap-2 text-xs text-gray-400">
+        <time datetime={publishedAt}>{formattedDate}</time>
+        {
+          tags.slice(0, 3).map((tag) => (
+            <span class="px-1.5 py-0.5 bg-gray-100 rounded">{tag.name}</span>
+          ))
+        }
+        {featured && <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 rounded">Featured</span>}
+      </div>
+    </div>
+  </article>
+</a>

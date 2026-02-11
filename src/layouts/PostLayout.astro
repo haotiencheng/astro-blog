@@ -1,0 +1,97 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  excerpt: string;
+  featureImage: string | null;
+  publishedAt: string;
+  tags: { name: string; slug: string }[];
+  lang: "zh-tw" | "en";
+  html: string;
+  pairSlug: string | null;
+  pairLang: "zh-tw" | "en" | null;
+}
+
+const {
+  title,
+  excerpt,
+  featureImage,
+  publishedAt,
+  tags,
+  lang,
+  html,
+  pairSlug,
+  pairLang,
+} = Astro.props;
+
+const date = new Date(publishedAt);
+const formattedDate = date.toLocaleDateString(lang === "zh-tw" ? "zh-TW" : "en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const pairUrl = pairSlug
+  ? pairLang === "en"
+    ? `/en/${pairSlug}/`
+    : `/zh-tw/${pairSlug}/`
+  : null;
+
+const siteUrl = "https://reallyniceday.com";
+const canonicalUrl = lang === "en"
+  ? `${siteUrl}/en/${Astro.params.slug}/`
+  : `${siteUrl}/zh-tw/${Astro.params.slug}/`;
+const alternateUrl = pairUrl ? `${siteUrl}${pairUrl}` : undefined;
+const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant-TW" : undefined;
+---
+
+<BaseLayout
+  title={`${title} | ReallyNiceDay`}
+  description={excerpt}
+  ogImage={featureImage}
+  lang={lang}
+  canonicalUrl={canonicalUrl}
+  alternateUrl={alternateUrl}
+  alternateLang={alternateLang}
+>
+  <article class="mx-auto max-w-3xl px-4 py-8">
+    <header class="mb-8">
+      {
+        featureImage && (
+          <img
+            src={featureImage}
+            alt={title}
+            class="w-full rounded-lg mb-6"
+            loading="eager"
+          />
+        )
+      }
+      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-3">
+        {title}
+      </h1>
+      <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500">
+        <time datetime={publishedAt}>{formattedDate}</time>
+        {
+          tags.map((tag) => (
+            <span class="px-2 py-0.5 bg-gray-100 rounded text-xs">
+              {tag.name}
+            </span>
+          ))
+        }
+        {
+          pairUrl && (
+            <a
+              href={pairUrl}
+              class="px-2 py-0.5 border border-gray-300 rounded text-xs hover:bg-gray-100 transition-colors"
+            >
+              {pairLang === "en" ? "Read in English" : "閱讀中文版"}
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <div class="prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold" set:html={html} />
+  </article>
+</BaseLayout>

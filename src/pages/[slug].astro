@@ -1,0 +1,33 @@
+---
+/**
+ * Redirect handler for old Ghost URLs.
+ * Old: /[slug]/ -> New: /zh-tw/[slug]/
+ * Generates a static HTML page with meta refresh + canonical for SEO.
+ */
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts
+    .filter((p) => p.data.lang === "zh-tw")
+    .map((post) => ({
+      params: { slug: post.data.slug },
+      props: { slug: post.data.slug },
+    }));
+}
+
+const { slug } = Astro.props;
+const newUrl = `/zh-tw/${slug}/`;
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0;url=${newUrl}`} />
+    <link rel="canonical" href={`https://reallyniceday.com/zh-tw/${slug}/`} />
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href={newUrl}>{newUrl}</a>...</p>
+  </body>
+</html>

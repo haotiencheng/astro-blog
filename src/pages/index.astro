@@ -8,51 +8,200 @@ const zhPosts = allPosts
   .filter((p) => p.data.lang === "zh-tw")
   .sort((a, b) => new Date(b.data.published_at).getTime() - new Date(a.data.published_at).getTime());
 
-const featuredPosts = zhPosts.filter((p) => p.data.featured);
-const recentPosts = zhPosts;
+// Collect unique tags
+const tagMap = new Map<string, string>();
+for (const post of zhPosts) {
+  for (const tag of post.data.tags) {
+    tagMap.set(tag.slug, tag.name);
+  }
+}
+const allTags = Array.from(tagMap.entries()).map(([slug, name]) => ({ slug, name }));
 ---
 
 <BaseLayout title="ReallyNiceDay" lang="zh-tw">
-  <div class="mx-auto max-w-3xl px-4 py-8">
-    {
-      featuredPosts.length > 0 && (
-        <section class="mb-10">
-          <h2 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-4">
-            精選文章
-          </h2>
-          {featuredPosts.map((post) => (
-            <PostCard
-              title={post.data.title}
-              slug={post.data.slug}
-              excerpt={post.data.excerpt}
-              featureImage={post.data.feature_image}
-              publishedAt={post.data.published_at}
-              tags={post.data.tags}
-              lang={post.data.lang}
-              featured
-            />
-          ))}
-        </section>
-      )
-    }
-
-    <section>
-      <h2 class="text-sm font-medium text-gray-400 uppercase tracking-wider mb-4">
-        所有文章
-      </h2>
-      {
-        recentPosts.map((post) => (
-          <PostCard
-            title={post.data.title}
-            slug={post.data.slug}
-            excerpt={post.data.excerpt}
-            featureImage={post.data.feature_image}
-            publishedAt={post.data.published_at}
-            tags={post.data.tags}
-            lang={post.data.lang}
-          />
-        ))
-      }
+  <div class="homepage">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="hero-label">Indie Developer &middot; Dancer &middot; NTU FIN</p>
+        <h1 class="hero-title">ReallyNiceDay</h1>
+        <p class="hero-sub">
+          關於開發、AI、創業和生產力的思考筆記
+        </p>
+      </div>
     </section>
+
+    <!-- Tag filter -->
+    <section class="filter-bar">
+      <div class="filter-inner">
+        <button class="filter-tag active" data-filter="all">全部</button>
+        {allTags.map((tag) => (
+          <button class="filter-tag" data-filter={tag.slug}>{tag.name}</button>
+        ))}
+      </div>
+    </section>
+
+    <!-- Post grid -->
+    <section class="post-grid">
+      {zhPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          slug={post.data.slug}
+          excerpt={post.data.excerpt}
+          featureImage={post.data.feature_image}
+          publishedAt={post.data.published_at}
+          tags={post.data.tags}
+          lang={post.data.lang}
+          featured={post.data.featured}
+        />
+      ))}
+    </section>
+
+    <p class="no-results" style="display:none;">
+      沒有符合的文章
+    </p>
   </div>
 </BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-tag');
+    const cards = document.querySelectorAll<HTMLElement>('.post-card');
+    const noResults = document.querySelector<HTMLElement>('.no-results');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter!;
+
+        // Update active state
+        buttons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter cards
+        let visible = 0;
+        cards.forEach((card) => {
+          const tags = card.dataset.tags?.split(',') || [];
+          const show = filter === 'all' || tags.includes(filter);
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        if (noResults) {
+          noResults.style.display = visible === 0 ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .homepage {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 3rem 0 2rem;
+    text-align: center;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin: 0 0 0.75rem;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    background: linear-gradient(135deg, #111 0%, #555 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  /* Filter bar */
+  .filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0.75rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-inner {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+
+  .filter-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-tag {
+    flex-shrink: 0;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-size: 0.8rem;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .filter-tag:hover {
+    border-color: #d1d5db;
+    color: #374151;
+  }
+
+  .filter-tag.active {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+
+  /* Post grid */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .post-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    color: #9ca3af;
+    padding: 3rem 0;
+    font-size: 0.95rem;
+  }
+</style>

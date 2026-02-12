@@ -145,6 +145,68 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
         progressBar.style.width = `${Math.min(scrolled, 100)}%`;
       });
     }
+
+    // Spotify lazy-load: replace bare spotify links with embedded iframes
+    const postContent = document.querySelector('.gh-content');
+    if (postContent) {
+      const anchors = Array.from(postContent.querySelectorAll('a'));
+      for (const a of anchors) {
+        const href = a.href;
+        if (!href.includes('open.spotify.com')) continue;
+        // Only replace if it's a standalone link (not inside another element with text around it)
+        const parent = a.parentElement;
+        if (!parent) continue;
+        const siblings = Array.from(parent.childNodes).filter(n => n.nodeType === Node.TEXT_NODE ? n.textContent!.trim() : n !== a);
+        if (siblings.length > 0) continue;
+
+        // Extract embed URL from track/album/playlist/episode/artist
+        const match = href.match(/open\.spotify\.com\/(track|album|playlist|episode|artist)\/([A-Za-z0-9]+)/);
+        if (!match) continue;
+        const [, type, id] = match;
+        const embedUrl = `https://open.spotify.com/embed/${type}/${id}`;
+
+        // Build placeholder card
+        const wrapper = document.createElement('div');
+        wrapper.className = 'spotify-embed-wrapper';
+        wrapper.dataset.src = embedUrl;
+        wrapper.innerHTML = `
+          <div class="spotify-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="spotify-icon">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            <span class="spotify-label">Spotify · ${type.charAt(0).toUpperCase() + type.slice(1)}</span>
+            <span class="spotify-loading">Loading…</span>
+          </div>
+        `;
+
+        // Replace the link's parent (likely a <p>) with wrapper
+        const container = parent.tagName === 'P' ? parent : a;
+        container.replaceWith(wrapper);
+
+        // Lazy load iframe via IntersectionObserver
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const el = entry.target as HTMLElement;
+            const src = el.dataset.src!;
+            const isTrack = src.includes('/track/');
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.width = '100%';
+            iframe.height = isTrack ? '152' : '352';
+            iframe.frameBorder = '0';
+            iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+            iframe.loading = 'lazy';
+            iframe.style.borderRadius = '12px';
+            el.innerHTML = '';
+            el.appendChild(iframe);
+            observer.unobserve(el);
+          }
+        }, { rootMargin: '200px' });
+
+        observer.observe(wrapper);
+      }
+    }
   });
 </script>
 
@@ -228,6 +290,40 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   .gh-toc :global(.is-active-link) {
     color: #111827;
     font-weight: 600;
+  }
+
+  /* Spotify embed */
+  :global(.spotify-embed-wrapper) {
+    margin: 1.5em 0;
+  }
+
+  :global(.spotify-placeholder) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #121212;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    color: #fff;
+    min-height: 80px;
+  }
+
+  :global(.spotify-icon) {
+    width: 2rem;
+    height: 2rem;
+    color: #1DB954;
+    flex-shrink: 0;
+  }
+
+  :global(.spotify-label) {
+    font-size: 0.9rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  :global(.spotify-loading) {
+    font-size: 0.75rem;
+    color: #9ca3af;
   }
 
   /* Collapse H4 lists unless active */

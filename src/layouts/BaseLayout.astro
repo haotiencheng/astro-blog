@@ -63,8 +63,8 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
   <body class="bg-white text-gray-900 antialiased">
     <nav class="border-b border-gray-200">
       <div class="mx-auto max-w-3xl px-4 py-4 flex items-center justify-between">
-        <a href={lang === "en" ? "/en/" : "/"} class="text-lg font-bold hover:text-gray-600 transition-colors">
-          ReallyNiceDay
+        <a href={lang === "en" ? "/en/" : "/"} class="hover:opacity-80 transition-opacity">
+          <img src="/images/logo.png" alt="ReallyNiceDay" height="36" class="h-9 w-auto" />
         </a>
         <div class="flex items-center gap-4 text-sm">
           <a href={lang === "en" ? "/en/" : "/"} class="hover:text-gray-600 transition-colors">
@@ -72,6 +72,9 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
           </a>
           <a href="/about/" class="hover:text-gray-600 transition-colors">
             {lang === "en" ? "About" : "關於"}
+          </a>
+          <a href="https://www.projectstain.dev" class="hover:text-gray-600 transition-colors">
+            {lang === "en" ? "Projects" : "專案"}
           </a>
           <a
             href={lang === "en" ? "/" : "/en/"}

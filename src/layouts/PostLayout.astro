@@ -122,6 +122,7 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
         hasInnerContainers: true,
         headingsOffset: 40,
         scrollSmoothOffset: -40,
+        collapseDepth: 2,
       });
     }
 
@@ -155,27 +156,59 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
     }
   }
 
-  /* tocbot link styles */
+  /* TOC — counter-based numbering: 1. / a. / i. */
   .gh-toc :global(.toc-list) {
     list-style: none;
     padding: 0;
     margin: 0;
+    counter-reset: toc-h2;
+  }
+
+  /* H2 level: 1. 2. 3. */
+  .gh-toc > :global(.toc-list) > :global(.toc-list-item) {
+    counter-increment: toc-h2;
+  }
+  .gh-toc > :global(.toc-list) > :global(.toc-list-item) > :global(.toc-link::before) {
+    content: counter(toc-h2) ". ";
+  }
+
+  /* H3 level: a. b. c. */
+  .gh-toc :global(.toc-list .toc-list) {
+    counter-reset: toc-h3;
+    padding-left: 0.9rem;
+    margin-top: 0.15rem;
+  }
+  .gh-toc :global(.toc-list .toc-list > .toc-list-item) {
+    counter-increment: toc-h3;
+  }
+  .gh-toc :global(.toc-list .toc-list > .toc-list-item > .toc-link::before) {
+    content: counter(toc-h3, lower-alpha) ". ";
+  }
+
+  /* H4 level: i. ii. iii. */
+  .gh-toc :global(.toc-list .toc-list .toc-list) {
+    counter-reset: toc-h4;
+    padding-left: 0.9rem;
+  }
+  .gh-toc :global(.toc-list .toc-list .toc-list > .toc-list-item) {
+    counter-increment: toc-h4;
+  }
+  .gh-toc :global(.toc-list .toc-list .toc-list > .toc-list-item > .toc-link::before) {
+    content: counter(toc-h4, lower-roman) ". ";
   }
 
   .gh-toc :global(.toc-list-item) {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .gh-toc :global(.toc-link) {
     display: block;
-    font-size: 0.8rem;
-    line-height: 1.4;
+    font-size: 0.75rem;
+    line-height: 1.5;
     color: #9ca3af;
     text-decoration: none;
-    padding: 0.15rem 0;
-    padding-left: 0.75rem;
-    border-left: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s;
+    padding: 0.1rem 0;
+    transition: color 0.15s;
   }
 
   .gh-toc :global(.toc-link:hover) {
@@ -184,12 +217,17 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
 
   .gh-toc :global(.is-active-link) {
     color: #111827;
-    font-weight: 500;
-    border-left-color: #3b82f6;
+    font-weight: 600;
   }
 
-  /* Nested levels — indent */
-  .gh-toc :global(.toc-list .toc-list) {
-    padding-left: 0.75rem;
+  /* Collapse H4 lists unless active */
+  .gh-toc :global(.is-collapsible) {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+  }
+
+  .gh-toc :global(.is-collapsible:not(.is-collapsed)) {
+    max-height: 999px;
   }
 </style>

@@ -136,6 +136,33 @@ lang: zh-tw
 Write in **Markdown** as normal. Images, links, code blocks all work.
 ```
 
+## Planned Features (Not Yet Built)
+
+### Claps + Comments (Cloudflare Pages Functions + D1)
+Designed but not implemented. When ready to build:
+
+**Claps**
+- Medium-style, up to 50 claps per visitor per post
+- Visitor clap count tracked in `localStorage` (keyed by slug)
+- Total clap count stored in Cloudflare D1
+
+**Comments**
+- Name + email required, no login
+- Auto-publish (no moderation queue)
+- Stored in Cloudflare D1
+
+**Backend**
+- Cloudflare Pages Functions (edge Workers) inside the same project — no separate server
+- Add a `/functions/api/` directory; Cloudflare deploys it alongside static assets automatically
+- D1 tables: `claps(slug, count)` and `comments(id, slug, name, email, body, created_at)`
+- Add D1 binding to `wrangler.jsonc`, run one SQL migration, done
+
+**Setup steps when ready**
+1. Create D1 database in Cloudflare dashboard
+2. Add binding to `wrangler.jsonc`
+3. Create `/functions/api/claps/[slug].ts` and `/functions/api/comments/[slug].ts`
+4. Add clap button + comments section as client-side components in `PostLayout.astro`
+
 ## Domain
 - Production: https://reallyniceday.com
 - Original platform: Ghost (no longer used as frontend)

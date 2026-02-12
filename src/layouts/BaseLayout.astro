@@ -267,6 +267,17 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     display: block;
   }
 
+  /* Prevent long URLs/strings from breaking mobile layout */
+  .prose {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .prose :where(a) {
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
+
   /* Inline code */
   .prose :where(code):not(:where(pre code)) {
     background: #f3f4f6;

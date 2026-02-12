@@ -10,6 +10,7 @@ interface Props {
   lang: "zh-tw" | "en";
   pairSlug: string | null;
   pairLang: "zh-tw" | "en" | null;
+  readingTime: number;
 }
 
 const {
@@ -21,14 +22,14 @@ const {
   lang,
   pairSlug,
   pairLang,
+  readingTime,
 } = Astro.props;
 
 const date = new Date(publishedAt);
-const formattedDate = date.toLocaleDateString(lang === "zh-tw" ? "zh-TW" : "en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const day = date.getDate().toString().padStart(2, "0");
+const month = date.toLocaleString("en-US", { month: "short" }).toUpperCase();
+const year = date.getFullYear();
+const formattedDate = `${day} ${month} ${year}`;
 
 const pairUrl = pairSlug
   ? pairLang === "en"
@@ -62,44 +63,53 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   </aside>
 
   <article class="mx-auto max-w-3xl px-4 py-8">
-    <header class="mb-8">
-      {
-        featureImage && (
-          <img
-            src={featureImage}
-            alt={title}
-            class="w-full rounded-lg mb-6"
-            width="768"
-            height="432"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
-        )
-      }
-      <h1 class="text-3xl md:text-4xl font-bold leading-tight mb-3">
-        {title}
-      </h1>
-      <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500">
+    <header class="mb-8 text-center">
+      <!-- Meta row: date · reading time · tag -->
+      <div class="flex items-center justify-center gap-2 text-xs tracking-widest text-gray-400 uppercase mb-4">
         <time datetime={publishedAt}>{formattedDate}</time>
-        {
-          tags.map((tag) => (
-            <span class="px-2 py-0.5 bg-gray-100 rounded text-xs">
-              {tag.name}
-            </span>
-          ))
-        }
-        {
-          pairUrl && (
-            <a
-              href={pairUrl}
-              class="px-2 py-0.5 border border-gray-300 rounded text-xs hover:bg-gray-100 transition-colors"
-            >
+        <span>·</span>
+        <span>{readingTime} {lang === "en" ? "MIN READ" : "分鐘閱讀"}</span>
+        {tags.length > 0 && (
+          <>
+            <span>·</span>
+            <span class="text-amber-700 font-semibold">{tags[0].name}</span>
+          </>
+        )}
+        {pairUrl && (
+          <>
+            <span>·</span>
+            <a href={pairUrl} class="text-gray-400 hover:text-gray-600 transition-colors normal-case tracking-normal">
               {pairLang === "en" ? "Read in English" : "閱讀中文版"}
             </a>
-          )
-        }
+          </>
+        )}
       </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5">
+        {title}
+      </h1>
+
+      <!-- Excerpt -->
+      {excerpt && (
+        <p class="text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8">
+          {excerpt}
+        </p>
+      )}
+
+      <!-- Feature image -->
+      {featureImage && (
+        <img
+          src={featureImage}
+          alt={title}
+          class="w-full rounded-lg"
+          width="768"
+          height="432"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      )}
     </header>
 
     <div class="gh-content prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">

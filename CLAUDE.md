@@ -92,9 +92,49 @@ Old English URLs at `/en/[slug]-en/` map to the same new path — no redirect ne
 - Downloads images to `public/images/ghost/`
 Replaces `__GHOST_URL__` with local image paths. Detects bilingual pairs by `-en` slug suffix.
 
-## Ghost HTML in Migrated Posts
-Existing posts contain raw Ghost HTML in the Markdown body (bookmark cards, image cards, etc.).
-Astro's Markdown pipeline passes through HTML blocks. New posts should be written in pure Markdown.
+## Content Rendering — IMPORTANT
+
+### The Problem (Ghost HTML + Markdown Pipeline)
+Migrated posts contain raw Ghost HTML in the body (bookmark cards, code blocks, etc.).
+Astro's remark/rehype Markdown pipeline corrupts this HTML when `<pre><code>` blocks contain
+Markdown-like syntax such as `# heading` or ` ``` ` fenced code blocks. The parser treats
+them as real Markdown and eats everything after the code block.
+
+**Example**: `llms-txt-user-manual-for-content-in-the-ai-era` showed only 6 of 17 headings
+because the Markdown renderer interpreted `# daisyUI 5` inside a `<pre><code>` as a heading.
+
+There was also a secondary bug: `feature_image` paths like `/images/ghost/2025/04/---3-1.webp`
+contain `---` mid-path, which tricked a naive frontmatter-stripping regex into stopping early,
+leaking frontmatter YAML into the rendered page.
+
+### The Solution (Raw File Read + set:html)
+Both `src/pages/zh-tw/[slug].astro` and `src/pages/en/[slug].astro` now:
+1. Read the raw `.md` file from disk using `readFileSync`
+2. Strip frontmatter with a line-aware regex: `/^---\n[\s\S]*?\n---\n?/`
+   (requires `---` on its own line, avoiding false matches mid-path)
+3. Pass the raw HTML body to `<Fragment set:html={htmlContent} />`
+
+This bypasses `render(post)` and Astro's Markdown pipeline entirely.
+
+### Writing New Posts
+Write the body in **pure Markdown**. The page routes auto-detect format:
+- Body starts with `<` → treated as raw HTML (all 23 migrated Ghost posts)
+- Body starts with anything else → processed through `marked` as Markdown (new posts)
+
+No frontmatter flag needed. Just write Markdown naturally:
+
+```md
+---
+title: "My New Post"
+slug: my-new-post
+lang: zh-tw
+...
+---
+
+## Introduction
+
+Write in **Markdown** as normal. Images, links, code blocks all work.
+```
 
 ## Domain
 - Production: https://reallyniceday.com

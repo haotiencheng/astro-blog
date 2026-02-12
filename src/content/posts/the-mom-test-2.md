@@ -3,7 +3,7 @@ title: "The Mom Test（二）：客戶對話的前中後，不再浪費時間走
 slug: the-mom-test-2
 lang: zh-tw
 excerpt: "學會高效客戶對話！掌握「三大問題」框架、客戶分群策略、動態更新準備技巧，完整「會前準備、會中執行、會後覆盤」結構化銷售流程，讓每次對話直擊要害，大幅提升客戶對話成效與轉換率。"
-feature_image: /images/ghost/2025/10/tmp_ix8z184.jpeg
+feature_image: /images/ghost/2025/10/tmp_ix8z184.webp
 featured: true
 published_at: "2025-10-06T13:12:20.000Z"
 updated_at: "2025-10-07T05:34:36.000Z"

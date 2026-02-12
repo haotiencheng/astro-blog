@@ -21,6 +21,17 @@ const formattedDate = date.toLocaleDateString(lang === "zh-tw" ? "zh-TW" : "en-U
 });
 
 const tagSlugs = tags.map((t) => t.slug).join(",");
+
+// Use thumbnail version for card grid (480px wide WebP)
+function getThumbSrc(src: string | null): string | null {
+  if (!src) return null;
+  // /images/ghost/2025/03/photo.webp -> /images/ghost/thumb/2025/03/photo.webp
+  const match = src.match(/^\/images\/ghost\/(\d{4}\/.*)$/);
+  if (match) return `/images/ghost/thumb/${match[1]}`;
+  return src;
+}
+
+const thumbSrc = getThumbSrc(featureImage);
 ---
 
 <a
@@ -33,8 +44,12 @@ const tagSlugs = tags.map((t) => t.slug).join(",");
       {
         featureImage ? (
           <img
-            src={featureImage}
+            src={thumbSrc || featureImage}
+            srcset={thumbSrc ? `${thumbSrc} 480w, ${featureImage} 960w` : undefined}
+            sizes="(max-width: 640px) 100vw, 480px"
             alt={title}
+            width="480"
+            height="270"
             loading="lazy"
             decoding="async"
             onload="this.classList.add('loaded')"

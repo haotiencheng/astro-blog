@@ -69,7 +69,11 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
             src={featureImage}
             alt={title}
             class="w-full rounded-lg mb-6"
+            width="768"
+            height="432"
             loading="eager"
+            decoding="async"
+            fetchpriority="high"
           />
         )
       }

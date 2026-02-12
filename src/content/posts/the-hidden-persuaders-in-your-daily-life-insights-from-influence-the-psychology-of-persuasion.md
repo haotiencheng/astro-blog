@@ -3,7 +3,7 @@ title: "《影響力：讓人乖乖聽話的說服術》讀書筆記：當我們
 slug: the-hidden-persuaders-in-your-daily-life-insights-from-influence-the-psychology-of-persuasion
 lang: zh-tw
 excerpt: "你是否曾在飲料店前選擇「最受歡迎」的商品？本文深入探討《影響力》一書揭示的六大心理操控原則，包括社會證明、一致性承諾、互惠、稀缺、好感與權威原則。透過生活實例說明這些技巧如何影響我們的決策，並提供實用策略幫助讀者在充滿精心設計的說服訊息世界中，重新掌握自己的選擇權。"
-feature_image: /images/ghost/2025/03/messageImage_1742200403199.jpg
+feature_image: /images/ghost/2025/03/messageImage_1742200403199.webp
 featured: true
 published_at: "2025-03-17T08:40:41.000Z"
 updated_at: "2025-03-22T04:05:55.000Z"

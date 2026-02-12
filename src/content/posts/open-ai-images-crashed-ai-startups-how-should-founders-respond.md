@@ -9,7 +9,7 @@ published_at: "2025-03-27T09:03:17.000Z"
 updated_at: "2025-03-27T09:19:53.000Z"
 created_at: "2025-03-27T08:09:47.000Z"
 tags:
-  - name: "startup"
+  - name: "Startup"
     slug: "startup"
   - name: "AI"
     slug: "ai"

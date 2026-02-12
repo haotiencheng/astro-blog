@@ -13,7 +13,7 @@ tags:
     slug: "business"
   - name: "Book Review"
     slug: "book-review"
-  - name: "startup"
+  - name: "Startup"
     slug: "startup"
 pair_slug: null
 pair_lang: null

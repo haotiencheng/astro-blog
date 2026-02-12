@@ -94,8 +94,17 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     </main>
 
     <footer class="border-t border-gray-200 mt-16">
-      <div class="mx-auto max-w-3xl px-4 py-8 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} ReallyNiceDay. Built with Astro.
+      <div class="mx-auto max-w-3xl px-4 py-8 text-sm text-gray-500">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3">
+          <span>&copy; {new Date().getFullYear()} ReallyNiceDay. Built with Astro.</span>
+          <span class="hidden sm:inline text-gray-300">·</span>
+          <a href="mailto:hello@reallyniceday.com" class="flex items-center gap-1 hover:text-gray-700 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            hello@reallyniceday.com
+          </a>
+        </div>
       </div>
     </footer>
   </body>

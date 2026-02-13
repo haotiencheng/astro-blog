@@ -259,6 +259,7 @@ function formatCarouselDate(iso: string) {
   .carousel-wrapper {
     overflow: hidden;
     border-radius: 0.75rem;
+    touch-action: pan-y; /* let browser scroll vertically; we handle horizontal swipe */
   }
 
   .carousel-track {

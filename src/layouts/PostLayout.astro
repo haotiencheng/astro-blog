@@ -60,6 +60,14 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   <!-- Reading progress bar -->
   <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-blue-500 z-50 transition-[width] duration-100" style="width: 0%"></div>
 
+  <!-- Sticky post header (appears when main nav scrolls away) -->
+  <div id="post-sticky-header" class="post-sticky-header">
+    <a href={lang === "en" ? "/en/" : "/"} class="sticky-logo">
+      <img src="/images/logo.webp" alt="ReallyNiceDay" width="224" height="125" />
+    </a>
+    <p class="sticky-title">{title}</p>
+  </div>
+
   <!-- TOC sidebar — fixed left -->
   <aside class="gh-sidebar">
     <div class="gh-toc"></div>
@@ -141,13 +149,24 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
       });
     }
 
-    // Reading progress bar
+    // Reading progress bar + sticky post header
     const progressBar = document.getElementById('progress-bar');
-    if (progressBar) {
+    const stickyHeader = document.getElementById('post-sticky-header');
+    const mainNav = document.querySelector('nav');
+
+    if (progressBar || stickyHeader) {
+      const observer = mainNav
+        ? new IntersectionObserver(([entry]) => {
+            stickyHeader?.classList.toggle('visible', !entry.isIntersecting);
+          }, { threshold: 0 })
+        : null;
+      if (mainNav && observer) observer.observe(mainNav);
+
       window.addEventListener('scroll', () => {
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrolled = (window.scrollY / docHeight) * 100;
-        progressBar.style.width = `${Math.min(scrolled, 100)}%`;
+        if (progressBar) {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          progressBar.style.width = `${Math.min((window.scrollY / docHeight) * 100, 100)}%`;
+        }
       });
     }
 
@@ -344,6 +363,50 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   :global(.spotify-loading) {
     font-size: 0.75rem;
     color: #9ca3af;
+  }
+
+  /* Sticky post header */
+  .post-sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #f0f0f0;
+    transform: translateY(-100%);
+    transition: transform 0.25s ease;
+    gap: 1rem;
+  }
+
+  .post-sticky-header.visible {
+    transform: translateY(0);
+  }
+
+  .sticky-logo img {
+    height: 2rem;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .sticky-title {
+    flex: 1;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* leave room so logo doesn't overlap — mirror logo width on the right */
+    padding-right: calc(2rem * (224 / 125)); /* matches logo aspect ratio at h=2rem */
+    margin: 0;
   }
 
   /* Collapse H4 lists unless active */

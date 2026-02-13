@@ -184,21 +184,37 @@ function formatCarouselDate(iso: string) {
   const rows = document.querySelectorAll<HTMLElement>('.post-row');
   const noResults = document.getElementById('no-results');
 
+  function applyFilter(filter: string) {
+    pills.forEach((p) => p.classList.toggle('active', p.dataset.filter === filter));
+    let visible = 0;
+    rows.forEach((row) => {
+      const tags = row.dataset.tags?.split(',') || [];
+      const show = filter === 'all' || tags.includes(filter);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+  }
+
   pills.forEach((pill) => {
     pill.addEventListener('click', () => {
       const filter = pill.dataset.filter!;
-      pills.forEach((p) => p.classList.remove('active'));
-      pill.classList.add('active');
-      let visible = 0;
-      rows.forEach((row) => {
-        const tags = row.dataset.tags?.split(',') || [];
-        const show = filter === 'all' || tags.includes(filter);
-        row.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
-      if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+      // Update URL without reloading
+      const url = new URL(window.location.href);
+      if (filter === 'all') url.searchParams.delete('tag');
+      else url.searchParams.set('tag', filter);
+      history.replaceState(null, '', url.toString());
+      applyFilter(filter);
     });
   });
+
+  // Activate filter from ?tag= query param on page load
+  const initialTag = new URLSearchParams(window.location.search).get('tag');
+  if (initialTag) {
+    applyFilter(initialTag);
+    // Scroll past hero to the list
+    document.querySelector('.filter-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 </script>
 
 <style>

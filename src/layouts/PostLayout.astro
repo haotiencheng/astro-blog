@@ -37,6 +37,9 @@ const pairUrl = pairSlug
     : `/zh-tw/${pairSlug}/`
   : null;
 
+const homeUrl = lang === "en" ? "/en/" : "/";
+const tagHomeUrl = (tagSlug: string) => `${homeUrl}?tag=${tagSlug}`;
+
 const siteUrl = "https://reallyniceday.com";
 const canonicalUrl = lang === "en"
   ? `${siteUrl}/en/${Astro.params.slug}/`
@@ -65,23 +68,25 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   <article class="mx-auto max-w-3xl px-4 py-8">
     <header class="mb-8 text-center">
       <!-- Meta row: date · reading time · tag -->
-      <div class="flex items-center justify-center gap-2 text-xs tracking-widest text-gray-400 uppercase mb-4">
+      <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs tracking-widest text-gray-400 uppercase mb-4">
         <time datetime={publishedAt}>{formattedDate}</time>
-        <span>·</span>
+        <span aria-hidden="true">·</span>
         <span>{readingTime} {lang === "en" ? "MIN READ" : "分鐘閱讀"}</span>
         {tags.length > 0 && (
           <>
-            <span>·</span>
-            <span class="text-amber-700 font-semibold">{tags[0].name}</span>
+            <span aria-hidden="true">·</span>
+            <a href={tagHomeUrl(tags[0].slug)} class="text-amber-700 font-semibold normal-case tracking-normal hover:text-amber-600 transition-colors">
+              {tags[0].name}
+            </a>
           </>
         )}
         {pairUrl && (
-          <>
-            <span>·</span>
-            <a href={pairUrl} class="text-gray-400 hover:text-gray-600 transition-colors normal-case tracking-normal">
+          <div class="basis-full flex justify-center mt-1">
+            <a href={pairUrl} class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gray-300 text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors normal-case tracking-normal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
               {pairLang === "en" ? "Read in English" : "閱讀中文版"}
             </a>
-          </>
+          </div>
         )}
       </div>
 

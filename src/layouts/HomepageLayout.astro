@@ -157,13 +157,10 @@ function formatCarouselDate(iso: string) {
 
   function goTo(idx: number) {
     current = Math.max(0, Math.min(idx, maxIdx()));
-    if (isMobile()) {
-      track.style.transform = `translateX(-${current * 100}%)`;
-    } else {
-      const slideEl = slides[0] as HTMLElement | undefined;
-      const offset = slideEl ? (slideEl.offsetWidth + 16) * current : 0;
-      track.style.transform = `translateX(-${offset}px)`;
-    }
+    const slideEl = slides[0] as HTMLElement | undefined;
+    const gap = isMobile() ? 0 : 16; // matches CSS: gap:0 mobile, gap:1rem desktop
+    const offset = slideEl ? (slideEl.offsetWidth + gap) * current : 0;
+    track.style.transform = `translateX(-${offset}px)`;
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
@@ -250,7 +247,7 @@ function formatCarouselDate(iso: string) {
 
   .carousel-track {
     display: flex;
-    gap: 1rem;
+    gap: 0; /* no gap on mobile — translateX(-slideWidth * n) works cleanly */
     transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
   }
 
@@ -260,6 +257,7 @@ function formatCarouselDate(iso: string) {
   }
 
   @media (min-width: 768px) {
+    .carousel-track { gap: 1rem; }
     .carousel-slide { flex: 0 0 calc((100% - 2rem) / 3); }
     .carousel-dots { display: none; }
     .carousel-controls { padding-top: 0.875rem; }

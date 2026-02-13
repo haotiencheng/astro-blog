@@ -229,12 +229,16 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
   /* Ghost Image Cards */
   .kg-image-card {
     margin: 1.5em 0;
+    max-width: 100%;
+    overflow: hidden;
   }
 
-  .kg-image-card img {
+  .kg-image-card img,
+  .kg-image {
     border-radius: 0.5rem;
     max-width: 100%;
     height: auto;
+    display: block;
   }
 
   .kg-image-card figcaption {
@@ -280,6 +284,17 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
   .kg-video-container video {
     width: 100%;
     display: block;
+  }
+
+  /* Responsive heading sizes inside post content */
+  .gh-content :where(h1) { font-size: 1.6rem; }
+  .gh-content :where(h2) { font-size: 1.3rem; }
+  .gh-content :where(h3) { font-size: 1.1rem; }
+
+  @media (min-width: 768px) {
+    .gh-content :where(h1) { font-size: 2.25rem; }
+    .gh-content :where(h2) { font-size: 1.75rem; }
+    .gh-content :where(h3) { font-size: 1.375rem; }
   }
 
   /* Prevent long URLs/strings from breaking mobile layout */

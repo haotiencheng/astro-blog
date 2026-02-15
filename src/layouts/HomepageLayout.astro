@@ -36,6 +36,18 @@ function formatCarouselDate(iso: string) {
 ---
 
 <BaseLayout title="ReallyNiceDay" lang={lang} canonicalUrl={canonicalUrl} hreflangs={hreflangs}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ReallyNiceDay",
+      url: siteUrl,
+      description: lang === "en"
+        ? "Notes on development, AI, startups, and productivity"
+        : "關於開發、AI、創業和生產力的思考筆記",
+      inLanguage: lang === "en" ? "en" : "zh-TW",
+    })} />
+  </Fragment>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">

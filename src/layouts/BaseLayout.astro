@@ -5,6 +5,7 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string | null;
+  ogType?: string;
   lang?: "zh-tw" | "en";
   canonicalUrl?: string;
   hreflangs?: { lang: string; url: string }[];
@@ -14,6 +15,7 @@ const {
   title,
   description = "ReallyNiceDay - Indie Developer | Dancer | NTU FIN graduate",
   ogImage,
+  ogType = "website",
   lang = "zh-tw",
   canonicalUrl,
   hreflangs,
@@ -41,7 +43,7 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={fullOgImage} />
@@ -58,6 +60,7 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     {hreflangs?.map((h) => (
       <link rel="alternate" hreflang={h.lang} href={h.url} />
     ))}
+    <slot name="head" />
     <Analytics />
   </head>
   <body class="bg-white text-gray-900 antialiased">

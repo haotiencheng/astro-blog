@@ -37,7 +37,7 @@ export async function getStaticPaths() {
 }
 
 const { post, pairSlug, pairLang } = Astro.props;
-const { title, excerpt, feature_image, published_at, tags, lang } = post.data;
+const { title, excerpt, feature_image, published_at, updated_at, tags, lang } = post.data;
 
 
 // Read raw file to bypass Astro's Markdown pipeline that corrupts Ghost HTML
@@ -58,6 +58,7 @@ const readingTime = Math.max(1, Math.round(textContent.length / 300));
   excerpt={excerpt}
   featureImage={feature_image}
   publishedAt={published_at}
+  updatedAt={updated_at}
   tags={tags}
   lang={lang}
   pairSlug={pairSlug}

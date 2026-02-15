@@ -45,7 +45,16 @@ const canonicalUrl = lang === "en"
   ? `${siteUrl}/en/${Astro.params.slug}/`
   : `${siteUrl}/zh-tw/${Astro.params.slug}/`;
 const alternateUrl = pairUrl ? `${siteUrl}${pairUrl}` : undefined;
-const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant-TW" : undefined;
+
+// Full hreflang set: self + pair + x-default (x-default = zh-tw version)
+const hreflangs: { lang: string; url: string }[] = [
+  { lang: lang === "en" ? "en" : "zh-Hant-TW", url: canonicalUrl },
+];
+if (alternateUrl && pairLang) {
+  hreflangs.push({ lang: pairLang === "en" ? "en" : "zh-Hant-TW", url: alternateUrl });
+}
+const xDefaultUrl = lang === "zh-tw" ? canonicalUrl : (alternateUrl ?? canonicalUrl);
+hreflangs.push({ lang: "x-default", url: xDefaultUrl });
 ---
 
 <BaseLayout
@@ -54,8 +63,7 @@ const alternateLang = pairLang === "en" ? "en" : pairLang === "zh-tw" ? "zh-Hant
   ogImage={featureImage}
   lang={lang}
   canonicalUrl={canonicalUrl}
-  alternateUrl={alternateUrl}
-  alternateLang={alternateLang}
+  hreflangs={hreflangs}
 >
   <!-- Reading progress bar -->
   <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-blue-500 z-50 transition-[width] duration-100" style="width: 0%"></div>

@@ -44,7 +44,9 @@ const { title, excerpt, feature_image, published_at, tags, lang } = post.data;
 const raw = readFileSync(`src/content/posts/${post.data.slug}.md`, "utf-8");
 const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
 // Auto-detect: Ghost-migrated posts start with "<" (raw HTML); new posts use Markdown
-const htmlContent = body.startsWith("<") ? body : await marked(body);
+const rawHtml = body.startsWith("<") ? body : await marked(body);
+// Demote H1 tags in the content body to H2 — the page <h1> is the post title
+const htmlContent = rawHtml.replace(/<h1(\s|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
 
 // Reading time: strip HTML tags, count chars, ~300 chars/min for zh-tw
 const textContent = htmlContent.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();

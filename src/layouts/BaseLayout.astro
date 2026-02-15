@@ -7,8 +7,7 @@ interface Props {
   ogImage?: string | null;
   lang?: "zh-tw" | "en";
   canonicalUrl?: string;
-  alternateUrl?: string;
-  alternateLang?: string;
+  hreflangs?: { lang: string; url: string }[];
 }
 
 const {
@@ -17,8 +16,7 @@ const {
   ogImage,
   lang = "zh-tw",
   canonicalUrl,
-  alternateUrl,
-  alternateLang,
+  hreflangs,
 } = Astro.props;
 
 const siteUrl = "https://reallyniceday.com";
@@ -48,6 +46,7 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     <meta property="og:description" content={description} />
     <meta property="og:image" content={fullOgImage} />
     <meta property="og:locale" content={lang === "zh-tw" ? "zh_TW" : "en_US"} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -56,11 +55,9 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     <meta name="twitter:image" content={fullOgImage} />
 
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    {
-      alternateUrl && alternateLang && (
-        <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
-      )
-    }
+    {hreflangs?.map((h) => (
+      <link rel="alternate" hreflang={h.lang} href={h.url} />
+    ))}
     <Analytics />
   </head>
   <body class="bg-white text-gray-900 antialiased">

@@ -10,9 +10,17 @@ interface Props {
   allPosts: CollectionEntry<"posts">[];
   allTags: { slug: string; name: string }[];
   t: HomepageUI;
+  canonicalUrl: string;
 }
 
-const { lang, carouselPosts, allPosts, allTags, t } = Astro.props;
+const { lang, carouselPosts, allPosts, allTags, t, canonicalUrl } = Astro.props;
+
+const siteUrl = "https://reallyniceday.com";
+const hreflangs = [
+  { lang: "zh-Hant-TW", url: `${siteUrl}/` },
+  { lang: "en",         url: `${siteUrl}/en/` },
+  { lang: "x-default",  url: `${siteUrl}/` },
+];
 
 function postUrl(slug: string) {
   return `/${lang}/${slug}/`;
@@ -27,7 +35,7 @@ function formatCarouselDate(iso: string) {
 }
 ---
 
-<BaseLayout title="ReallyNiceDay" lang={lang}>
+<BaseLayout title="ReallyNiceDay" lang={lang} canonicalUrl={canonicalUrl} hreflangs={hreflangs}>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">

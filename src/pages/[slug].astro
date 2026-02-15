@@ -20,9 +20,10 @@ const { slug } = Astro.props;
 const newUrl = `/zh-tw/${slug}/`;
 ---
 
-<html>
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, follow" />
     <meta http-equiv="refresh" content={`0;url=${newUrl}`} />
     <link rel="canonical" href={`https://reallyniceday.com/zh-tw/${slug}/`} />
     <title>Redirecting...</title>

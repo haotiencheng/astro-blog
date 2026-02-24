@@ -9,6 +9,7 @@ interface Props {
   updatedAt?: string;
   tags: { name: string; slug: string }[];
   lang: "zh-tw" | "en";
+  slug: string;
   pairSlug: string | null;
   pairLang: "zh-tw" | "en" | null;
   readingTime: number;
@@ -22,6 +23,7 @@ const {
   updatedAt,
   tags,
   lang,
+  slug,
   pairSlug,
   pairLang,
   readingTime,
@@ -158,6 +160,13 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
         <time datetime={publishedAt}>{formattedDate}</time>
         <span aria-hidden="true">·</span>
         <span>{readingTime} {lang === "en" ? "MIN READ" : "分鐘閱讀"}</span>
+        <span id="post-views-wrap" class="contents hidden" data-slug={slug}>
+          <span aria-hidden="true">·</span>
+          <span class="inline-flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="post-views">0</span>
+          </span>
+        </span>
         {tags.length > 0 && (
           <>
             <span aria-hidden="true">·</span>
@@ -213,6 +222,28 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // Views counter
+    const viewsWrap = document.getElementById('post-views-wrap') as HTMLElement | null;
+    const viewsEl = document.getElementById('post-views');
+    const slug = viewsWrap?.dataset.slug;
+    if (slug && viewsEl) {
+      const sessionKey = `viewed:${slug}`;
+      const alreadyCounted = sessionStorage.getItem(sessionKey);
+      const method = alreadyCounted ? 'GET' : 'POST';
+      if (!alreadyCounted) sessionStorage.setItem(sessionKey, '1');
+      const fmt = (n: number) =>
+        n >= 1_000_000 ? `${+(n / 1_000_000).toFixed(1)}M`
+        : n >= 1_000   ? `${+(n / 1_000).toFixed(1)}K`
+        : String(n);
+      fetch(`/api/views/${slug}`, { method })
+        .then((r) => r.json())
+        .then(({ count }: { count: number }) => {
+          viewsEl.textContent = fmt(count);
+          viewsWrap.classList.remove('hidden');
+        })
+        .catch(() => {});
+    }
+
     // Init tocbot
     const content = document.querySelector('.gh-content');
     if (content && typeof (window as any).tocbot !== 'undefined') {

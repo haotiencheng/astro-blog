@@ -4,3 +4,8 @@ compatibility_date = "2026-02-11"
 [assets]
 directory = "./dist"
 
+[[d1_databases]]
+binding = "astro_blog_db"
+database_name = "astro-blog-db"
+database_id = "3b557903-ca8d-4354-b1be-6e9b697ba861"
+

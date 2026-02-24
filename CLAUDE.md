@@ -18,7 +18,9 @@ Deployed to Cloudflare Pages. Content authored in Markdown files.
 ```
 src/
 ├── content.config.ts              # Collection schema (posts, pages)
-├── content/posts/*.{md,mdx}       # Blog posts (Markdown/MDX + frontmatter)
+├── content/posts/
+│   ├── zh-tw/*.{md,mdx}           # Chinese posts
+│   └── en/*.{md,mdx}              # English posts
 ├── data/pages/*.json              # Static pages (About, Projects) — still JSON
 ├── layouts/
 │   ├── BaseLayout.astro           # HTML shell, nav, footer, SEO meta
@@ -37,7 +39,7 @@ src/
 
 ### Markdown post (no interactive components)
 
-Create `src/content/posts/my-post-slug.md`:
+Create `src/content/posts/zh-tw/my-post-slug.md`:
 
 ```md
 ---
@@ -85,12 +87,12 @@ Rest of post in **Markdown**.
 
 ### Bilingual pairs
 
-For the English version, create a second file with the **same slug** but `lang: en`:
+For the English version, create a file in `src/content/posts/en/` with the **same slug** but `lang: en`:
 
-| Format | zh-tw filename | en filename |
-|--------|---------------|-------------|
-| Markdown | `my-post-slug.md` | `my-post-slug-en.md` |
-| MDX | `my-post-slug.mdx` | `my-post-slug-en.mdx` |
+| Format | zh-tw file | en file |
+|--------|-----------|---------|
+| Markdown | `zh-tw/my-post-slug.md` | `en/my-post-slug.md` |
+| MDX | `zh-tw/my-post-slug.mdx` | `en/my-post-slug.mdx` |
 
 Both files use `slug: my-post-slug` in frontmatter → routes `/zh-tw/my-post-slug/` and `/en/my-post-slug/`.
 
@@ -99,12 +101,11 @@ No need to set `pair_slug` / `pair_lang` unless the slugs differ.
 
 ## Slug Convention (New Posts)
 - Use the **same slug** for both languages (e.g., `the-mom-test`)
-- Filename: `the-mom-test.md` / `the-mom-test.mdx` (zh-tw), `the-mom-test-en.md` / `the-mom-test-en.mdx` (en)
+- Files: `zh-tw/the-mom-test.md` and `en/the-mom-test.md` (or `.mdx`)
 - Routes: `/zh-tw/the-mom-test/` and `/en/the-mom-test/`
 
 ## Slug Convention (Legacy / Migrated Posts)
-- Chinese: `the-mom-test` → English: `the-mom-test-en`
-- The `-en` suffix convention is still supported for backward compatibility
+- English slugs carry a `-en` suffix (e.g. `the-mom-test-en`) — this is preserved in the frontmatter slug and the filename inside `en/`
 - Do NOT change old slugs — they are indexed by search engines
 
 ## Old URL Redirects
@@ -144,7 +145,7 @@ leaking frontmatter YAML into the rendered page.
 `src/pages/[lang]/[slug].astro` (unified page for both languages) picks a rendering path at build time:
 
 **Path 1 — MDX** (new posts needing components):
-- Detected by `existsSync(mdxFile)` where `mdxFile` is `${slug}.mdx` (zh-tw) or `${slug}-en.mdx` (en)
+- Detected by `existsSync(`src/content/posts/${lang}/${slug}.mdx`)`
 - Uses Astro's `render(post)` → `<Content />` (full MDX pipeline, JSX components work)
 
 **Path 2 — Markdown** (new plain text posts):
@@ -160,7 +161,7 @@ Frontmatter is stripped with a line-aware regex `/^---\n[\s\S]*?\n---\n?/` (requ
 
 ### Collection ID Collision (Critical)
 
-The Astro glob loader derives a collection ID from the filename by stripping dots. `foo.mdx` and `foo.en.mdx` would both get ID `foo`, causing one to silently overwrite the other.
+Even with posts in separate `zh-tw/` and `en/` subdirectories, Astro's glob loader does **not** include the subdirectory in the generated ID — only the filename stem. So `zh-tw/foo.mdx` and `en/foo.mdx` would both get ID `foo`, causing one to silently overwrite the other.
 
 **Fix in `content.config.ts`:** use `generateId` to derive the ID from frontmatter instead:
 ```ts
@@ -170,7 +171,7 @@ loader: glob({
   generateId: ({ data }) => `${data.lang}-${data.slug}`,
 }),
 ```
-This guarantees uniqueness: `zh-tw-my-post-slug` vs `en-my-post-slug`.
+This guarantees uniqueness: `zh-tw-my-post-slug` vs `en-my-post-slug`. **Do not remove `generateId`.**
 
 ### Writing New Posts
 Write the body in **pure Markdown** (`.md`) or **MDX** (`.mdx`). The page route auto-detects:

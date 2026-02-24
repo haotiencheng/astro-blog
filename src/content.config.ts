@@ -5,8 +5,8 @@ const posts = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
     base: "src/content/posts",
-    // Use lang+slug from frontmatter as ID so two files with the same slug
-    // (zh-tw and en versions) never collide in the collection.
+    // Derive ID from lang+slug frontmatter so same-named files in zh-tw/ and en/
+    // never collide in the collection store.
     generateId: ({ data }) => `${data.lang}-${data.slug}`,
   }),
   schema: z.object({

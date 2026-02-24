@@ -227,15 +227,11 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     const viewsEl = document.getElementById('post-views');
     const slug = viewsWrap?.dataset.slug;
     if (slug && viewsEl) {
-      const sessionKey = `viewed:${slug}`;
-      const alreadyCounted = sessionStorage.getItem(sessionKey);
-      const method = alreadyCounted ? 'GET' : 'POST';
-      if (!alreadyCounted) sessionStorage.setItem(sessionKey, '1');
       const fmt = (n: number) =>
         n >= 1_000_000 ? `${+(n / 1_000_000).toFixed(1)}M`
         : n >= 1_000   ? `${+(n / 1_000).toFixed(1)}K`
         : String(n);
-      fetch(`/api/views/${slug}`, { method })
+      fetch(`/api/views/${slug}`, { method: 'POST' })
         .then((r) => r.json())
         .then(({ count }: { count: number }) => {
           viewsEl.textContent = fmt(count);

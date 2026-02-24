@@ -1,7 +1,7 @@
 ---
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { marked } from "marked";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
 
 export async function getStaticPaths() {
@@ -39,18 +39,34 @@ export async function getStaticPaths() {
 const { post, pairSlug, pairLang } = Astro.props;
 const { title, excerpt, feature_image, published_at, updated_at, tags, lang } = post.data;
 
+// MDX posts (new): use Astro's render() pipeline — supports components/HTML natively
+// MD posts (legacy Ghost HTML): use readFileSync + set:html to bypass the Markdown pipeline
+const isMdx = existsSync(`src/content/posts/${post.data.slug}.mdx`);
 
-// Read raw file to bypass Astro's Markdown pipeline that corrupts Ghost HTML
-const raw = readFileSync(`src/content/posts/${post.data.slug}.md`, "utf-8");
-const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
-// Auto-detect: Ghost-migrated posts start with "<" (raw HTML); new posts use Markdown
-const rawHtml = body.startsWith("<") ? body : await marked(body);
-// Demote H1 tags in the content body to H2 — the page <h1> is the post title
-const htmlContent = rawHtml.replace(/<h1(\s|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
+let Content: any = null;
+let htmlContent = "";
+let readingTime = 1;
 
-// Reading time: strip HTML tags, count chars, ~300 chars/min for zh-tw
-const textContent = htmlContent.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-const readingTime = Math.max(1, Math.round(textContent.length / 300));
+if (isMdx) {
+  const rendered = await render(post);
+  Content = rendered.Content;
+  // Reading time: strip frontmatter + markup from raw source
+  const raw = readFileSync(`src/content/posts/${post.data.slug}.mdx`, "utf-8");
+  const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
+  const textContent = body.replace(/<[^>]+>/g, " ").replace(/[#*`_[\]()!]/g, " ").replace(/\s+/g, " ").trim();
+  readingTime = Math.max(1, Math.round(textContent.length / 300));
+} else {
+  // Read raw file to bypass Astro's Markdown pipeline that corrupts Ghost HTML
+  const raw = readFileSync(`src/content/posts/${post.data.slug}.md`, "utf-8");
+  const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
+  // Auto-detect: Ghost-migrated posts start with "<" (raw HTML); new posts use Markdown
+  const rawHtml = body.startsWith("<") ? body : await marked(body);
+  // Demote H1 tags in the content body to H2 — the page <h1> is the post title
+  htmlContent = rawHtml.replace(/<h1(\s|>)/gi, '<h2$1').replace(/<\/h1>/gi, '</h2>');
+  // Reading time: strip HTML tags, count chars, ~300 chars/min for zh-tw
+  const textContent = htmlContent.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  readingTime = Math.max(1, Math.round(textContent.length / 300));
+}
 ---
 
 <PostLayout
@@ -65,5 +81,5 @@ const readingTime = Math.max(1, Math.round(textContent.length / 300));
   pairLang={pairLang}
   readingTime={readingTime}
 >
-  <Fragment set:html={htmlContent} />
+  {isMdx ? <Content /> : <Fragment set:html={htmlContent} />}
 </PostLayout>

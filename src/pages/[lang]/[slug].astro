@@ -41,7 +41,7 @@ const { slug } = post.data;
 // MD fallback for both: ${slug}.md (legacy en slugs already carry the -en suffix)
 const mdxFile = lang === "zh-tw"
   ? `src/content/posts/${slug}.mdx`
-  : `src/content/posts/${slug}.en.mdx`;
+  : `src/content/posts/${slug}-en.mdx`;
 const isMdx = existsSync(mdxFile);
 
 let Content: any = null;

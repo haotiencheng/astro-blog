@@ -7,7 +7,7 @@ Deployed to Cloudflare Pages. Content authored in Markdown files.
 ## Architecture
 - **Framework**: Astro 5 (SSG, static output)
 - **Styling**: Tailwind CSS 3 + `@tailwindcss/typography` (`prose` class)
-- **Content**: Markdown files in `src/content/posts/` with frontmatter
+- **Content**: Markdown/MDX files in `src/content/posts/` with frontmatter
 - **i18n**: File-based routing — `/zh-tw/[slug]/` and `/en/[slug]/`
 - **Language detection**: `lang` field in frontmatter (`zh-tw` or `en`)
 - **Bilingual pairs**: Auto-detected by matching slugs across languages. `pair_slug` in frontmatter as optional override.
@@ -18,7 +18,7 @@ Deployed to Cloudflare Pages. Content authored in Markdown files.
 ```
 src/
 ├── content.config.ts              # Collection schema (posts, pages)
-├── content/posts/*.md             # Blog posts (Markdown + frontmatter)
+├── content/posts/*.{md,mdx}       # Blog posts (Markdown/MDX + frontmatter)
 ├── data/pages/*.json              # Static pages (About, Projects) — still JSON
 ├── layouts/
 │   ├── BaseLayout.astro           # HTML shell, nav, footer, SEO meta
@@ -28,14 +28,16 @@ src/
 │   ├── index.astro                # Chinese home (lists zh-tw posts)
 │   ├── about.astro                # About page
 │   ├── [slug].astro               # 301 redirect: /[slug]/ → /zh-tw/[slug]/
-│   ├── zh-tw/[slug].astro         # Chinese post pages
+│   ├── [lang]/[slug].astro        # Post pages (unified — handles both zh-tw and en)
 │   └── en/
-│       ├── index.astro            # English home
-│       └── [slug].astro           # English post pages
+│       └── index.astro            # English home
 ```
 
 ## Adding a New Post
-Create a `.md` file in `src/content/posts/`:
+
+### Markdown post (no interactive components)
+
+Create `src/content/posts/my-post-slug.md`:
 
 ```md
 ---
@@ -58,16 +60,46 @@ pair_lang: null
 Your Markdown content here.
 ```
 
+### MDX post (needs custom components or web components)
+
+Use `.mdx` extension. Same frontmatter. Import components at the top of the body or use web component scripts inline:
+
+```mdx
+---
+title: "My Post"
+slug: my-post-slug
+lang: zh-tw
+...
+---
+
+<script type="module" src="https://cdn.example.com/my-component.js"></script>
+
+<my-component prop="value"></my-component>
+
+Rest of post in **Markdown**.
+```
+
+**Important MDX rules:**
+- Boolean HTML attributes must use bare syntax (e.g. `<my-component frame>` not `frame=true`)
+- JSX attribute syntax applies: string values need quotes, expressions need `{}`
+
+### Bilingual pairs
+
 For the English version, create a second file with the **same slug** but `lang: en`:
-- `my-post-slug.md` → `lang: zh-tw`, `slug: my-post-slug`
-- `my-post-slug.en.md` → `lang: en`, `slug: my-post-slug`
+
+| Format | zh-tw filename | en filename |
+|--------|---------------|-------------|
+| Markdown | `my-post-slug.md` | `my-post-slug-en.md` |
+| MDX | `my-post-slug.mdx` | `my-post-slug-en.mdx` |
+
+Both files use `slug: my-post-slug` in frontmatter → routes `/zh-tw/my-post-slug/` and `/en/my-post-slug/`.
 
 Pairs are auto-detected at build time by matching slugs across languages.
 No need to set `pair_slug` / `pair_lang` unless the slugs differ.
 
 ## Slug Convention (New Posts)
 - Use the **same slug** for both languages (e.g., `the-mom-test`)
-- Filename: `the-mom-test.md` (zh-tw), `the-mom-test.en.md` (en)
+- Filename: `the-mom-test.md` / `the-mom-test.mdx` (zh-tw), `the-mom-test-en.md` / `the-mom-test-en.mdx` (en)
 - Routes: `/zh-tw/the-mom-test/` and `/en/the-mom-test/`
 
 ## Slug Convention (Legacy / Migrated Posts)
@@ -107,19 +139,44 @@ There was also a secondary bug: `feature_image` paths like `/images/ghost/2025/0
 contain `---` mid-path, which tricked a naive frontmatter-stripping regex into stopping early,
 leaking frontmatter YAML into the rendered page.
 
-### The Solution (Raw File Read + set:html)
-Both `src/pages/zh-tw/[slug].astro` and `src/pages/en/[slug].astro` now:
-1. Read the raw `.md` file from disk using `readFileSync`
-2. Strip frontmatter with a line-aware regex: `/^---\n[\s\S]*?\n---\n?/`
-   (requires `---` on its own line, avoiding false matches mid-path)
-3. Pass the raw HTML body to `<Fragment set:html={htmlContent} />`
+### The Solution (Three Rendering Paths)
 
-This bypasses `render(post)` and Astro's Markdown pipeline entirely.
+`src/pages/[lang]/[slug].astro` (unified page for both languages) picks a rendering path at build time:
+
+**Path 1 — MDX** (new posts needing components):
+- Detected by `existsSync(mdxFile)` where `mdxFile` is `${slug}.mdx` (zh-tw) or `${slug}-en.mdx` (en)
+- Uses Astro's `render(post)` → `<Content />` (full MDX pipeline, JSX components work)
+
+**Path 2 — Markdown** (new plain text posts):
+- `.md` file body does NOT start with `<`
+- Processed through `marked` for standard Markdown → HTML conversion
+
+**Path 3 — Legacy Ghost HTML** (all 23 migrated posts):
+- `.md` file body starts with `<`
+- Read raw via `readFileSync`, bypasses Astro's remark/rehype pipeline entirely
+- Passed to `<Fragment set:html={htmlContent} />`
+
+Frontmatter is stripped with a line-aware regex `/^---\n[\s\S]*?\n---\n?/` (requires `---` on its own line, avoiding false matches in paths like `/images/ghost/2025/04/---3-1.webp`).
+
+### Collection ID Collision (Critical)
+
+The Astro glob loader derives a collection ID from the filename by stripping dots. `foo.mdx` and `foo.en.mdx` would both get ID `foo`, causing one to silently overwrite the other.
+
+**Fix in `content.config.ts`:** use `generateId` to derive the ID from frontmatter instead:
+```ts
+loader: glob({
+  pattern: "**/*.{md,mdx}",
+  base: "src/content/posts",
+  generateId: ({ data }) => `${data.lang}-${data.slug}`,
+}),
+```
+This guarantees uniqueness: `zh-tw-my-post-slug` vs `en-my-post-slug`.
 
 ### Writing New Posts
-Write the body in **pure Markdown**. The page routes auto-detect format:
-- Body starts with `<` → treated as raw HTML (all 23 migrated Ghost posts)
-- Body starts with anything else → processed through `marked` as Markdown (new posts)
+Write the body in **pure Markdown** (`.md`) or **MDX** (`.mdx`). The page route auto-detects:
+- `.mdx` file exists for the slug → MDX path (components, scripts, JSX)
+- Body starts with `<` → raw Ghost HTML path
+- Anything else → `marked()` Markdown path
 
 No frontmatter flag needed. Just write Markdown naturally:
 

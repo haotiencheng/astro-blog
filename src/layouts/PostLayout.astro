@@ -111,6 +111,15 @@ const articleJsonLd = {
       <img src="/images/logo.webp" alt="ReallyNiceDay" width="224" height="125" />
     </a>
     <p class="sticky-title">{title}</p>
+    <div class="sticky-right">
+      {pairUrl && (
+        <a href={pairUrl} class="sticky-lang-btn" title={pairLang === "en" ? "Read in English" : "閱讀中文版"}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span class="sticky-lang-full">{pairLang === "en" ? "Read in English" : "閱讀中文版"}</span>
+          <span class="sticky-lang-short">{pairLang === "en" ? "EN" : "中文"}</span>
+        </a>
+      )}
+    </div>
   </div>
 
   <!-- TOC sidebar — fixed left -->
@@ -449,9 +458,53 @@ const articleJsonLd = {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* leave room so logo doesn't overlap — mirror logo width on the right */
-    padding-right: calc(2rem * (224 / 125)); /* matches logo aspect ratio at h=2rem */
     margin: 0;
+    min-width: 0;
+  }
+
+  /* Right slot — mirrors logo side width so title stays visually centred */
+  .sticky-right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Same width as logo at h=2rem: 2rem × (224÷125) */
+    min-width: calc(2rem * (224 / 125));
+  }
+
+  .sticky-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+  }
+
+  .sticky-lang-btn:hover {
+    border-color: #9ca3af;
+    color: #374151;
+    background-color: #f9fafb;
+  }
+
+  /* Mobile: short label ("EN" / "中文") */
+  .sticky-lang-full { display: none; }
+  .sticky-lang-short { display: inline; }
+
+  /* sm+: full label ("Read in English" / "閱讀中文版") */
+  @media (min-width: 640px) {
+    .sticky-lang-full { display: inline; }
+    .sticky-lang-short { display: none; }
+    /* Expand right slot to fit full text without squeezing title */
+    .sticky-right {
+      min-width: auto;
+    }
   }
 
   /* Collapse H4 lists unless active */

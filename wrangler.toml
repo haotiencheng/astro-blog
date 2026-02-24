@@ -1,11 +1,13 @@
 name = "astro-blog"
+main = "dist/_worker.js/index.js"
 compatibility_date = "2026-02-11"
+compatibility_flags = ["nodejs_compat"]
 
 [assets]
+binding = "ASSETS"
 directory = "./dist"
 
 [[d1_databases]]
 binding = "astro_blog_db"
 database_name = "astro-blog-db"
 database_id = "3b557903-ca8d-4354-b1be-6e9b697ba861"
-

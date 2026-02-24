@@ -5,7 +5,7 @@ compatibility_date = "2026-02-11"
 directory = "./dist"
 
 [[d1_databases]]
-binding = "DB"
+binding = "astro_blog_db"
 database_name = "astro-blog-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "3b557903-ca8d-4354-b1be-6e9b697ba861"
 

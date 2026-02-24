@@ -84,6 +84,27 @@ const articleJsonLd = {
   mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   inLanguage: lang === "en" ? "en" : "zh-TW",
 };
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: lang === "en" ? "Home" : "首頁",
+      item: lang === "en" ? `${siteUrl}/en/` : siteUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: title,
+      item: canonicalUrl,
+    },
+  ],
+};
+
+const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh_TW" : null;
 ---
 
 <BaseLayout
@@ -99,7 +120,10 @@ const articleJsonLd = {
     <meta property="article:published_time" content={publishedAt} />
     {updatedAt && <meta property="article:modified_time" content={updatedAt} />}
     {tags.map((tag) => <meta property="article:tag" content={tag.name} />)}
+    <meta property="article:author" content="ReallyNiceDay" />
+    {alternateLocale && <meta property="og:locale:alternate" content={alternateLocale} />}
     <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
   </Fragment>
 
   <!-- Reading progress bar -->

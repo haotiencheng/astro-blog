@@ -42,11 +42,15 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
 
+    <meta name="author" content="ReallyNiceDay" />
+
     <!-- Open Graph -->
+    <meta property="og:site_name" content="ReallyNiceDay" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:locale" content={lang === "zh-tw" ? "zh_TW" : "en_US"} />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
 
@@ -55,6 +59,7 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={fullOgImage} />
+    <meta name="twitter:image:alt" content={title} />
 
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     {hreflangs?.map((h) => (

@@ -1,6 +1,20 @@
 ---
 import { readFileSync, existsSync } from "node:fs";
 import { marked } from "marked";
+
+// Add id attributes to headings so tocbot can link to them
+marked.use({
+  renderer: {
+    heading({ text, depth }: { text: string; depth: number }) {
+      const rawText = text.replace(/<[^>]+>/g, "");
+      const id = rawText
+        .toLowerCase()
+        .replace(/[^\w\u4e00-\u9fff]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      return `<h${depth} id="${id}">${text}</h${depth}>\n`;
+    },
+  },
+});
 import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
 

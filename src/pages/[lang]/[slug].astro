@@ -2,16 +2,22 @@
 import { readFileSync, existsSync } from "node:fs";
 import { marked } from "marked";
 
-// Add id attributes to headings so tocbot can link to them
+// Add id attributes to headings so tocbot can link to them.
+// text is raw inline markdown in marked v17, so we parseInline to render
+// inline code, bold, etc., and strip markdown syntax for the ID.
 marked.use({
   renderer: {
     heading({ text, depth }: { text: string; depth: number }) {
-      const rawText = text.replace(/<[^>]+>/g, "");
+      const rendered = marked.parseInline(text) as string;
+      const rawText = text
+        .replace(/`([^`]*)`/g, "$1")   // strip backtick code markers
+        .replace(/[*_~]/g, "")          // strip bold/italic/strike markers
+        .replace(/<[^>]+>/g, "");       // strip any remaining HTML
       const id = rawText
         .toLowerCase()
         .replace(/[^\w\u4e00-\u9fff]+/g, "-")
         .replace(/^-+|-+$/g, "");
-      return `<h${depth} id="${id}">${text}</h${depth}>\n`;
+      return `<h${depth} id="${id}">${rendered}</h${depth}>\n`;
     },
   },
 });

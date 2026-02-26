@@ -1,6 +1,30 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const TagEnum = z.enum([
+  "ai",
+  "automation",
+  "book-review",
+  "business",
+  "development",
+  "n8n",
+  "productivity",
+  "psychology",
+  "startup",
+]);
+
+const tagNames: Record<z.infer<typeof TagEnum>, string> = {
+  ai: "AI",
+  automation: "Automation",
+  "book-review": "Book Review",
+  business: "Business",
+  development: "Development",
+  n8n: "n8n",
+  productivity: "Productivity",
+  psychology: "Psychology",
+  startup: "Startup",
+};
+
 const posts = defineCollection({
   loader: glob({
     pattern: "**/*.{md,mdx}",
@@ -19,7 +43,15 @@ const posts = defineCollection({
     published_at: z.string(),
     updated_at: z.string(),
     created_at: z.string(),
-    tags: z.array(z.object({ name: z.string(), slug: z.string() })),
+    tags: z
+      .array(z.union([TagEnum, z.object({ name: z.string(), slug: TagEnum })]))
+      .transform((tags) =>
+        tags.map((tag) => {
+          const slug = typeof tag === "string" ? tag : tag.slug;
+          const name = typeof tag === "string" ? tagNames[slug] : tag.name;
+          return { slug, name };
+        }),
+      ),
     pair_slug: z.string().nullable(),
     pair_lang: z.enum(["zh-tw", "en"]).nullable(),
   }),

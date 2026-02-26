@@ -1,0 +1,58 @@
+---
+/**
+ * Bookmark card — auto-fetches OG metadata at build time via curl.
+ *
+ *   <Bookmark url="https://t.me/BotFather" />
+ *   <Bookmark url="https://t.me/BotFather" title="BotFather" caption="點擊使用" />
+ *
+ * Only `url` is required. Manual props override fetched values.
+ */
+
+import { fetchOG } from "../utils/og";
+
+interface Props {
+  url: string;
+  title?: string;
+  description?: string;
+  icon?: string;
+  author?: string;
+  thumbnail?: string;
+  caption?: string;
+}
+
+const { url, caption, ...overrides } = Astro.props;
+
+const fetched = overrides.title ? { url, title: overrides.title } : fetchOG(url);
+const { title, description, icon, author, thumbnail } = { ...fetched, ...overrides };
+
+const hostname = (() => {
+  try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return ""; }
+})();
+---
+
+<figure class:list={["kg-card", "kg-bookmark-card", caption && "kg-card-hascaption"]}>
+  <a class="kg-bookmark-container" href={url} target="_blank" rel="noopener noreferrer">
+    <div class="kg-bookmark-content">
+      <div class="kg-bookmark-title">{title}</div>
+      {description && (
+        <div class="kg-bookmark-description">{description}</div>
+      )}
+      <div class="kg-bookmark-metadata">
+        {icon && (
+          <img class="kg-bookmark-icon" src={icon} alt="" loading="lazy" />
+        )}
+        <span class="kg-bookmark-author">{author ?? hostname}</span>
+      </div>
+    </div>
+    {thumbnail && (
+      <div class="kg-bookmark-thumbnail">
+        <img src={thumbnail} alt="" onerror="this.style.display='none'" loading="lazy" />
+      </div>
+    )}
+  </a>
+  {caption && (
+    <figcaption>
+      <p><span style="white-space: pre-wrap;">{caption}</span></p>
+    </figcaption>
+  )}
+</figure>

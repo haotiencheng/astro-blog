@@ -1,7 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
 import { getThumbSrc, getReadingTime } from "../utils/postHelpers";
+import { resolvePostImage } from "../utils/images";
 import type { Lang, HomepageUI } from "../i18n/homepage";
 
 interface Props {
@@ -62,16 +64,28 @@ function formatCarouselDate(iso: string) {
       <div class="carousel-track" id="carousel-track">
         {carouselPosts.map((post, i) => {
           const img = post.data.feature_image;
-          const thumb = getThumbSrc(img);
+          const imgMeta = resolvePostImage(img);
           const tag = post.data.tags[0];
           return (
             <div class="carousel-slide">
               <a href={postUrl(post.data.slug)} class="slide-link">
                 <div class="slide-img-wrap">
-                  {img ? (
+                  {imgMeta ? (
+                    <Image
+                      src={imgMeta}
+                      alt={post.data.title}
+                      class="slide-img"
+                      width={480}
+                      height={270}
+                      widths={[240, 480, 960]}
+                      sizes="(min-width:768px) 33vw, 100vw"
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  ) : img ? (
                     <img
-                      src={thumb || img}
-                      srcset={thumb ? `${thumb} 480w, ${img} 960w` : undefined}
+                      src={getThumbSrc(img) || img}
+                      srcset={getThumbSrc(img) ? `${getThumbSrc(img)} 480w, ${img} 960w` : undefined}
                       sizes="(min-width:768px) 33vw, 100vw"
                       alt={post.data.title}
                       class="slide-img"
@@ -127,7 +141,7 @@ function formatCarouselDate(iso: string) {
     <div class="post-list" id="post-list">
       {allPosts.map((post) => {
         const img = post.data.feature_image;
-        const thumb = getThumbSrc(img);
+        const imgMeta = resolvePostImage(img);
         const tag = post.data.tags[0];
         const tagSlugs = post.data.tags.map((t) => t.slug).join(",");
         const d = new Date(post.data.published_at);
@@ -140,8 +154,10 @@ function formatCarouselDate(iso: string) {
               <span class="row-yr">{d.getFullYear()}</span>
             </div>
             <div class="row-thumb">
-              {img ? (
-                <img src={thumb || img} alt={post.data.title} width="96" height="54" loading="lazy" decoding="async" />
+              {imgMeta ? (
+                <Image src={imgMeta} alt={post.data.title} width={96} height={54} loading="lazy" decoding="async" />
+              ) : img ? (
+                <img src={getThumbSrc(img) || img} alt={post.data.title} width="96" height="54" loading="lazy" decoding="async" />
               ) : (
                 <div class="row-thumb-empty" />
               )}

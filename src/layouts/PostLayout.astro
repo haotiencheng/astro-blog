@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
+import { resolvePostImage } from "../utils/images";
 
 interface Props {
   title: string;
@@ -60,8 +62,12 @@ if (alternateUrl && pairLang) {
 const xDefaultUrl = lang === "zh-tw" ? canonicalUrl : (alternateUrl ?? canonicalUrl);
 hreflangs.push({ lang: "x-default", url: xDefaultUrl });
 
+// Resolve to ImageMetadata if the image lives in src/assets/posts/ (new posts).
+// Falls back to null for legacy ghost paths and remote URLs.
+const featureImageMeta = resolvePostImage(featureImage);
+
 const fullFeatureImage = featureImage
-  ? featureImage.startsWith("http") ? featureImage : `${siteUrl}${featureImage}`
+  ? featureImage.startsWith("http") ? featureImage : `${siteUrl}${featureImageMeta?.src ?? featureImage}`
   : undefined;
 
 const articleJsonLd = {
@@ -112,7 +118,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
 <BaseLayout
   title={`${title} | ReallyNiceDay`}
   description={excerpt}
-  ogImage={featureImage}
+  ogImage={featureImageMeta ? featureImageMeta.src : featureImage}
   ogType="article"
   lang={lang}
   canonicalUrl={canonicalUrl}
@@ -199,16 +205,45 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
 
       <!-- Feature image -->
       {featureImage && (
-        <img
-          src={featureImage}
-          alt={title}
-          class="w-full rounded-lg"
-          width="768"
-          height="432"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
+        featureImageMeta ? (
+          // New post image in src/assets/posts/ — fully optimized (resized, compressed, srcset)
+          <Image
+            src={featureImageMeta}
+            alt={title}
+            class="w-full rounded-lg"
+            widths={[480, 768, 1200]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 768px, 768px"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        ) : featureImage.startsWith("http") ? (
+          // Remote URL — no optimization
+          <img
+            src={featureImage}
+            alt={title}
+            class="w-full rounded-lg"
+            width="1200"
+            height="675"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        ) : (
+          // Legacy ghost path in public/ — correct markup, no recompression
+          <Image
+            src={featureImage}
+            alt={title}
+            class="w-full rounded-lg"
+            width={1200}
+            height={675}
+            widths={[480, 768, 1200]}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 768px, 768px"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        )
       )}
     </header>
 

@@ -287,8 +287,8 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
         : n >= 1_000   ? `${+(n / 1_000).toFixed(1)}K`
         : String(n);
       fetch(`/api/views/${slug}`, { method: 'POST' })
-        .then((r) => r.json())
-        .then(({ count }: { count: number }) => {
+        .then((r) => r.json() as Promise<{ count: number }>)
+        .then(({ count }) => {
           viewsEl.textContent = fmt(count);
         })
         .catch(() => {

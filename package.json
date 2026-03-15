@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "NODE_OPTIONS='--disable-warning=DEP0040' astro dev",
-    "deploy": "NODE_OPTIONS='--disable-warning=DEP0040' astro build && bunx wrangler deploy",
-    "build": "NODE_OPTIONS='--disable-warning=DEP0040' astro check && NODE_OPTIONS='--disable-warning=DEP0040' astro build",
+    "dev": "astro dev",
+    "deploy": "astro build && bunx wrangler deploy",
+    "build": "astro check && astro build",
     "preview": "bun wrangler pages dev ./dist",
     "astro": "astro"
   },

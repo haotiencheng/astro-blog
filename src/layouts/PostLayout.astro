@@ -157,9 +157,10 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     </div>
   </div>
 
-  <!-- TOC sidebar — fixed left -->
+  <!-- TOC + Related posts sidebar — fixed left -->
   <aside class="gh-sidebar">
     <div class="gh-toc"></div>
+    <RelatedPosts posts={relatedPosts} lang={lang} />
   </aside>
 
   <article class="mx-auto max-w-3xl px-4 py-8">
@@ -253,7 +254,6 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     <div class="gh-content prose md:prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">
       <slot />
     </div>
-    <RelatedPosts posts={relatedPosts} lang={lang} />
   </article>
 
   <!-- Giscus comments -->
@@ -361,7 +361,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
       (window as any).tocbot.init({
         tocSelector: '.gh-toc',
         contentSelector: '.gh-content',
-        headingSelector: 'h2, h3, h4',
+        headingSelector: 'h2',
         hasInnerContainers: true,
         headingsOffset: 60,
         scrollSmoothOffset: -60,
@@ -475,6 +475,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     display: none;
   }
 
+
   @media (min-width: 1280px) {
     .gh-sidebar {
       display: block;
@@ -485,6 +486,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
       max-height: calc(100vh - 6rem);
       overflow-y: auto;
     }
+
   }
 
   /* TOC — counter-based numbering: 1. / a. / i. */

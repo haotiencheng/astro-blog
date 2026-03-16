@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import HomepageLayout from "../../../layouts/HomepageLayout.astro";
+import { ui } from "../../../i18n/homepage";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+
+  const tagSlugs = new Set<string>();
+  for (const post of allPosts) {
+    for (const tag of post.data.tags) {
+      tagSlugs.add(tag.slug);
+    }
+  }
+
+  return Array.from(tagSlugs).map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const lang = "en" as const;
+const t = ui[lang];
+
+const allPosts = await getCollection("posts");
+const langPosts = allPosts
+  .filter((p) => p.data.lang === lang && p.data.tags.some((t) => t.slug === slug))
+  .sort((a, b) => new Date(b.data.published_at).getTime() - new Date(a.data.published_at).getTime());
+
+const featured = langPosts.filter((p) => p.data.featured);
+const carouselPosts = featured.length > 0 ? featured : langPosts.slice(0, 3);
+
+const tagMap = new Map<string, string>();
+for (const p of langPosts) for (const tag of p.data.tags) tagMap.set(tag.slug, tag.name);
+const allTags = Array.from(tagMap.entries()).map(([s, name]) => ({ slug: s, name }));
+
+const siteUrl = "https://reallyniceday.com";
+---
+
+<HomepageLayout
+  lang={lang}
+  carouselPosts={carouselPosts}
+  allPosts={langPosts}
+  allTags={allTags}
+  t={t}
+  canonicalUrl={`${siteUrl}/en/tag/${slug}/`}
+/>

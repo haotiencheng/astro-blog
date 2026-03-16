@@ -1,5 +1,4 @@
 ---
-import { readFileSync, existsSync } from "node:fs";
 import { marked } from "marked";
 
 // Add id attributes to headings so tocbot can link to them.
@@ -23,6 +22,12 @@ marked.use({
 });
 import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
+
+// Detect MDX files at build time via Vite — no runtime fs needed
+const mdxFiles = new Set(
+  Object.keys(import.meta.glob("/src/content/posts/**/*.mdx"))
+    .map((p) => p.replace("/src/content/posts/", "").replace(".mdx", "")),
+);
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -57,8 +62,23 @@ const { post, pairSlug, pairLang } = Astro.props;
 const { title, excerpt, feature_image, published_at, updated_at, tags, lang } = post.data;
 const { slug } = post.data;
 
-const mdxFile = `src/content/posts/${lang}/${slug}.mdx`;
-const isMdx = existsSync(mdxFile);
+// Related posts: same language, share at least one tag, exclude current post
+const allPosts = await getCollection("posts");
+const currentTagSlugs = new Set(tags.map((t: { slug: string }) => t.slug));
+const relatedPosts = allPosts
+  .filter((p) => p.data.lang === lang && p.data.slug !== slug)
+  .map((p) => ({
+    post: p,
+    score: p.data.tags.filter((t) => currentTagSlugs.has(t.slug)).length,
+  }))
+  .filter((p) => p.score > 0)
+  .sort((a, b) => b.score - a.score || new Date(b.post.data.published_at).getTime() - new Date(a.post.data.published_at).getTime())
+  .slice(0, 3)
+  .map((p) => p.post);
+
+// Use post.body from content collection — no readFileSync needed
+const body = (post.body ?? "").trim();
+const isMdx = mdxFiles.has(`${lang}/${slug}`);
 
 let Content: any = null;
 let htmlContent = "";
@@ -67,16 +87,11 @@ let readingTime = 1;
 if (isMdx) {
   const rendered = await render(post);
   Content = rendered.Content;
-  const raw = readFileSync(mdxFile, "utf-8");
-  const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
   const text = body.replace(/<[^>]+>/g, " ").replace(/[#*`_[\]()!]/g, " ").replace(/\s+/g, " ").trim();
   readingTime = lang === "zh-tw"
     ? Math.max(1, Math.round(text.length / 300))
     : Math.max(1, Math.round(text.split(" ").length / 200));
 } else {
-  // Read raw file to bypass Astro's Markdown pipeline that corrupts Ghost HTML
-  const raw = readFileSync(`src/content/posts/${lang}/${slug}.md`, "utf-8");
-  const body = raw.replace(/^---\n[\s\S]*?\n---\n?/, "").trim();
   // Auto-detect: Ghost-migrated posts start with "<" (raw HTML); new posts use Markdown
   const rawHtml = body.startsWith("<") ? body : await marked(body);
   // Demote H1 tags in the content body to H2 — the page <h1> is the post title
@@ -100,6 +115,7 @@ if (isMdx) {
   pairSlug={pairSlug}
   pairLang={pairLang}
   readingTime={readingTime}
+  relatedPosts={relatedPosts}
 >
   {isMdx ? <Content /> : <Fragment set:html={htmlContent} />}
 </PostLayout>

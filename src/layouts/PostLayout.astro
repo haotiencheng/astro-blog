@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
+import RelatedPosts from "../components/RelatedPosts.astro";
 import { resolvePostImage } from "../utils/images";
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
   pairSlug: string | null;
   pairLang: "zh-tw" | "en" | null;
   readingTime: number;
+  relatedPosts: CollectionEntry<"posts">[];
 }
 
 const {
@@ -29,6 +32,7 @@ const {
   pairSlug,
   pairLang,
   readingTime,
+  relatedPosts,
 } = Astro.props;
 
 const date = new Date(publishedAt);
@@ -43,8 +47,7 @@ const pairUrl = pairSlug
     : `/zh-tw/${pairSlug}/`
   : null;
 
-const homeUrl = lang === "en" ? "/en/" : "/";
-const tagHomeUrl = (tagSlug: string) => `${homeUrl}?tag=${tagSlug}`;
+const tagHomeUrl = (tagSlug: string) => lang === "en" ? `/en/tag/${tagSlug}/` : `/tag/${tagSlug}/`;
 
 const siteUrl = "https://reallyniceday.com";
 const canonicalUrl = lang === "en"
@@ -250,6 +253,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     <div class="gh-content prose md:prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 prose-headings:font-bold">
       <slot />
     </div>
+    <RelatedPosts posts={relatedPosts} lang={lang} />
   </article>
 
   <!-- Giscus comments -->

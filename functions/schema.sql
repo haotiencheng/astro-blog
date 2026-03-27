@@ -2,3 +2,9 @@ CREATE TABLE IF NOT EXISTS views (
   slug TEXT PRIMARY KEY,
   count INTEGER NOT NULL DEFAULT 0
 );
+
+CREATE TABLE IF NOT EXISTS shares (
+  id TEXT PRIMARY KEY,
+  markdown TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);

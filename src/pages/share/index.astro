@@ -53,18 +53,28 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         &larr; Edit
       </button>
       <button
-        id="btn-share-from-render"
-        class="px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+        id="btn-copy-render"
+        class="px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm hidden"
       >
         Copy Link
       </button>
     </div>
     <article id="rendered-content" class="prose prose-lg max-w-none gh-content"></article>
   </div>
+
+  <!-- Loading state -->
+  <div id="loading-view" class="mx-auto max-w-3xl px-4 py-20 text-center hidden">
+    <p class="text-gray-500">Loading...</p>
+  </div>
+
+  <!-- Not found state -->
+  <div id="notfound-view" class="mx-auto max-w-3xl px-4 py-20 text-center hidden">
+    <p class="text-gray-500">Share not found.</p>
+    <a href="/share/" class="text-sm text-gray-900 underline mt-2 inline-block">Create a new one</a>
+  </div>
 </BaseLayout>
 
 <script>
-  import lzstring from "lz-string";
   import { marked } from "marked";
 
   marked.use({
@@ -86,55 +96,60 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   const editorView = document.getElementById("editor-view")!;
   const renderView = document.getElementById("render-view")!;
+  const loadingView = document.getElementById("loading-view")!;
+  const notfoundView = document.getElementById("notfound-view")!;
   const mdInput = document.getElementById("md-input") as HTMLTextAreaElement;
   const renderedContent = document.getElementById("rendered-content")!;
   const shareResult = document.getElementById("share-result")!;
   const shareUrl = document.getElementById("share-url") as HTMLInputElement;
+  const btnCopyRender = document.getElementById("btn-copy-render")!;
 
-  function encode(text: string): string {
-    return lzstring.compressToEncodedURIComponent(text);
-  }
-
-  function decode(compressed: string): string | null {
-    return lzstring.decompressFromEncodedURIComponent(compressed);
-  }
+  let currentShareId: string | null = null;
 
   function renderMarkdown(md: string) {
     renderedContent.innerHTML = marked(md) as string;
   }
 
-  function showEditor() {
-    editorView.classList.remove("hidden");
-    renderView.classList.add("hidden");
-  }
-
-  function showRender() {
-    editorView.classList.add("hidden");
-    renderView.classList.remove("hidden");
-  }
-
-  function getShareLink(): string {
-    const compressed = encode(mdInput.value);
-    return `${window.location.origin}/share/#${compressed}`;
+  function showView(view: "editor" | "render" | "loading" | "notfound") {
+    editorView.classList.toggle("hidden", view !== "editor");
+    renderView.classList.toggle("hidden", view !== "render");
+    loadingView.classList.toggle("hidden", view !== "loading");
+    notfoundView.classList.toggle("hidden", view !== "notfound");
   }
 
   // Preview button
   document.getElementById("btn-preview")!.addEventListener("click", () => {
     if (!mdInput.value.trim()) return;
     renderMarkdown(mdInput.value);
-    showRender();
+    btnCopyRender.classList.add("hidden");
+    showView("render");
   });
 
   // Generate share link
-  document.getElementById("btn-share")!.addEventListener("click", () => {
+  document.getElementById("btn-share")!.addEventListener("click", async (e) => {
     if (!mdInput.value.trim()) return;
-    const link = getShareLink();
-    shareUrl.value = link;
-    shareResult.classList.remove("hidden");
-    window.history.replaceState(null, "", `/share/#${encode(mdInput.value)}`);
+    const btn = e.target as HTMLButtonElement;
+    btn.textContent = "Saving...";
+    btn.disabled = true;
+
+    try {
+      const res = await fetch("/api/shares", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markdown: mdInput.value }),
+      });
+      const data = await res.json() as { id: string };
+      currentShareId = data.id;
+      const link = `${window.location.origin}/s/${data.id}`;
+      shareUrl.value = link;
+      shareResult.classList.remove("hidden");
+    } finally {
+      btn.textContent = "Generate Share Link";
+      btn.disabled = false;
+    }
   });
 
-  // Copy link
+  // Copy link buttons
   document.getElementById("btn-copy")!.addEventListener("click", (e) => {
     navigator.clipboard.writeText(shareUrl.value);
     const btn = e.target as HTMLButtonElement;
@@ -142,9 +157,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     setTimeout(() => (btn.textContent = "Copy"), 1500);
   });
 
-  // Copy link from render view
-  document.getElementById("btn-share-from-render")!.addEventListener("click", (e) => {
-    const link = getShareLink();
+  btnCopyRender.addEventListener("click", (e) => {
+    if (!currentShareId) return;
+    const link = `${window.location.origin}/s/${currentShareId}`;
     navigator.clipboard.writeText(link);
     const btn = e.target as HTMLButtonElement;
     btn.textContent = "Copied!";
@@ -153,17 +168,29 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   // Back to edit
   document.getElementById("btn-edit")!.addEventListener("click", () => {
-    showEditor();
+    showView("editor");
   });
 
-  // On load: if hash exists, decode and render
-  const hash = window.location.hash.slice(1);
-  if (hash) {
-    const md = decode(hash);
-    if (md) {
-      mdInput.value = md;
-      renderMarkdown(md);
-      showRender();
-    }
+  // On load: check for ?id= param (redirected from /s/[id])
+  const params = new URLSearchParams(window.location.search);
+  const shareId = params.get("id");
+
+  if (shareId) {
+    showView("loading");
+    fetch(`/api/shares/${shareId}`)
+      .then((r) => {
+        if (!r.ok) throw new Error("not found");
+        return r.json() as Promise<{ markdown: string }>;
+      })
+      .then(({ markdown }) => {
+        currentShareId = shareId;
+        mdInput.value = markdown;
+        renderMarkdown(markdown);
+        btnCopyRender.classList.remove("hidden");
+        showView("render");
+      })
+      .catch(() => {
+        showView("notfound");
+      });
   }
 </script>

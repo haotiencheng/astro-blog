@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Share" noindex={true}>
+  <!-- Editor view -->
+  <div id="editor-view" class="mx-auto max-w-3xl px-4 py-10">
+    <h1 class="text-2xl font-bold mb-6">Share Markdown</h1>
+    <textarea
+      id="md-input"
+      class="w-full h-[60vh] p-4 border border-gray-300 rounded-lg font-mono text-sm resize-y focus:outline-none focus:ring-2 focus:ring-gray-400"
+      placeholder="Paste your markdown here..."
+    ></textarea>
+    <div class="mt-4 flex gap-3">
+      <button
+        id="btn-preview"
+        class="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+      >
+        Preview
+      </button>
+      <button
+        id="btn-share"
+        class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+      >
+        Generate Share Link
+      </button>
+    </div>
+    <div id="share-result" class="mt-4 hidden">
+      <div class="flex items-center gap-2">
+        <input
+          id="share-url"
+          type="text"
+          readonly
+          class="flex-1 p-2 border border-gray-300 rounded-lg text-sm bg-gray-50"
+        />
+        <button
+          id="btn-copy"
+          class="px-3 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm whitespace-nowrap"
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rendered view -->
+  <div id="render-view" class="mx-auto max-w-3xl px-4 py-10 hidden">
+    <div class="mb-6 flex items-center gap-3">
+      <button
+        id="btn-edit"
+        class="px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+      >
+        &larr; Edit
+      </button>
+      <button
+        id="btn-share-from-render"
+        class="px-3 py-1.5 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors text-sm"
+      >
+        Copy Link
+      </button>
+    </div>
+    <article id="rendered-content" class="prose prose-lg max-w-none gh-content"></article>
+  </div>
+</BaseLayout>
+
+<script>
+  import lzstring from "lz-string";
+  import { marked } from "marked";
+
+  marked.use({
+    renderer: {
+      heading({ text, depth }: { text: string; depth: number }) {
+        const rendered = marked.parseInline(text) as string;
+        const rawText = text
+          .replace(/`([^`]*)`/g, "$1")
+          .replace(/[*_~]/g, "")
+          .replace(/<[^>]+>/g, "");
+        const id = rawText
+          .toLowerCase()
+          .replace(/[^\w\u4e00-\u9fff]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+        return `<h${depth} id="${id}">${rendered}</h${depth}>\n`;
+      },
+    },
+  });
+
+  const editorView = document.getElementById("editor-view")!;
+  const renderView = document.getElementById("render-view")!;
+  const mdInput = document.getElementById("md-input") as HTMLTextAreaElement;
+  const renderedContent = document.getElementById("rendered-content")!;
+  const shareResult = document.getElementById("share-result")!;
+  const shareUrl = document.getElementById("share-url") as HTMLInputElement;
+
+  function encode(text: string): string {
+    return lzstring.compressToEncodedURIComponent(text);
+  }
+
+  function decode(compressed: string): string | null {
+    return lzstring.decompressFromEncodedURIComponent(compressed);
+  }
+
+  function renderMarkdown(md: string) {
+    renderedContent.innerHTML = marked(md) as string;
+  }
+
+  function showEditor() {
+    editorView.classList.remove("hidden");
+    renderView.classList.add("hidden");
+  }
+
+  function showRender() {
+    editorView.classList.add("hidden");
+    renderView.classList.remove("hidden");
+  }
+
+  function getShareLink(): string {
+    const compressed = encode(mdInput.value);
+    return `${window.location.origin}/share/#${compressed}`;
+  }
+
+  // Preview button
+  document.getElementById("btn-preview")!.addEventListener("click", () => {
+    if (!mdInput.value.trim()) return;
+    renderMarkdown(mdInput.value);
+    showRender();
+  });
+
+  // Generate share link
+  document.getElementById("btn-share")!.addEventListener("click", () => {
+    if (!mdInput.value.trim()) return;
+    const link = getShareLink();
+    shareUrl.value = link;
+    shareResult.classList.remove("hidden");
+    window.history.replaceState(null, "", `/share/#${encode(mdInput.value)}`);
+  });
+
+  // Copy link
+  document.getElementById("btn-copy")!.addEventListener("click", (e) => {
+    navigator.clipboard.writeText(shareUrl.value);
+    const btn = e.target as HTMLButtonElement;
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = "Copy"), 1500);
+  });
+
+  // Copy link from render view
+  document.getElementById("btn-share-from-render")!.addEventListener("click", (e) => {
+    const link = getShareLink();
+    navigator.clipboard.writeText(link);
+    const btn = e.target as HTMLButtonElement;
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = "Copy Link"), 1500);
+  });
+
+  // Back to edit
+  document.getElementById("btn-edit")!.addEventListener("click", () => {
+    showEditor();
+  });
+
+  // On load: if hash exists, decode and render
+  const hash = window.location.hash.slice(1);
+  if (hash) {
+    const md = decode(hash);
+    if (md) {
+      mdInput.value = md;
+      renderMarkdown(md);
+      showRender();
+    }
+  }
+</script>

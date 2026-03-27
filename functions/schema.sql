@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS views (
 
 CREATE TABLE IF NOT EXISTS shares (
   id TEXT PRIMARY KEY,
+  title TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '',
   markdown TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

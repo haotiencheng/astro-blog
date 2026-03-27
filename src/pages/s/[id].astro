@@ -1,5 +1,63 @@
 ---
 export const prerender = false;
 
-return Astro.redirect(`/share/?id=${Astro.params.id}`);
+import { marked } from "marked";
+import { env } from "cloudflare:workers";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+marked.use({
+  renderer: {
+    heading({ text, depth }: { text: string; depth: number }) {
+      const rendered = marked.parseInline(text) as string;
+      const rawText = text
+        .replace(/`([^`]*)`/g, "$1")
+        .replace(/[*_~]/g, "")
+        .replace(/<[^>]+>/g, "");
+      const id = rawText
+        .toLowerCase()
+        .replace(/[^\w\u4e00-\u9fff]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+      return `<h${depth} id="${id}">${rendered}</h${depth}>\n`;
+    },
+  },
+});
+
+const { id } = Astro.params;
+const db = (env as { astro_blog_db: D1Database }).astro_blog_db;
+
+const row = await db
+  .prepare("SELECT title, description, markdown, created_at FROM shares WHERE id = ?")
+  .bind(id)
+  .first<{ title: string; description: string; markdown: string; created_at: string }>();
+
+if (!row) {
+  return Astro.redirect("/share/");
+}
+
+const title = row.title || "Shared Page";
+const description = row.description || "";
+const htmlContent = (await marked(row.markdown))
+  .replace(/<h1(\s|>)/gi, "<h2$1")
+  .replace(/<\/h1>/gi, "</h2>");
 ---
+
+<BaseLayout
+  title={title}
+  description={description || title}
+  noindex={true}
+  canonicalUrl={`https://reallyniceday.com/s/${id}/`}
+>
+  <article class="mx-auto max-w-3xl px-4 py-10">
+    {row.title && (
+      <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">{row.title}</h1>
+        {row.description && (
+          <p class="mt-2 text-gray-500">{row.description}</p>
+        )}
+      </header>
+    )}
+    <div class="prose prose-lg max-w-none gh-content">
+      <Fragment set:html={htmlContent} />
+    </div>
+  </article>
+</BaseLayout>

@@ -8,13 +8,13 @@ export const GET: APIRoute = async ({ params }) => {
   const db = (env as { astro_blog_db: D1Database }).astro_blog_db;
 
   const row = await db
-    .prepare("SELECT markdown, created_at FROM shares WHERE id = ?")
+    .prepare("SELECT title, description, markdown, created_at FROM shares WHERE id = ?")
     .bind(id)
-    .first<{ markdown: string; created_at: string }>();
+    .first<{ title: string; description: string; markdown: string; created_at: string }>();
 
   if (!row) {
     return Response.json({ error: "not found" }, { status: 404 });
   }
 
-  return Response.json({ markdown: row.markdown, created_at: row.created_at });
+  return Response.json(row);
 };

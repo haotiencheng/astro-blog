@@ -9,18 +9,32 @@ function generateId(length = 8): string {
   return Array.from(bytes, (b) => chars[b % chars.length]).join("");
 }
 
+export const GET: APIRoute = async () => {
+  const db = (env as { astro_blog_db: D1Database }).astro_blog_db;
+  const { results } = await db
+    .prepare("SELECT id, title, description, created_at FROM shares ORDER BY created_at DESC")
+    .all<{ id: string; title: string; description: string; created_at: string }>();
+  return Response.json(results);
+};
+
 export const POST: APIRoute = async ({ request }) => {
-  const body = await request.json().catch(() => null) as { markdown?: string } | null;
+  const body = await request.json().catch(() => null) as {
+    markdown?: string;
+    title?: string;
+    description?: string;
+  } | null;
   if (!body || typeof body.markdown !== "string" || !body.markdown.trim()) {
     return Response.json({ error: "markdown is required" }, { status: 400 });
   }
 
   const db = (env as { astro_blog_db: D1Database }).astro_blog_db;
   const id = generateId();
+  const title = body.title?.trim() || "";
+  const description = body.description?.trim() || "";
 
   await db
-    .prepare("INSERT INTO shares (id, markdown) VALUES (?, ?)")
-    .bind(id, body.markdown)
+    .prepare("INSERT INTO shares (id, title, description, markdown) VALUES (?, ?, ?, ?)")
+    .bind(id, title, description, body.markdown)
     .run();
 
   return Response.json({ id });

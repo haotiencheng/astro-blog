@@ -7,6 +7,7 @@
     "deploy": "astro build && bunx wrangler deploy",
     "build": "astro check && astro build",
     "preview": "bun wrangler pages dev ./dist",
+    "preview:remote": "astro build && wrangler dev --remote",
     "astro": "astro"
   },
   "dependencies": {

@@ -686,6 +686,28 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     max-height: 999px;
   }
 
+  /* ── Tables: horizontal scroll on mobile ────────────────── */
+  :global(.gh-content table) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  :global(.gh-content table th),
+  :global(.gh-content table td) {
+    white-space: normal;
+    min-width: 8rem;
+  }
+
+  @media (min-width: 768px) {
+    :global(.gh-content table) {
+      display: table;
+      overflow-x: visible;
+      white-space: normal;
+    }
+  }
+
   /* ── Code block: hover overlay (no header bar) ────────────── */
   :global(.code-block-wrapper) {
     position: relative;

@@ -350,4 +350,28 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
     font-style: italic;
     color: #6b7280;
   }
+
+  /* Tables: horizontal scroll on mobile */
+  .gh-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gh-content table th,
+  .gh-content table td {
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .gh-content table {
+      display: table;
+      overflow-x: visible;
+    }
+
+    .gh-content table th,
+    .gh-content table td {
+      white-space: normal;
+    }
+  }
 </style>

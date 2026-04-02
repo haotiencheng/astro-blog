@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "deploy": "astro build && bunx wrangler deploy",
     "build": "astro check && astro build",
-    "preview": "bun wrangler pages dev ./dist",
+    "preview": "bun run build && bun wrangler dev",
+    "db:init": "bun wrangler d1 execute astro-blog-db --local --file=functions/schema.sql",
     "preview:remote": "astro build && wrangler dev --remote",
     "astro": "astro"
   },
@@ -20,7 +21,8 @@
     "astro": "6.0.4",
     "marked": "^17.0.3",
     "tailwindcss": "^3.4.19",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.79.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260313.1"

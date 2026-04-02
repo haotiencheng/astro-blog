@@ -133,8 +133,8 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     {tags.map((tag) => <meta property="article:tag" content={tag.name} />)}
     <meta property="article:author" content="ReallyNiceDay" />
     {alternateLocale && <meta property="og:locale:alternate" content={alternateLocale} />}
-    <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
   </Fragment>
 
   <!-- Reading progress bar -->
@@ -258,7 +258,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
 
   <!-- Giscus comments -->
   <div class="mx-auto max-w-3xl px-4 pb-16">
-    <script src="https://giscus.app/client.js"
+    <script is:inline src="https://giscus.app/client.js"
       data-repo="haotiencheng/astro-blog"
       data-repo-id="R_kgDORN9Mww"
       data-category="Announcements"
@@ -453,7 +453,7 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
             iframe.src = src;
             iframe.width = '100%';
             iframe.height = isTrack ? '152' : '352';
-            iframe.frameBorder = '0';
+            iframe.style.border = 'none';
             iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
             iframe.loading = 'lazy';
             iframe.style.borderRadius = '12px';

@@ -39,7 +39,7 @@ function formatCarouselDate(iso: string) {
 
 <BaseLayout title="ReallyNiceDay" lang={lang} canonicalUrl={canonicalUrl} hreflangs={hreflangs}>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: "ReallyNiceDay",

@@ -6,6 +6,10 @@ compatibility_flags = ["nodejs_compat"]
 binding = "ASSETS"
 directory = "./dist"
 
+[[kv_namespaces]]
+binding = "SESSION"
+id = "f270b57c003e4f61b145151d4bc8dee3"
+
 [[d1_databases]]
 binding = "astro_blog_db"
 database_name = "astro-blog-db"

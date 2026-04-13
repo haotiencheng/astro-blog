@@ -11,6 +11,7 @@ const TagEnum = z.enum([
   "n8n",
   "productivity",
   "psychology",
+  "social-media",
   "startup",
 ]);
 
@@ -23,6 +24,7 @@ const tagNames: Record<z.infer<typeof TagEnum>, string> = {
   n8n: "n8n",
   productivity: "Productivity",
   psychology: "Psychology",
+  "social-media": "Social Media",
   startup: "Startup",
 };
 

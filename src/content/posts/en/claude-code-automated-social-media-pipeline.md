@@ -61,6 +61,8 @@ I broke it down into four stages:
 
 I still manually curate from Facebook groups and other channels — picking only high-quality positions. The automated part notifies me each morning which positions are open, but I decide which ones to run through the pipeline.
 
+![Picking a job posting from a Facebook group and triggering slide generation with a slash command](/assets/posts/claude-code-automated-social-media-pipeline/fb-job-post-example.png)
+
 This is intentional: **I control the quality gate at the input. Everything after that is fully automated.**
 
 ### Stage 2: Data Validation
@@ -68,6 +70,8 @@ This is intentional: **I control the quality gate at the input. Everything after
 This step matters more than people think, and most content creators skip it entirely.
 
 Once Claude Code has the job info, it automatically cross-references against authoritative sources — the company's official site, major job boards, etc. — to verify salary ranges, job descriptions, and company details.
+
+![Claude Code validation output: claim-by-claim source check, flagging fields that couldn't be independently verified](/assets/posts/claude-code-automated-social-media-pipeline/validation-example.png)
 
 Why bother? Because if you share wrong info even once, your audience remembers you as unreliable. Validation takes almost no extra time, but saves you from trust crises down the road.
 
@@ -81,6 +85,8 @@ For slides, I ditched Gamma entirely and switched to **Marp CLI** — a Markdown
 
 Company logos? Also automatic — Claude Code fetches them and places them into the slides.
 
+![Slide generation pipeline: logo fetch, background template, QR code, Marp render, R2 upload — inputs, outputs, and tools per stage](/assets/posts/claude-code-automated-social-media-pipeline/slide-pipeline.png)
+
 Here's an actual post produced by the pipeline — slides and copy fully auto-generated:
 
 ![Example Threads post produced by the pipeline — UNIQLO 2026 UMC program](/assets/posts/claude-code-automated-social-media-pipeline/threads-example.png)
@@ -88,6 +94,8 @@ Here's an actual post produced by the pipeline — slides and copy fully auto-ge
 ### Stage 4: Publishing
 
 I use **Buffer** with **MCP (Model Context Protocol)**.
+
+![Claude Code calling Buffer MCP's create_post directly — passing copy, image URLs, and scheduled time](/assets/posts/claude-code-automated-social-media-pipeline/buffer-mcp-example.png)
 
 The benefits:
 
@@ -110,9 +118,7 @@ The subpost automatically attaches a link to that page, right below the main pos
 
 Here's what the actual subposts look like — AI mock interview and deep-dive analysis, both auto-generated:
 
-![Subpost: AI mock interview practice](/assets/posts/claude-code-automated-social-media-pipeline/subpost-mock-interview.png)
-
-![Subpost: job deep-dive analysis](/assets/posts/claude-code-automated-social-media-pipeline/subpost-deep-analysis.png)
+![Subposts: AI mock interview and job deep-dive analysis, auto-threaded under the main post](/assets/posts/claude-code-automated-social-media-pipeline/subposts-combined.png)
 
 This approach drove **3,300 users from Threads to my site in a single month**. Every post isn't just reach — it's direct traffic to the product.
 

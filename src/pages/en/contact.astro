@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactForm from "../../components/ContactForm.astro";
+---
+
+<BaseLayout
+  title="Contact | ReallyNiceDay"
+  description="Need help with AI automation, workflow optimization, or building with AI tools? Get in touch."
+  lang="en"
+  canonicalUrl="https://reallyniceday.com/en/contact/"
+  hreflangs={[
+    { lang: "zh-Hant-TW", url: "https://reallyniceday.com/contact/" },
+    { lang: "en", url: "https://reallyniceday.com/en/contact/" },
+  ]}
+  langSwitchUrl="/contact/"
+>
+  <ContactForm lang="en" />
+</BaseLayout>

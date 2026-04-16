@@ -1,0 +1,199 @@
+---
+interface Props {
+  lang: "zh-tw" | "en";
+}
+
+const { lang } = Astro.props;
+const isEn = lang === "en";
+
+const t = {
+  title: isEn ? "Get in Touch" : "與我聯繫",
+  subtitle: isEn
+    ? "Need help with AI automation, workflow optimization, or building with AI tools? Leave your info and question below — I'll get back to you by email within a day."
+    : "需要 AI 自動化、工作流程優化，或是用 AI 工具打造產品方面的協助？ 留下你的資訊和問題，我會在一天內透過 email 回覆你。",
+  name: isEn ? "Name" : "姓名",
+  namePlaceholder: isEn ? "Your name" : "你的名字",
+  nameError: isEn ? "Please enter your name" : "請輸入姓名",
+  email: "Email",
+  emailPlaceholder: "you@example.com",
+  emailEmptyError: isEn ? "Please enter your email" : "請輸入 email 地址",
+  emailInvalidError: isEn ? "Please enter a valid email address" : "請輸入有效的 email 地址",
+  message: isEn ? "How can I help?" : "有什麼我能幫忙的？",
+  messagePlaceholder: isEn
+    ? "Describe your project or question — e.g. automating social media, building AI workflows, integrating Claude into your app..."
+    : "描述你的專案或問題 — 例如自動化社群媒體發文、建立 AI 工作流程、將 Claude 整合到你的應用中...",
+  messageError: isEn ? "Please describe your question or project" : "請輸入你的問題或需求",
+  submit: isEn ? "Send Message" : "送出訊息",
+  sending: isEn ? "Sending..." : "送出中...",
+  success: isEn ? "Thanks for reaching out! I'll get back to you within a day." : "感謝你的來信！我會在一天內回覆你。",
+  genericError: isEn ? "Failed to send. Please try again." : "送出失敗，請再試一次。",
+};
+
+const inputClass = "w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-900 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 outline-none transition-colors";
+---
+
+<div class="mx-auto max-w-3xl px-4 py-12">
+  <h1 class="text-3xl font-bold mb-2">{t.title}</h1>
+  <p class="text-gray-600 mb-8">{t.subtitle}</p>
+
+  <form id="contact-form" class="space-y-5" novalidate
+    data-sending={t.sending}
+    data-default={t.submit}
+    data-email-empty={t.emailEmptyError}
+    data-email-invalid={t.emailInvalidError}
+    data-generic-error={t.genericError}
+  >
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+        {t.name} <span class="text-red-500">*</span>
+      </label>
+      <input type="text" id="name" name="name" required class={inputClass} placeholder={t.namePlaceholder} />
+      <p class="field-error mt-1 text-sm text-red-600 hidden" data-field="name">{t.nameError}</p>
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+        {t.email} <span class="text-red-500">*</span>
+      </label>
+      <input type="email" id="email" name="email" required class={inputClass} placeholder={t.emailPlaceholder} />
+      <p class="field-error mt-1 text-sm text-red-600 hidden" data-field="email">{t.emailInvalidError}</p>
+    </div>
+
+    <div>
+      <label for="message" class="block text-sm font-medium text-gray-700 mb-1">
+        {t.message} <span class="text-red-500">*</span>
+      </label>
+      <textarea id="message" name="message" required rows="5" class={`${inputClass} resize-y`} placeholder={t.messagePlaceholder}></textarea>
+      <p class="field-error mt-1 text-sm text-red-600 hidden" data-field="message">{t.messageError}</p>
+    </div>
+
+    <button
+      type="submit"
+      class="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-6 py-2.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span id="btn-text">{t.submit}</span>
+      <svg id="btn-spinner" class="hidden animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+    </button>
+  </form>
+
+  <div id="success-msg" class="hidden mt-6 rounded-lg bg-green-50 border border-green-200 p-4 text-green-800">
+    {t.success}
+  </div>
+
+  <div id="error-msg" class="hidden mt-6 rounded-lg bg-red-50 border border-red-200 p-4 text-red-800">
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const btnText = document.getElementById("btn-text")!;
+  const btnSpinner = document.getElementById("btn-spinner")!;
+  const successMsg = document.getElementById("success-msg")!;
+  const errorMsg = document.getElementById("error-msg")!;
+  const submitBtn = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+  const sendingText = form.dataset.sending!;
+  const defaultText = form.dataset.default!;
+  const emailEmptyMsg = form.dataset.emailEmpty!;
+  const emailInvalidMsg = form.dataset.emailInvalid!;
+  const genericError = form.dataset.genericError!;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const errorBorder = "border-red-500 focus:border-red-500 focus:ring-red-500";
+  const normalBorder = "border-gray-300 focus:border-gray-900 focus:ring-gray-900";
+
+  function setFieldError(field: HTMLInputElement | HTMLTextAreaElement, show: boolean, msg?: string) {
+    const errorEl = form.querySelector(`.field-error[data-field="${field.name}"]`) as HTMLElement;
+    if (show) {
+      field.classList.remove(...normalBorder.split(" "));
+      field.classList.add(...errorBorder.split(" "));
+      if (msg) errorEl.textContent = msg;
+      errorEl.classList.remove("hidden");
+    } else {
+      field.classList.remove(...errorBorder.split(" "));
+      field.classList.add(...normalBorder.split(" "));
+      errorEl.classList.add("hidden");
+    }
+  }
+
+  function validate(): boolean {
+    const nameEl = form.elements.namedItem("name") as HTMLInputElement;
+    const emailEl = form.elements.namedItem("email") as HTMLInputElement;
+    const messageEl = form.elements.namedItem("message") as HTMLTextAreaElement;
+    let valid = true;
+
+    if (!nameEl.value.trim()) {
+      setFieldError(nameEl, true);
+      valid = false;
+    } else {
+      setFieldError(nameEl, false);
+    }
+
+    if (!emailEl.value.trim()) {
+      setFieldError(emailEl, true, emailEmptyMsg);
+      valid = false;
+    } else if (!emailRegex.test(emailEl.value.trim())) {
+      setFieldError(emailEl, true, emailInvalidMsg);
+      valid = false;
+    } else {
+      setFieldError(emailEl, false);
+    }
+
+    if (!messageEl.value.trim()) {
+      setFieldError(messageEl, true);
+      valid = false;
+    } else {
+      setFieldError(messageEl, false);
+    }
+
+    return valid;
+  }
+
+  for (const field of [form.elements.namedItem("name"), form.elements.namedItem("email"), form.elements.namedItem("message")] as (HTMLInputElement | HTMLTextAreaElement)[]) {
+    field.addEventListener("input", () => setFieldError(field, false));
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorMsg.classList.add("hidden");
+    successMsg.classList.add("hidden");
+
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    btnText.textContent = sendingText;
+    btnSpinner.classList.remove("hidden");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: (form.elements.namedItem("name") as HTMLInputElement).value,
+          email: (form.elements.namedItem("email") as HTMLInputElement).value,
+          message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+        }),
+      });
+
+      const data = await res.json() as { error?: string };
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
+      form.reset();
+      successMsg.classList.remove("hidden");
+      form.classList.add("hidden");
+    } catch (err: any) {
+      errorMsg.textContent = err.message || genericError;
+      errorMsg.classList.remove("hidden");
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = defaultText;
+      btnSpinner.classList.add("hidden");
+    }
+  });
+</script>

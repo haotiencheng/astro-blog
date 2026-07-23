@@ -36,9 +36,9 @@ const {
 } = Astro.props;
 
 const date = new Date(publishedAt);
-const day = date.getDate().toString().padStart(2, "0");
-const month = date.toLocaleString("en-US", { month: "short" }).toUpperCase();
-const year = date.getFullYear();
+const day = date.toLocaleString("en-US", { day: "2-digit", timeZone: "Asia/Taipei" });
+const month = date.toLocaleString("en-US", { month: "short", timeZone: "Asia/Taipei" }).toUpperCase();
+const year = date.toLocaleString("en-US", { year: "numeric", timeZone: "Asia/Taipei" });
 const formattedDate = `${day} ${month} ${year}`;
 
 const pairUrl = pairSlug

@@ -1,11 +1,11 @@
 # Astro Blog — Ghost Migration
 
 ## Overview
-Static blog migrated from Ghost CMS to Astro 5. Bilingual (zh-tw / en).
+Static blog migrated from Ghost CMS to Astro (now on Astro 7). Bilingual (zh-tw / en).
 Deployed to Cloudflare Pages. Content authored in Markdown files.
 
 ## Architecture
-- **Framework**: Astro 5 (SSG, static output)
+- **Framework**: Astro 7 (SSG, static output + Cloudflare adapter for API routes)
 - **Styling**: Tailwind CSS 3 + `@tailwindcss/typography` (`prose` class)
 - **Content**: Markdown/MDX files in `src/content/posts/` with frontmatter
 - **i18n**: File-based routing — `/zh-tw/[slug]/` and `/en/[slug]/`

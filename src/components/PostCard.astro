@@ -20,6 +20,7 @@ const formattedDate = date.toLocaleDateString(lang === "zh-tw" ? "zh-TW" : "en-U
   year: "numeric",
   month: "short",
   day: "numeric",
+  timeZone: "Asia/Taipei",
 });
 
 const tagSlugs = tags.map((t) => t.slug).join(",");

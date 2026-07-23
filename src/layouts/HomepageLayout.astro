@@ -33,6 +33,7 @@ function formatCarouselDate(iso: string) {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "Asia/Taipei",
   });
 }
 ---
@@ -149,9 +150,9 @@ function formatCarouselDate(iso: string) {
         return (
           <a href={postUrl(post.data.slug)} class="post-row" data-tags={tagSlugs}>
             <div class="row-date">
-              <span class="row-day">{d.getDate()}</span>
-              <span class="row-mon">{d.toLocaleString(t.dateLocale, { month: "short" }).toUpperCase()}</span>
-              <span class="row-yr">{d.getFullYear()}</span>
+              <span class="row-day">{d.toLocaleString("en-US", { day: "numeric", timeZone: "Asia/Taipei" })}</span>
+              <span class="row-mon">{d.toLocaleString(t.dateLocale, { month: "short", timeZone: "Asia/Taipei" }).toUpperCase()}</span>
+              <span class="row-yr">{d.toLocaleString("en-US", { year: "numeric", timeZone: "Asia/Taipei" })}</span>
             </div>
             <div class="row-thumb">
               {imgMeta ? (

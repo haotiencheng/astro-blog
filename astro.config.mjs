@@ -10,6 +10,8 @@ export default defineConfig({
     imageService: "compile",
   }),
   site: "https://reallyniceday.com",
+  // Astro 7 changed the default to 'jsx' whitespace stripping; keep v6 HTML-aware behavior
+  compressHTML: true,
   integrations: [
     mdx(),
     tailwind(),

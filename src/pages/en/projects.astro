@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectsPage from "../../components/ProjectsPage.astro";
+---
+
+<BaseLayout
+  title="Projects | ReallyNiceDay"
+  description="Products and tools I build as an indie developer: Mocky.pro English mock interviews, PeekaTube YouTube AI summaries, and md2tg. Open for collaboration."
+  lang="en"
+  canonicalUrl="https://reallyniceday.com/en/projects/"
+  hreflangs={[
+    { lang: "en", url: "https://reallyniceday.com/en/projects/" },
+    { lang: "zh-Hant-TW", url: "https://reallyniceday.com/projects/" },
+  ]}
+  langSwitchUrl="/projects/"
+>
+  <ProjectsPage lang="en" />
+</BaseLayout>

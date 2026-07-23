@@ -86,7 +86,7 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
           <a href="/about/" class="hover:text-gray-600 transition-colors">
             {lang === "en" ? "About" : "關於"}
           </a>
-          <a href="https://www.projectstain.dev" class="hover:text-gray-600 transition-colors">
+          <a href={lang === "en" ? "/en/projects/" : "/projects/"} class="hover:text-gray-600 transition-colors">
             {lang === "en" ? "Projects" : "專案"}
           </a>
           <a href={lang === "en" ? "/en/contact/" : "/contact/"} class="hover:text-gray-600 transition-colors">

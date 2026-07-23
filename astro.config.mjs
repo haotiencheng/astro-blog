@@ -26,7 +26,8 @@ export default defineConfig({
           (path === "/" ||
             path.startsWith("/zh-tw/") ||
             path.startsWith("/en/") ||
-            path === "/about/")
+            path === "/about/" ||
+            path === "/projects/")
         );
       },
     }),

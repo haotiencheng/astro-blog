@@ -99,6 +99,56 @@ Both files use `slug: my-post-slug` in frontmatter → routes `/zh-tw/my-post-sl
 Pairs are auto-detected at build time by matching slugs across languages.
 No need to set `pair_slug` / `pair_lang` unless the slugs differ.
 
+## WYSIWYG Editor (local dev only)
+
+Ghost-style editor at `http://localhost:4321/admin` while `bun run dev` is running.
+It writes Markdown files straight into `src/content/posts/` — you still commit and push
+as usual. Nothing about it ships to production.
+
+- `/admin` — post list (filter, new zh-tw / new en)
+- `/admin/edit?lang=&slug=` — editor; `/admin/edit?lang=zh-tw` starts a new post
+- Feature image and title sit on the canvas (Ghost style): click or drop onto the hero
+  area, `Enter` in the title jumps to the body. The drawer holds the rest of the frontmatter
+- In dev the site nav shows an `Edit` button that deep-links to the current post
+- Bubble toolbar on selection, `/` slash menu for blocks, drag/paste image upload,
+  `⌘S` to save, settings drawer for all frontmatter fields
+- Images land in `public/images/uploads/YYYY/MM/` and are inserted by path
+
+### Pasting from Obsidian (or any Markdown source)
+Raw Markdown on the clipboard arrives as plain text, which TipTap would drop in as literal
+`## heading` paragraphs. `handlePaste` detects Markdown block markers and parses it, so
+headings, lists, tables, code fences, quotes and rules all come through. Obsidian's own
+`---` frontmatter is stripped and `[[wikilinks]]` collapse to their text (`[[a|b]]` → `b`).
+`![[embeds]]` cannot be resolved — upload those images by drag and drop instead.
+
+### Editing modes
+- **WYSIWYG** — plain `.md` posts. Body is `marked()` → TipTap → Turndown on save.
+  Round-trip is verified against every existing Markdown post: output matches the source
+  apart from whitespace. Turndown needs four fixes for that: unwrap the `<p>` TipTap puts
+  in list items and table cells, 2-space list indents, `hr: "---"`, and unescaping
+  intra-word underscores. Tables also need their `<colgroup>` stripped before Turndown —
+  the GFM plugin only emits a pipe table when `<tbody>` is the table's first child.
+- **Source** — `.mdx` posts and migrated Ghost HTML bodies (body starts with `<`) open in a
+  raw textarea so the markup is never rewritten. Same detection rule as `[lang]/[slug].astro`.
+
+### How it is wired
+- `src/integrations/admin-editor.ts` — dev-only Astro integration. It injects the `/admin`
+  routes (only when `command === "dev"`, so the ~400KB TipTap chunk stays out of `dist/`)
+  and serves `/api/admin/*` from Vite's Node middleware. **The file writes must live here:**
+  Astro API routes run inside workerd, where `node:fs` does nothing.
+- `src/admin/*.astro` — editor UI (outside `src/pages/` on purpose)
+- `src/scripts/admin/editor.ts` — TipTap setup, slash menu, Turndown rules
+- `src/lib/admin/posts.ts` — frontmatter parse/serialize, shared with the UI
+- `src/layouts/BaseLayout.astro` — dev-only `Edit` nav link
+
+Saving rewrites a watched content file, so Vite would answer with a full page reload and
+wipe the editor; `suppressFullReload()` redirects that reload at a dummy path. Refresh by
+hand if you edit the editor's own source.
+
+Frontmatter is written with the repo's field order. Ghost-migrated posts wrap long
+`excerpt` values across unindented lines, which strict YAML rejects; `splitFile()` repairs
+that before parsing, and rewrites it as a single line on save.
+
 ## Slug Convention (New Posts)
 - Use the **same slug** for both languages (e.g., `the-mom-test`)
 - Files: `zh-tw/the-mom-test.md` and `en/the-mom-test.md` (or `.mdx`)

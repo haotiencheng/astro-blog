@@ -107,6 +107,9 @@ as usual. Nothing about it ships to production.
 
 - `/admin` — post list (filter, new zh-tw / new en)
 - `/admin/edit?lang=&slug=` — editor; `/admin/edit?lang=zh-tw` starts a new post
+- Feature image and title sit on the canvas (Ghost style): click or drop onto the hero
+  area, `Enter` in the title jumps to the body. The drawer holds the rest of the frontmatter
+- In dev the site nav shows an `Edit` button that deep-links to the current post
 - Bubble toolbar on selection, `/` slash menu for blocks, drag/paste image upload,
   `⌘S` to save, settings drawer for all frontmatter fields
 - Images land in `public/images/uploads/YYYY/MM/` and are inserted by path
@@ -126,6 +129,11 @@ as usual. Nothing about it ships to production.
 - `src/admin/*.astro` — editor UI (outside `src/pages/` on purpose)
 - `src/scripts/admin/editor.ts` — TipTap setup, slash menu, Turndown rules
 - `src/lib/admin/posts.ts` — frontmatter parse/serialize, shared with the UI
+- `src/layouts/BaseLayout.astro` — dev-only `Edit` nav link
+
+Saving rewrites a watched content file, so Vite would answer with a full page reload and
+wipe the editor; `suppressFullReload()` redirects that reload at a dummy path. Refresh by
+hand if you edit the editor's own source.
 
 Frontmatter is written with the repo's field order. Ghost-migrated posts wrap long
 `excerpt` values across unindented lines, which strict YAML rejects; `splitFile()` repairs

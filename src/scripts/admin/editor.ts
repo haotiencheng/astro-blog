@@ -95,7 +95,39 @@ function readForm() {
   };
 }
 
+/** Feature image lives on the canvas; #fm-feature is the hidden source of truth. */
+function renderHero() {
+  const url = $<HTMLInputElement>("#fm-feature").value.trim();
+  const figure = $("#hero-figure");
+  const add = $("#hero-add");
+  figure.hidden = !url;
+  add.hidden = !!url;
+  if (url) {
+    $<HTMLImageElement>("#hero-img").src = url;
+    $("#hero-path").textContent = url;
+  }
+}
+
+function setFeature(url: string | null) {
+  $<HTMLInputElement>("#fm-feature").value = url ?? "";
+  renderHero();
+  markDirty();
+}
+
+function setTitle(value: string) {
+  $<HTMLInputElement>("#fm-title").value = value;
+  $("#doc-title").textContent = value || "Untitled";
+}
+
+/** Keep the canvas title one line tall per line of text. */
+function autoGrowTitle() {
+  const ta = $<HTMLTextAreaElement>("#title-input");
+  ta.style.height = "auto";
+  ta.style.height = `${ta.scrollHeight}px`;
+}
+
 function fillForm(fm: any) {
+  $<HTMLTextAreaElement>("#title-input").value = fm.title ?? "";
   $<HTMLInputElement>("#fm-title").value = fm.title ?? "";
   $<HTMLInputElement>("#fm-slug").value = fm.slug ?? "";
   $<HTMLSelectElement>("#fm-lang").value = fm.lang ?? "zh-tw";
@@ -113,6 +145,8 @@ function fillForm(fm: any) {
     el.checked = slugs.has(el.value);
   });
   $("#doc-title").textContent = fm.title || "Untitled";
+  renderHero();
+  autoGrowTitle();
 }
 
 function toIso(local: string) {
@@ -323,7 +357,20 @@ async function save() {
 
 /* ---------------- boot ---------------- */
 
+/**
+ * Saving rewrites a file the content collection watches, so Vite answers with a
+ * full page reload and the editor loses its state mid-session. Point the reload
+ * at another page so the Vite client skips it; refresh manually when needed.
+ */
+function suppressFullReload() {
+  if (!import.meta.hot) return;
+  import.meta.hot.on("vite:beforeFullReload", (payload: { path?: string }) => {
+    payload.path = "/__admin-editor-no-reload.html";
+  });
+}
+
 export async function initEditor() {
+  suppressFullReload();
   const params = new URLSearchParams(location.search);
   const lang = params.get("lang") ?? "zh-tw";
   const slug = params.get("slug");
@@ -454,11 +501,21 @@ export async function initEditor() {
   document.querySelectorAll("#sidebar input, #sidebar textarea, #sidebar select").forEach((el) => {
     el.addEventListener("input", markDirty);
   });
-  const titleInput = $<HTMLInputElement>("#fm-title");
+  const titleInput = $<HTMLTextAreaElement>("#title-input");
   titleInput.addEventListener("input", () => {
-    $("#doc-title").textContent = titleInput.value || "Untitled";
+    setTitle(titleInput.value);
+    autoGrowTitle();
+    markDirty();
   });
-  $("#fm-feature-pick").addEventListener("click", async () => {
+  // Enter in the title moves to the body, like Ghost.
+  titleInput.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    if (state.mode === "raw") $<HTMLTextAreaElement>("#raw-editor").focus();
+    else editor?.chain().focus("start").run();
+  });
+
+  const pickFeature = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -466,12 +523,25 @@ export async function initEditor() {
       const f = input.files?.[0];
       if (!f) return;
       const url = await uploadImage(f);
-      if (url) {
-        $<HTMLInputElement>("#fm-feature").value = url;
-        markDirty();
-      }
+      if (url) setFeature(url);
     };
     input.click();
+  };
+  $("#hero-add").addEventListener("click", pickFeature);
+  $("#hero-replace").addEventListener("click", pickFeature);
+  $("#hero-remove").addEventListener("click", () => setFeature(null));
+
+  // Drop an image anywhere on the hero area to set it.
+  const head = $("#canvas-head");
+  head.addEventListener("dragover", (e) => e.preventDefault());
+  head.addEventListener("drop", async (e) => {
+    const file = [...((e as DragEvent).dataTransfer?.files ?? [])].find((f) =>
+      f.type.startsWith("image/"),
+    );
+    if (!file) return;
+    e.preventDefault();
+    const url = await uploadImage(file);
+    if (url) setFeature(url);
   });
   const sidebar = $("#sidebar");
   const closeSidebar = () => sidebar.classList.remove("is-open");

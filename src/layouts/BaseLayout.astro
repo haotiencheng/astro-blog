@@ -32,6 +32,15 @@ const fullOgImage = ogImage
     : `${siteUrl}${ogImage}`
   : `${siteUrl}/images/ghost/icon/R0000314-6.JPG`;
 const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
+
+// Dev-only shortcut into the local editor. On a post page it deep-links to that
+// post; anywhere else it opens the post list.
+const NON_POST_SEGMENTS = ["projects", "contact", "about", "tag", "share", "s"];
+const postMatch = Astro.url.pathname.match(/^\/(zh-tw|en)\/([^/]+)\/?$/);
+const editorHref =
+  postMatch && !NON_POST_SEGMENTS.includes(postMatch[2])
+    ? `/admin/edit?lang=${postMatch[1]}&slug=${postMatch[2]}`
+    : "/admin";
 ---
 
 <!doctype html>
@@ -92,6 +101,16 @@ const htmlLang = lang === "zh-tw" ? "zh-Hant-TW" : "en";
           <a href={lang === "en" ? "/en/contact/" : "/contact/"} class="hover:text-gray-600 transition-colors">
             {lang === "en" ? "Contact" : "聯繫"}
           </a>
+          {
+            import.meta.env.DEV && (
+              <a
+                href={editorHref}
+                class="px-2 py-1 rounded border border-amber-400 bg-amber-50 text-amber-800 hover:bg-amber-100 transition-colors"
+              >
+                Edit
+              </a>
+            )
+          }
           <a
             href={langSwitchUrl || (lang === "en" ? "/" : "/en/")}
             class="px-2 py-1 rounded border border-gray-300 hover:bg-gray-100 transition-colors"

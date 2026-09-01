@@ -473,8 +473,12 @@ export async function initEditor() {
     };
     input.click();
   });
-  $("#sidebar-toggle").addEventListener("click", () => {
-    $("#sidebar").classList.toggle("is-open");
+  const sidebar = $("#sidebar");
+  const closeSidebar = () => sidebar.classList.remove("is-open");
+  $("#sidebar-toggle").addEventListener("click", () => sidebar.classList.toggle("is-open"));
+  $("#sidebar-close").addEventListener("click", closeSidebar);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sidebar.classList.contains("is-open")) closeSidebar();
   });
   $("#save-btn").addEventListener("click", save);
 

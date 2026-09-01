@@ -17,22 +17,22 @@ if (!import.meta.env.DEV) {
   </head>
   <body class="bg-white text-neutral-900">
     <header
-      class="sticky top-0 z-20 flex items-center gap-3 border-b border-neutral-200 bg-white/90 px-5 py-2.5 backdrop-blur"
+      class="sticky top-0 z-30 flex items-center gap-3 border-b border-neutral-200 bg-white/90 px-5 py-2.5 backdrop-blur"
     >
       <a href="/admin" class="text-sm text-neutral-500 hover:text-neutral-900">← Posts</a>
-      <span id="doc-title" class="ml-2 truncate text-sm font-medium">Untitled</span>
-      <span id="mode-badge" class="rounded bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"></span>
-      <div class="ml-auto flex items-center gap-3">
-        <span id="save-state" class="text-xs text-neutral-500">Saved</span>
-        <a id="view-link" target="_blank" class="text-sm text-neutral-500 hover:text-neutral-900">Preview</a>
+      <span id="doc-title" class="ml-2 min-w-[4rem] flex-1 truncate text-sm font-medium">Untitled</span>
+      <span id="mode-badge" class="hidden shrink-0 whitespace-nowrap rounded sm:inline-block bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"></span>
+      <div class="ml-auto flex shrink-0 items-center gap-3">
+        <span id="save-state" class="hidden text-xs text-neutral-500 sm:inline">Saved</span>
+        <a id="view-link" target="_blank" class="hidden text-sm text-neutral-500 hover:text-neutral-900 sm:inline">Preview</a>
         <button id="sidebar-toggle" type="button" class="rounded border border-neutral-300 px-3 py-1.5 text-sm">
           Settings
         </button>
         <button id="delete-btn" type="button" hidden class="rounded border border-red-300 px-3 py-1.5 text-sm text-red-700">
           Delete
         </button>
-        <button id="save-btn" type="button" class="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white">
-          Save ⌘S
+        <button id="save-btn" type="button" title="Save (⌘S)" class="rounded bg-neutral-900 px-3 py-1.5 text-sm text-white">
+          Save
         </button>
       </div>
     </header>
@@ -57,7 +57,7 @@ if (!import.meta.env.DEV) {
     <div
       id="bubble"
       hidden
-      class="fixed z-30 flex gap-0.5 rounded-md bg-neutral-900 p-1 text-white shadow-lg"
+      class="fixed z-40 flex gap-0.5 rounded-md bg-neutral-900 p-1 text-white shadow-lg"
     >
       <button data-mark="bold" class="bubble-btn font-bold">B</button>
       <button data-mark="italic" class="bubble-btn italic">i</button>
@@ -73,22 +73,31 @@ if (!import.meta.env.DEV) {
     <div
       id="slash-menu"
       hidden
-      class="fixed z-30 w-64 overflow-hidden rounded-md border border-neutral-200 bg-white py-1 shadow-xl"
+      class="fixed z-40 w-64 overflow-hidden rounded-md border border-neutral-200 bg-white py-1 shadow-xl"
     >
     </div>
 
     <div
       id="toast"
       hidden
-      class="fixed bottom-5 left-1/2 z-40 -translate-x-1/2 rounded bg-neutral-900 px-4 py-2 text-sm text-white shadow-lg"
+      class="fixed bottom-5 left-1/2 z-50 -translate-x-1/2 rounded bg-neutral-900 px-4 py-2 text-sm text-white shadow-lg"
     >
     </div>
 
     <!-- settings sidebar -->
     <aside
       id="sidebar"
-      class="fixed right-0 top-0 z-20 h-full w-80 translate-x-full overflow-y-auto border-l border-neutral-200 bg-white p-5 pt-16 text-sm transition-transform"
+      class="fixed right-0 top-0 z-10 h-full w-80 translate-x-full overflow-y-auto border-l border-neutral-200 bg-white p-5 pt-16 text-sm transition-transform"
     >
+      <button
+        id="sidebar-close"
+        type="button"
+        aria-label="Close settings"
+        class="absolute right-3 top-14 rounded px-2 py-1 text-lg leading-none text-neutral-500 hover:bg-neutral-100"
+      >
+        ×
+      </button>
+
       <label class="fm-label" for="fm-title">Title</label>
       <input id="fm-title" class="fm-input" />
 

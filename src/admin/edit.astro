@@ -212,6 +212,19 @@ if (!import.meta.env.DEV) {
         pointer-events: none;
         @apply text-neutral-400;
       }
+      .ProseMirror table {
+        @apply w-full table-fixed border-collapse;
+      }
+      .ProseMirror th,
+      .ProseMirror td {
+        @apply border border-neutral-300 px-2 py-1 text-left align-top;
+      }
+      .ProseMirror th {
+        @apply bg-neutral-100 font-semibold;
+      }
+      .ProseMirror .selectedCell:after {
+        @apply pointer-events-none absolute inset-0 z-10 bg-neutral-900/10 content-[""];
+      }
       .ProseMirror img {
         @apply rounded;
       }

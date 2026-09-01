@@ -1,6 +1,7 @@
 import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
+import { TableKit } from "@tiptap/extension-table";
 import { Placeholder } from "@tiptap/extensions";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
@@ -31,10 +32,13 @@ const td = new TurndownService({
 });
 td.use(gfm);
 
-// TipTap wraps list item content in <p>; unwrap it so lists stay tight.
-td.addRule("tightListItemParagraph", {
+// TipTap wraps list item and table cell content in <p>; unwrap it so lists stay
+// tight and cells stay on one line (a newline inside a cell breaks a pipe table).
+td.addRule("unwrapBlockParagraph", {
   filter: (node) =>
-    node.nodeName === "P" && node.parentNode?.nodeName === "LI" && node.parentNode.childNodes.length === 1,
+    node.nodeName === "P" &&
+    ["LI", "TH", "TD"].includes(node.parentNode?.nodeName ?? "") &&
+    node.parentNode!.childNodes.length === 1,
   replacement: (content) => content,
 });
 
@@ -45,6 +49,8 @@ td.addRule("listItem", {
     const body = content
       .replace(/^\n+/, "")
       .replace(/\n+$/, "\n")
+      // drop the blank line TipTap leaves between an item and its nested list
+      .replace(/\n\s*\n(?=\s*(?:[-*+]|\d+\.) )/g, "\n")
       .replace(/\n/gm, "\n  ");
     const parent = node.parentNode as HTMLElement;
     let prefix = `${options.bulletListMarker} `;
@@ -181,6 +187,26 @@ async function insertImageFiles(files: File[]) {
   }
 }
 
+/* ---------------- markdown paste ---------------- */
+
+const MD_BLOCK_RE = /^(#{1,6} |[-*+] |\d+\. |> |```|\|.*\|)/m;
+
+/** Obsidian and friends put raw Markdown on the clipboard as plain text. */
+function looksLikeMarkdown(text: string) {
+  return MD_BLOCK_RE.test(text);
+}
+
+/**
+ * Obsidian-flavoured bits that mean nothing on the blog: a note's own YAML
+ * frontmatter, and `[[wikilinks]]` that point inside the vault.
+ */
+function cleanObsidian(text: string) {
+  return text
+    .replace(/^---\n[\s\S]*?\n---\n+/, "")
+    .replace(/(?<!!)\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
+    .replace(/(?<!!)\[\[([^\]]+)\]\]/g, "$1");
+}
+
 /* ---------------- slash menu ---------------- */
 
 type Cmd = { label: string; hint: string; run: () => void };
@@ -195,6 +221,11 @@ const commands = (): Cmd[] => {
     { label: "Quote", hint: "Blockquote", run: () => c().toggleBlockquote().run() },
     { label: "Code block", hint: "Fenced code", run: () => c().toggleCodeBlock().run() },
     { label: "Divider", hint: "Horizontal rule", run: () => c().setHorizontalRule().run() },
+    {
+      label: "Table",
+      hint: "3 x 3 with header",
+      run: () => c().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
+    },
     { label: "Image", hint: "Upload from disk", run: () => pickImage() },
   ];
 };
@@ -301,6 +332,22 @@ function bubbleAction(name: string) {
   }
 }
 
+/**
+ * TipTap emits a <colgroup> and colspan/rowspan="1" on every cell. Turndown's GFM
+ * plugin only recognises a header row when <tbody> is the table's first child, so
+ * without this strip every table would serialize as raw HTML instead of a pipe table.
+ */
+function toMarkdown() {
+  const html = editor!
+    .getHTML()
+    .replace(/<colgroup>[\s\S]*?<\/colgroup>/g, "")
+    .replace(/ (?:colspan|rowspan)="1"/g, "")
+    .replace(/ style="min-width: \d+px;?"/g, "");
+  // Turndown escapes every underscore, including snake_case in prose and image
+  // alt text; unescaping intra-word ones keeps saves from churning old posts.
+  return td.turndown(html).replace(/(\w)\\_(?=\w)/g, "$1_");
+}
+
 /* ---------------- save ---------------- */
 
 function toast(msg: string, isError = false) {
@@ -322,9 +369,7 @@ async function save() {
   state.saving = true;
   $("#save-state").textContent = "Saving…";
   const body =
-    state.mode === "raw"
-      ? $<HTMLTextAreaElement>("#raw-editor").value
-      : td.turndown(editor!.getHTML());
+    state.mode === "raw" ? $<HTMLTextAreaElement>("#raw-editor").value : toMarkdown();
 
   const res = await fetch("/api/admin/posts", {
     method: "POST",
@@ -426,6 +471,7 @@ export async function initEditor() {
           link: { openOnClick: false, autolink: true },
         }),
         Image.configure({ inline: false }),
+        TableKit.configure({ table: { resizable: false } }),
         Placeholder.configure({
           placeholder: "Write here. Type / for blocks, drop an image anywhere.",
         }),
@@ -436,9 +482,18 @@ export async function initEditor() {
         attributes: { class: "prose prose-lg max-w-none focus:outline-none" },
         handlePaste: (_view, event) => {
           const files = [...(event.clipboardData?.files ?? [])];
-          if (!files.length) return false;
+          if (files.length) {
+            event.preventDefault();
+            insertImageFiles(files);
+            return true;
+          }
+          // Raw Markdown (Obsidian, a terminal, another editor) arrives as plain
+          // text only; without this it lands as literal "## heading" paragraphs.
+          const text = event.clipboardData?.getData("text/plain") ?? "";
+          const html = event.clipboardData?.getData("text/html") ?? "";
+          if (html || !looksLikeMarkdown(text)) return false;
           event.preventDefault();
-          insertImageFiles(files);
+          editor?.chain().focus().insertContent(marked.parse(cleanObsidian(text)) as string).run();
           return true;
         },
         handleDrop: (_view, event) => {

@@ -114,10 +114,20 @@ as usual. Nothing about it ships to production.
   `⌘S` to save, settings drawer for all frontmatter fields
 - Images land in `public/images/uploads/YYYY/MM/` and are inserted by path
 
+### Pasting from Obsidian (or any Markdown source)
+Raw Markdown on the clipboard arrives as plain text, which TipTap would drop in as literal
+`## heading` paragraphs. `handlePaste` detects Markdown block markers and parses it, so
+headings, lists, tables, code fences, quotes and rules all come through. Obsidian's own
+`---` frontmatter is stripped and `[[wikilinks]]` collapse to their text (`[[a|b]]` → `b`).
+`![[embeds]]` cannot be resolved — upload those images by drag and drop instead.
+
 ### Editing modes
 - **WYSIWYG** — plain `.md` posts. Body is `marked()` → TipTap → Turndown on save.
-  Round-trip was verified against every existing Markdown post: output is byte-stable
-  apart from whitespace.
+  Round-trip is verified against every existing Markdown post: output matches the source
+  apart from whitespace. Turndown needs four fixes for that: unwrap the `<p>` TipTap puts
+  in list items and table cells, 2-space list indents, `hr: "---"`, and unescaping
+  intra-word underscores. Tables also need their `<colgroup>` stripped before Turndown —
+  the GFM plugin only emits a pipe table when `<tbody>` is the table's first child.
 - **Source** — `.mdx` posts and migrated Ghost HTML bodies (body starts with `<`) open in a
   raw textarea so the markup is never rewritten. Same detection rule as `[lang]/[slug].astro`.
 

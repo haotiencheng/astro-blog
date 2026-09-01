@@ -99,6 +99,38 @@ Both files use `slug: my-post-slug` in frontmatter → routes `/zh-tw/my-post-sl
 Pairs are auto-detected at build time by matching slugs across languages.
 No need to set `pair_slug` / `pair_lang` unless the slugs differ.
 
+## WYSIWYG Editor (local dev only)
+
+Ghost-style editor at `http://localhost:4321/admin` while `bun run dev` is running.
+It writes Markdown files straight into `src/content/posts/` — you still commit and push
+as usual. Nothing about it ships to production.
+
+- `/admin` — post list (filter, new zh-tw / new en)
+- `/admin/edit?lang=&slug=` — editor; `/admin/edit?lang=zh-tw` starts a new post
+- Bubble toolbar on selection, `/` slash menu for blocks, drag/paste image upload,
+  `⌘S` to save, settings drawer for all frontmatter fields
+- Images land in `public/images/uploads/YYYY/MM/` and are inserted by path
+
+### Editing modes
+- **WYSIWYG** — plain `.md` posts. Body is `marked()` → TipTap → Turndown on save.
+  Round-trip was verified against every existing Markdown post: output is byte-stable
+  apart from whitespace.
+- **Source** — `.mdx` posts and migrated Ghost HTML bodies (body starts with `<`) open in a
+  raw textarea so the markup is never rewritten. Same detection rule as `[lang]/[slug].astro`.
+
+### How it is wired
+- `src/integrations/admin-editor.ts` — dev-only Astro integration. It injects the `/admin`
+  routes (only when `command === "dev"`, so the ~400KB TipTap chunk stays out of `dist/`)
+  and serves `/api/admin/*` from Vite's Node middleware. **The file writes must live here:**
+  Astro API routes run inside workerd, where `node:fs` does nothing.
+- `src/admin/*.astro` — editor UI (outside `src/pages/` on purpose)
+- `src/scripts/admin/editor.ts` — TipTap setup, slash menu, Turndown rules
+- `src/lib/admin/posts.ts` — frontmatter parse/serialize, shared with the UI
+
+Frontmatter is written with the repo's field order. Ghost-migrated posts wrap long
+`excerpt` values across unindented lines, which strict YAML rejects; `splitFile()` repairs
+that before parsing, and rewrites it as a single line on save.
+
 ## Slug Convention (New Posts)
 - Use the **same slug** for both languages (e.g., `the-mom-test`)
 - Files: `zh-tw/the-mom-test.md` and `en/the-mom-test.md` (or `.mdx`)

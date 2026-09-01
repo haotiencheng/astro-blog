@@ -89,22 +89,22 @@ if (!import.meta.env.DEV) {
       id="sidebar"
       class="fixed right-0 top-0 z-20 h-full w-80 translate-x-full overflow-y-auto border-l border-neutral-200 bg-white p-5 pt-16 text-sm transition-transform"
     >
-      <label class="fm-label">Title</label>
+      <label class="fm-label" for="fm-title">Title</label>
       <input id="fm-title" class="fm-input" />
 
-      <label class="fm-label">Slug</label>
+      <label class="fm-label" for="fm-slug">Slug</label>
       <input id="fm-slug" class="fm-input" placeholder="my-post-slug" />
 
-      <label class="fm-label">Language</label>
+      <label class="fm-label" for="fm-lang">Language</label>
       <select id="fm-lang" class="fm-input">
         <option value="zh-tw">zh-tw</option>
         <option value="en">en</option>
       </select>
 
-      <label class="fm-label">Excerpt</label>
+      <label class="fm-label" for="fm-excerpt">Excerpt</label>
       <textarea id="fm-excerpt" rows="4" class="fm-input"></textarea>
 
-      <label class="fm-label">Feature image</label>
+      <label class="fm-label" for="fm-feature">Feature image</label>
       <div class="flex gap-2">
         <input id="fm-feature" class="fm-input flex-1" placeholder="/images/…" />
         <button id="fm-feature-pick" type="button" class="mb-3 shrink-0 rounded border border-neutral-300 px-2">
@@ -112,7 +112,7 @@ if (!import.meta.env.DEV) {
         </button>
       </div>
 
-      <label class="fm-label">Published at</label>
+      <label class="fm-label" for="fm-published">Published at</label>
       <input id="fm-published" type="datetime-local" class="fm-input" />
       <input id="fm-created" type="hidden" />
 
@@ -120,7 +120,7 @@ if (!import.meta.env.DEV) {
         <input id="fm-featured" type="checkbox" /> Featured
       </label>
 
-      <label class="fm-label">Tags</label>
+      <span class="fm-label">Tags</span>
       <div class="mb-3 space-y-1">
         {
           TAG_SLUGS.map((slug) => (
@@ -132,10 +132,10 @@ if (!import.meta.env.DEV) {
         }
       </div>
 
-      <label class="fm-label">Pair slug (only if it differs)</label>
+      <label class="fm-label" for="fm-pair-slug">Pair slug (only if it differs)</label>
       <input id="fm-pair-slug" class="fm-input" />
 
-      <label class="fm-label">Pair lang</label>
+      <label class="fm-label" for="fm-pair-lang">Pair lang</label>
       <select id="fm-pair-lang" class="fm-input">
         <option value="">none</option>
         <option value="zh-tw">zh-tw</option>

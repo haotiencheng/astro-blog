@@ -105,6 +105,16 @@ pair_lang: null
 
 我提早到辦事處，即使預約時間還沒到，還是可以先去櫃檯報到。報到後會拿到一張號碼牌，接著等叫號就好，整體很順。
 
+幾個現場的注意事項：
+
+- **櫃員的英文通常不太好。** 文件先準備齊全，或帶著翻譯機，免得卡在溝通上。
+- **拿到的文件記得拍照留存**，正本也收好。後面辦居留證、電信、月票都會再用到。
+- **台灣人請確認稅號是 `Z217` 結尾**，那是台灣的國別碼；`Z220` 是中國，別被搞混了。
+
+最後會拿到這張 Certificato di attribuzione del codice fiscale：
+
+![稅號證明（個資已遮蔽）](/assets/posts/italy-codice-fiscale/certificate.png)
+
 ## 參考資料
 
 - [Tax identification number for foreign citizens — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)

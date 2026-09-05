@@ -105,6 +105,16 @@ A filled-in example:
 
 I arrived early, and checking in at the front desk before my slot was fine. They hand you a number, you wait for it to be called, and that is it — the whole thing went smoothly.
 
+A few things worth knowing at the counter:
+
+- **Staff English is usually limited.** Have every document ready, or bring a translation device, so nothing stalls on communication.
+- **Photograph the document they hand you** and keep the original safe. You will need it again for the residence permit, phone contract and transit pass.
+- **Taiwanese applicants: check the code ends in `Z217`**, the country code for Taiwan. `Z220` is China — do not let them get mixed up.
+
+What you walk out with is this Certificato di attribuzione del codice fiscale:
+
+![The tax code certificate, personal details redacted](/assets/posts/italy-codice-fiscale/certificate.png)
+
 ## References
 
 - [Tax identification number for foreign citizens — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)

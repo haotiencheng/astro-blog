@@ -18,6 +18,15 @@ marked.use({
         .replace(/^-+|-+$/g, "");
       return `<h${depth} id="${id}">${rendered}</h${depth}>\n`;
     },
+    // ![alt](/path "caption") renders as a figure with a visible caption;
+    // without a title it stays a plain image.
+    image({ href, title, text }: { href: string; title: string | null; text: string }) {
+      const alt = (text ?? "").replace(/"/g, "&quot;");
+      const img = `<img src="${href}" alt="${alt}" loading="lazy" decoding="async">`;
+      if (!title) return img;
+      const caption = marked.parseInline(title) as string;
+      return `<figure>${img}<figcaption>${caption}</figcaption></figure>`;
+    },
   },
 });
 import { getCollection, render } from "astro:content";

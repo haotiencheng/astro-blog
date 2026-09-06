@@ -35,43 +35,43 @@ pair_lang: null
 
 「Di cosa hai bisogno?」選 **Assistenza fiscale**（稅務相關）；「Per quale argomento?」選 **Identificativi fiscali, abilitazioni, consegna documenti e istanze**（稅務識別資料）。
 
-![選擇 Assistenza fiscale 與 Identificativi fiscali](/assets/posts/italy-codice-fiscale/booking-01.png)
+![選擇 Assistenza fiscale 與 Identificativi fiscali](/assets/posts/italy-codice-fiscale/booking-01.png "步驟 1：服務類型選 Assistenza fiscale，主題選 Identificativi fiscali")
 
 ### 2. 選擇預約近期時間
 
 選左邊的 **Appuntamento per i prossimi giorni**（預約近期時間）。右邊的 Webticket 是當天現場的抽號票，不是我們要的。
 
-![選擇 Appuntamento per i prossimi giorni](/assets/posts/italy-codice-fiscale/booking-02.png)
+![選擇 Appuntamento per i prossimi giorni](/assets/posts/italy-codice-fiscale/booking-02.png "步驟 2：選左邊的 Appuntamento per i prossimi giorni")
 
 ### 3. 本人辦理、首次申請
 
 選 **per te stesso**（本人辦理），勾選首次申請稅號的選項，稅號欄位留空，最後勾選已閱讀個資保護政策。
 
-![選擇本人辦理與首次辦理稅號](/assets/posts/italy-codice-fiscale/booking-03.png)
+![選擇本人辦理與首次辦理稅號](/assets/posts/italy-codice-fiscale/booking-03.png "步驟 3：本人辦理、首次申請稅號")
 
 ### 4. 填寫基本資料
 
 `Cognome` 是姓、`Nome` 是名。聯絡方式三選一必填，建議填 email，預約確認信會寄到這裡。
 
-![填寫姓名與聯絡方式](/assets/posts/italy-codice-fiscale/booking-04.png)
+![填寫姓名與聯絡方式](/assets/posts/italy-codice-fiscale/booking-04.png "步驟 4：Cognome 是姓、Nome 是名，聯絡方式建議填 email")
 
 ### 5. 輸入出發城市
 
 輸入你出發的城市，系統會自動推薦鄰近的辦事處。
 
-![輸入出發城市](/assets/posts/italy-codice-fiscale/booking-05.png)
+![輸入出發城市](/assets/posts/italy-codice-fiscale/booking-05.png "步驟 5：輸入出發城市，系統會推薦鄰近辦事處")
 
 ### 6. 挑辦事處與日期
 
 系統會列出附近幾個 Ufficio Territoriale 與各自最近可預約的日期。挑一個日期合適、交通也方便到的。
 
-![挑選辦事處與日期](/assets/posts/italy-codice-fiscale/booking-06.png)
+![挑選辦事處與日期](/assets/posts/italy-codice-fiscale/booking-06.png "步驟 6：挑日期與交通方便的辦事處")
 
 ### 7. 選時段
 
 日曆上綠色是可預約的日子。時段建議選最早的，當天比較不會被前面的人拖到。
 
-![選擇日期與時段](/assets/posts/italy-codice-fiscale/booking-07.png)
+![選擇日期與時段](/assets/posts/italy-codice-fiscale/booking-07.png "步驟 7：綠色為可預約日，時段建議選最早的")
 
 ### 8. 說明預約事由
 
@@ -81,11 +81,11 @@ pair_lang: null
 >
 > （申請在義大利就學／居留之首次義大利稅號）
 
-![填寫預約事由與聯絡方式](/assets/posts/italy-codice-fiscale/booking-08.png)
+![填寫預約事由與聯絡方式](/assets/posts/italy-codice-fiscale/booking-08.png "步驟 8：說明預約事由，並留下聯絡方式")
 
 送出後會收到像這樣的確認信，接著就可以開始準備文件，當天準時到即可。
 
-![預約確認信](/assets/posts/italy-codice-fiscale/feature-appointment-email.png)
+![預約確認信](/assets/posts/italy-codice-fiscale/feature-appointment-email.png "預約確認信（預約編號與 Ticket 號碼已遮蔽）")
 
 ## 當天要帶的文件
 
@@ -99,7 +99,7 @@ pair_lang: null
 
 表格填寫範例：
 
-![AA4/8 表格填寫範例](/assets/posts/italy-codice-fiscale/aa4-8-example.png)
+![AA4/8 表格填寫範例](/assets/posts/italy-codice-fiscale/aa4-8-example.png "AA4/8 表格填寫範例（生日、地址與簽名已遮蔽）")
 
 ## 當天流程
 
@@ -113,7 +113,7 @@ pair_lang: null
 
 最後會拿到這張 Certificato di attribuzione del codice fiscale：
 
-![稅號證明（個資已遮蔽）](/assets/posts/italy-codice-fiscale/certificate.png)
+![稅號證明（個資已遮蔽）](/assets/posts/italy-codice-fiscale/certificate.png "稅號證明（稅號、條碼、生日與公文編號已遮蔽）")
 
 ## 參考資料
 

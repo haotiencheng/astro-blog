@@ -692,6 +692,15 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     margin: 1.5em 0;
   }
 
+  /* Image captions from ![alt](src "caption") */
+  :global(.gh-content figure figcaption) {
+    margin-top: 0.6rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+    color: #6b7280;
+  }
+
   /* Keep prose's own pre styles intact; just reset its margin (wrapper provides it) */
   :global(.code-block-wrapper pre) {
     margin: 0 !important;

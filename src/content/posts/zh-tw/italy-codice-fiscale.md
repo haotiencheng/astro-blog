@@ -1,5 +1,5 @@
 ---
-title: "義大利稅號 Codice Fiscale 申請全流程：線上預約到臨櫃領取"
+title: "義大利稅號 Codice Fiscale 申請全流程（2026 最新）"
 slug: "italy-codice-fiscale"
 lang: "zh-tw"
 excerpt: "稅號是義大利所有行政流程的第一道門檻，居留證、電信門號、交通月票都要它。這篇記錄我在米蘭申請 Codice Fiscale 的完整流程：為什麼要先準備 VPN、線上預約的每一步截圖、當天要帶的文件清單，以及臨櫃報到的實際狀況。"

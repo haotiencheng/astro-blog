@@ -4,6 +4,7 @@ import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
 import mdx from "@astrojs/mdx";
 import cloudflare from "@astrojs/cloudflare";
+import adminEditor from "./src/integrations/admin-editor";
 
 export default defineConfig({
   adapter: cloudflare({
@@ -13,6 +14,8 @@ export default defineConfig({
   // Astro 7 changed the default to 'jsx' whitespace stripping; keep v6 HTML-aware behavior
   compressHTML: true,
   integrations: [
+    // Local WYSIWYG editor at /admin (dev server only)
+    adminEditor(),
     mdx(),
     tailwind(),
     sitemap({

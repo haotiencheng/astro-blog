@@ -1,5 +1,5 @@
 ---
-title: "How to Get an Italian Codice Fiscale (2026 Guide)"
+title: "How to Get an Italian Codice Fiscale (Sept 2026 Guide)"
 slug: "italy-codice-fiscale"
 lang: "en"
 excerpt: "The tax code is the first gate in every Italian administrative process — residence permit, phone plan, transit pass all need it. Here is the full run of applying for a Codice Fiscale in Milan: why you need a VPN first, every screen of the online booking flow, the documents to bring, and what the appointment actually looks like."

@@ -6,7 +6,7 @@ excerpt: "稅號是義大利所有行政流程的第一道門檻，居留證、�
 feature_image: "/assets/posts/italy-codice-fiscale/feature-appointment-email.png"
 featured: false
 published_at: "2026-09-05T00:00:00.000Z"
-updated_at: "2026-09-05T00:00:00.000Z"
+updated_at: "2026-09-07T00:00:00.000Z"
 created_at: "2026-09-05T00:00:00.000Z"
 tags:
   - name: "Italy"

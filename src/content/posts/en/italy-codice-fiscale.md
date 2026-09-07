@@ -6,7 +6,7 @@ excerpt: "The tax code is the first gate in every Italian administrative process
 feature_image: "/assets/posts/italy-codice-fiscale/feature-appointment-email.png"
 featured: false
 published_at: "2026-09-05T00:00:00.000Z"
-updated_at: "2026-09-05T00:00:00.000Z"
+updated_at: "2026-09-07T00:00:00.000Z"
 created_at: "2026-09-05T00:00:00.000Z"
 tags:
   - name: "Italy"

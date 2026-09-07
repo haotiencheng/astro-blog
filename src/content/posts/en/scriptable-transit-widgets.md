@@ -31,7 +31,7 @@ Both operators have apps. The problem is the rhythm.
 - Neither Trenord nor ATM has a home screen widget for *my* route specifically.
 - The information I actually read is about eight lines long.
 
-[Scriptable](https://scriptable.app/) fills exactly that gap: a single JavaScript file that runs inside an iOS widget. No Xcode, no developer account, nothing to ship.
+[Scriptable](https://scriptable.app/) fills exactly that gap: a single JavaScript file that runs inside an iOS widget, without needing Xcode, a developer account, or anything to ship.
 
 I keep mine in the **Today View**, the widget page one swipe left of the home screen. In practice it refreshes as I swipe onto it, so there's nothing to tap and nothing to wait for. One swipe on the way out the door tells me whether I need to run.
 
@@ -67,7 +67,7 @@ Now cancellations don't get listed at all, just a small "2 sopp." next to the he
 
 ### Color means "can I still make it"
 
-This is my favorite thing about the tram widget. The color of the time isn't decoration; it encodes the fact that the stop is a 4 minute walk away.
+Departure times in the tram widget come in three colors, and the threshold is the 4 minute walk to the stop.
 
 - **Red**: 4 minutes or less. Skip it.
 - **Orange**: 4 to 8 minutes. Leave now.
@@ -123,7 +123,7 @@ This matters more than it sounds. Scriptable stores its scripts in iCloud Drive,
 2. iCloud syncs it.
 3. I open Scriptable on my iPhone and the script is already the new version. Hit run, see the result.
 
-No build, no cable, no install, no TestFlight. Change a line, glance at the phone, change it again. That near-zero friction is the only reason the small adjustments happened at all ("this text is too big," "that color isn't obvious enough," "I never look at this field") and those adjustments are the entire value of a widget like this.
+That skips the whole build, cable, install and TestFlight routine. Change a line, glance at the phone, change it again. That near-zero friction is the only reason the small adjustments happened at all ("this text is too big," "that color isn't obvious enough," "I never look at this field") and those adjustments are the entire value of a widget like this.
 
 ## The cheapest possible version
 

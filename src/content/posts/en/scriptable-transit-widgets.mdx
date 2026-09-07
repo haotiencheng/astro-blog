@@ -15,11 +15,11 @@ pair_slug: null
 pair_lang: null
 ---
 
+import Bookmark from "../../../components/Bookmark.astro";
+
 I live near Bovisa in Milan, and my main way of getting around is the Trenord train from Bovisa to Cadorna, then a metro or tram to wherever I'm going in the city. So I handed that need to Claude Code: find me a usable API, wire it up, and put the next departures, platforms and delays on my home screen. When something goes badly wrong on the line it also shows a warning row, which is my cue that I might not be taking the train at all today.
 
 My girlfriend lives near Giovenale, so I built her the same thing for tram 15. Now she can see the next departures at a glance instead of watching the tram pull away in front of her.
-
-![Two widgets on the home screen](/assets/posts/scriptable-transit-widgets/widgets-home.png "Trains on top, tram below, sitting in the Today View one swipe left of the home screen")
 
 Claude Code wrote almost all of the code, so this post isn't really about how to write it. It's about the part I actually decided: **on a screen that fits eight lines, what goes on it and what doesn't.**
 
@@ -31,11 +31,25 @@ Both operators have apps. The problem is the rhythm.
 - Neither Trenord nor ATM has a home screen widget for *my* route specifically.
 - The information I actually read is about eight lines long.
 
-[Scriptable](https://scriptable.app/) fills exactly that gap: a single JavaScript file that runs inside an iOS widget, without needing Xcode, a developer account, or anything to ship.
+Scriptable fills exactly that gap: a single JavaScript file that runs inside an iOS widget, without needing Xcode, a developer account, or anything to ship.
 
-I keep mine in the **Today View**, the widget page one swipe left of the home screen. In practice it refreshes as I swipe onto it, so there's nothing to tap and nothing to wait for. One swipe on the way out the door tells me whether I need to run.
+<Bookmark
+  url="https://scriptable.app/"
+  title="Scriptable"
+  description="Automate iOS using JavaScript"
+  icon="https://scriptable.app/assets/appicon.png"
+  author="scriptable.app"
+/>
+
+I keep mine in the **Today View**, the widget page one swipe left of the home screen, sitting between the weather, activity rings and battery widgets. In practice it refreshes as I swipe onto it, so there's nothing to tap and nothing to wait for. One swipe on the way out the door tells me whether I need to run.
+
+![The two widgets in the Today View](/assets/posts/scriptable-transit-widgets/today-view.png "Mixed in with Apple's own widgets, they don't read as bolted on")
 
 ## What a widget is made of
+
+One script is one card. Two of mine run in Italy (train, tram) and two are gym occupancy widgets from back in Taiwan.
+
+![The script list in Scriptable](/assets/posts/scriptable-transit-widgets/scriptable-scripts.png "Each script backs one widget")
 
 ![The three parts of a Scriptable widget](/assets/posts/scriptable-transit-widgets/widget-arch-en.png "Data sources → one script → phone")
 
@@ -117,7 +131,13 @@ The snags are all the same species: **the data exists, it's just inside the inte
 
 ## Why iterating is cheap: iCloud
 
-This matters more than it sounds. Scriptable stores its scripts in iCloud Drive, so the loop is:
+This matters more than it sounds. Scriptable stores its scripts in iCloud Drive, as long as you turn it on under Settings → iCloud → Saved to iCloud.
+
+![Saved to iCloud in Settings](/assets/posts/scriptable-transit-widgets/icloud-setting.png "Settings → iCloud → Saved to iCloud")
+
+![Scriptable's iCloud sync switched on](/assets/posts/scriptable-transit-widgets/icloud-scriptable-on.png "Scriptable has to be on here for scripts to sync with the Mac")
+
+With that on, the loop is:
 
 1. Claude Code edits the file on my Mac.
 2. iCloud syncs it.

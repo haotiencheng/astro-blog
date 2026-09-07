@@ -29,6 +29,7 @@ marked.use({
     },
   },
 });
+import { byNewest } from "../../lib/sort-posts";
 import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
 import { getReadingTime } from "../../utils/postHelpers";
@@ -83,7 +84,7 @@ const relatedPosts = allPosts
     score: p.data.tags.filter((t) => currentTagSlugs.has(t.slug)).length,
   }))
   .filter((p) => p.score > 0)
-  .sort((a, b) => b.score - a.score || new Date(b.post.data.published_at).getTime() - new Date(a.post.data.published_at).getTime())
+  .sort((a, b) => b.score - a.score || byNewest(a.post, b.post))
   .slice(0, 5)
   .map((p) => p.post);
 

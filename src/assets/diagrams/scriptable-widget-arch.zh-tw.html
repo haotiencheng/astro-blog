@@ -1,0 +1,108 @@
+<style>
+  html, body { margin: 0; padding: 0; }
+  #frame {
+    width: 1200px; height: 630px;
+    background: #fffdf7;
+    font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive;
+    color: #1b1b1f;
+    position: relative;
+  }
+  svg { display: block; }
+  .t { font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive; }
+</style>
+
+<div id="frame">
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b3b40"/>
+    </marker>
+  </defs>
+
+  <!-- title -->
+  <text class="t" x="60" y="70" font-size="38" fill="#1b1b1f">一個 Scriptable widget 的組成</text>
+  <path d="M60 84 C 200 78, 340 90, 500 82" stroke="#e8a33d" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.75"/>
+  <text class="t" x="62" y="116" font-size="20" fill="#6b6b70">一支 .js 檔，跑在 iOS 桌面上：抓資料 → 整理 → 畫格子</text>
+
+  <!-- lane labels -->
+  <text class="t" x="62" y="150" font-size="17" fill="#8a8a90">① 資料來源</text>
+  <text class="t" x="474" y="148" font-size="17" fill="#8a8a90">② 一支腳本</text>
+  <text class="t" x="974" y="150" font-size="17" fill="#8a8a90">③ 桌面</text>
+
+  <!-- source boxes -->
+  <path d="M62 186 C 62 174, 70 168, 84 168 L 356 169 C 370 168, 378 176, 377 188 L 378 232 C 379 246, 370 252, 356 251 L 82 250 C 68 251, 61 244, 62 230 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="204" font-size="21" fill="#1b1b1f">開放時刻表 API</text>
+  <text class="t" x="86" y="232" font-size="16" fill="#6b6b70">Transitous（GTFS，免金鑰）</text>
+
+  <path d="M62 268 C 62 256, 70 250, 84 250 L 356 251 C 370 250, 378 258, 377 270 L 378 314 C 379 328, 370 334, 356 333 L 82 332 C 68 333, 61 326, 62 312 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="286" font-size="21" fill="#1b1b1f">官方 App 的內部 API</text>
+  <text class="t" x="86" y="314" font-size="16" fill="#6b6b70">Trenord BFF、ATM GiroMilano</text>
+
+  <path d="M62 350 C 62 338, 70 332, 84 332 L 356 333 C 370 332, 378 340, 377 352 L 378 396 C 379 410, 370 416, 356 415 L 82 414 C 68 415, 61 408, 62 394 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="368" font-size="21" fill="#1b1b1f">任何回 JSON 的網址</text>
+  <text class="t" x="86" y="396" font-size="16" fill="#6b6b70">三重運動中心的 proxy1.php</text>
+
+  <!-- arrows into script -->
+  <path d="M386 210 C 420 206, 428 250, 462 258" stroke="#3b3b40" stroke-width="2.4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M386 292 C 418 288, 430 288, 462 290" stroke="#3b3b40" stroke-width="2.4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M386 374 C 420 370, 428 330, 462 322" stroke="#3b3b40" stroke-width="2.4" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- script box (highlight) -->
+  <path d="M472 178 C 472 164, 482 157, 498 157 L 856 158 C 872 157, 881 166, 880 180 L 881 402 C 882 418, 872 425, 856 424 L 496 423 C 480 424, 471 416, 472 402 Z"
+        fill="#fdf0d5" stroke="#c98a12" stroke-width="3.4"/>
+  <path d="M478 183 C 478 169, 488 162, 504 162 L 862 163 C 878 162, 887 171, 886 185 L 887 407 C 888 423, 878 430, 862 429 L 502 428 C 486 429, 477 421, 478 407 Z"
+        fill="none" stroke="#c98a12" stroke-width="1.6" opacity="0.5"/>
+
+  <text class="t" x="500" y="204" font-size="23" fill="#1b1b1f">Bovisa-Cadorna.js</text>
+
+  <text class="t" x="500" y="246" font-size="18" fill="#33517a">new Request(url).loadJSON()</text>
+  <text class="t" x="500" y="274" font-size="16" fill="#6b6b70">抓：時刻、延誤、月台、公告</text>
+
+  <text class="t" x="500" y="312" font-size="18" fill="#33517a">merge / filter / sort</text>
+  <text class="t" x="500" y="340" font-size="16" fill="#6b6b70">合併兩邊資料，取消的車直接踢掉</text>
+
+  <text class="t" x="500" y="378" font-size="18" fill="#33517a">ListWidget + DrawContext</text>
+  <text class="t" x="500" y="406" font-size="16" fill="#6b6b70">堆疊排版、線路色塊、分隔線</text>
+
+  <!-- arrow to phone -->
+  <path d="M890 290 C 920 284, 930 296, 958 290" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- phone -->
+  <path d="M972 182 C 972 168, 982 161, 998 161 L 1130 162 C 1146 161, 1155 170, 1154 184 L 1155 456 C 1156 472, 1146 479, 1130 478 L 996 477 C 980 478, 971 470, 972 456 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.8"/>
+  <path d="M1042 176 L 1086 177" stroke="#3b3b40" stroke-width="3" stroke-linecap="round"/>
+
+  <path d="M992 208 C 992 200, 997 196, 1006 196 L 1122 197 C 1131 196, 1136 201, 1135 209 L 1136 284 C 1137 293, 1131 297, 1122 296 L 1004 295 C 995 296, 990 291, 991 283 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.2"/>
+  <text class="t" x="1004" y="228" font-size="15" fill="#33517a">Bovisa ⇄ Cadorna</text>
+  <text class="t" x="1004" y="254" font-size="15" fill="#5a7296">S3 23:53 +2 bin.6</text>
+  <text class="t" x="1004" y="278" font-size="15" fill="#5a7296">RE54 23:57 ✓</text>
+
+  <path d="M992 316 C 992 308, 997 304, 1006 304 L 1122 305 C 1131 304, 1136 309, 1135 317 L 1136 392 C 1137 401, 1131 405, 1122 404 L 1004 403 C 995 404, 990 399, 991 391 Z"
+        fill="#fff3e6" stroke="#c98a12" stroke-width="2.2"/>
+  <text class="t" x="1004" y="336" font-size="15" fill="#8a5c0d">Tram 15</text>
+  <text class="t" x="1004" y="362" font-size="15" fill="#a0742a">15 23:52 +4 ●</text>
+  <text class="t" x="1004" y="386" font-size="15" fill="#a0742a">15 00:03</text>
+
+  <text class="t" x="988" y="438" font-size="15" fill="#8a8a90">每分鐘自己更新</text>
+
+  <!-- refresh note -->
+  <path d="M472 452 C 472 442, 479 437, 490 437 L 878 438 C 889 437, 896 444, 895 454 L 896 516 C 897 528, 889 533, 878 532 L 488 531 C 477 532, 470 526, 471 514 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <text class="t" x="492" y="472" font-size="18" fill="#33517a">widget.refreshAfterDate = 一分鐘後</text>
+  <text class="t" x="492" y="498" font-size="16" fill="#5a7296">iOS 只當作「建議」，實際更新頻率由系統決定</text>
+  <text class="t" x="492" y="522" font-size="16" fill="#5a7296">點一下 widget → scriptable:///run 立刻重跑</text>
+
+  <!-- build note -->
+  <path d="M62 452 C 62 442, 69 437, 80 437 L 380 438 C 391 437, 398 444, 397 454 L 398 516 C 399 528, 391 533, 380 532 L 78 531 C 67 532, 60 526, 61 514 Z"
+        fill="#fdece9" stroke="#c0392b" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <text class="t" x="82" y="472" font-size="18" fill="#c0392b">最花時間的不是排版</text>
+  <text class="t" x="82" y="498" font-size="16" fill="#6b6b70">是找到「哪個 API 真的有即時資料」</text>
+  <text class="t" x="82" y="522" font-size="16" fill="#6b6b70">這段丟給 Claude Code 去翻</text>
+
+  <text class="t" x="1000" y="600" font-size="18" fill="#8a8a90">reallyniceday.com</text>
+</svg>
+</div>

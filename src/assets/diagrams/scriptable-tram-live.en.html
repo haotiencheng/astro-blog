@@ -1,0 +1,84 @@
+<style>
+  html, body { margin: 0; padding: 0; }
+  #frame {
+    width: 1200px; height: 630px;
+    background: #fffdf7;
+    font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive;
+    color: #1b1b1f;
+    position: relative;
+  }
+  svg { display: block; }
+  .t { font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive; }
+</style>
+
+<div id="frame">
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b3b40"/>
+    </marker>
+  </defs>
+
+  <text class="t" x="60" y="70" font-size="38" fill="#1b1b1f">Tram widget: stop display + timetable</text>
+  <path d="M60 84 C 210 78, 360 90, 690 82" stroke="#e8a33d" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.75"/>
+  <text class="t" x="62" y="116" font-size="20" fill="#6b6b70">The stop display knows the next tram; the timetable knows every one after it</text>
+
+  <!-- left: ATM -->
+  <path d="M62 160 C 62 148, 70 142, 84 142 L 400 143 C 414 142, 422 150, 421 162 L 422 262 C 423 276, 414 282, 400 281 L 82 280 C 68 281, 61 274, 62 260 Z"
+        fill="#fdf0d5" stroke="#c98a12" stroke-width="3"/>
+  <text class="t" x="86" y="180" font-size="21" fill="#1b1b1f">ATM GiroMilano</text>
+  <text class="t" x="86" y="208" font-size="16" fill="#6b6b70">the API behind the sign at the stop</text>
+  <text class="t" x="86" y="234" font-size="17" fill="#c07f0d">WaitMessage: "9 min" / "in arrivo"</text>
+  <text class="t" x="86" y="260" font-size="16" fill="#6b6b70">behind Akamai → browser UA + Referer</text>
+
+  <!-- right: Transitous -->
+  <path d="M62 306 C 62 294, 70 288, 84 288 L 400 289 C 414 288, 422 296, 421 308 L 422 400 C 423 414, 414 420, 400 419 L 82 418 C 68 419, 61 412, 62 398 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="326" font-size="21" fill="#1b1b1f">Transitous /stoptimes</text>
+  <text class="t" x="86" y="354" font-size="16" fill="#6b6b70">the whole stop's timetable</text>
+  <text class="t" x="86" y="380" font-size="16" fill="#6b6b70">filtered by line 15 + headsign</text>
+  <text class="t" x="86" y="404" font-size="16" fill="#6b6b70">still standing when ATM is not</text>
+
+  <path d="M430 210 C 468 204, 480 240, 516 250" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M430 352 C 468 346, 480 316, 516 306" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- merge box -->
+  <path d="M526 190 C 526 176, 536 169, 552 169 L 890 170 C 906 169, 915 178, 914 192 L 915 380 C 916 396, 906 403, 890 402 L 550 401 C 534 402, 525 394, 526 380 Z"
+        fill="#fdece9" stroke="#c0392b" stroke-width="2.8"/>
+  <text class="t" x="550" y="212" font-size="21" fill="#c0392b">Merge rules</text>
+  <text class="t" x="550" y="244" font-size="17" fill="#1b1b1f">First row ← the live wait from the sign</text>
+  <text class="t" x="550" y="270" font-size="16" fill="#6b6b70">(the delay is already baked into it)</text>
+  <text class="t" x="550" y="302" font-size="17" fill="#1b1b1f">Delay = live minutes − scheduled minutes</text>
+  <text class="t" x="550" y="330" font-size="16" fill="#6b6b70">gap &gt; 15 min → show no delay at all</text>
+  <text class="t" x="550" y="356" font-size="16" fill="#6b6b70">that's not a delay, that run was pulled</text>
+  <text class="t" x="550" y="388" font-size="17" fill="#1b1b1f">Rest ← timetable, sorted, four of them</text>
+
+  <path d="M924 290 C 954 284, 966 296, 996 290" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- output -->
+  <path d="M1006 196 C 1006 186, 1013 181, 1024 181 L 1146 182 C 1157 181, 1164 188, 1163 198 L 1164 384 C 1165 396, 1157 401, 1146 400 L 1022 399 C 1011 400, 1004 394, 1005 382 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4"/>
+  <text class="t" x="1022" y="216" font-size="16" fill="#33517a">→ Duomo</text>
+  <text class="t" x="1022" y="248" font-size="17" fill="#c0392b">23:52 +4 ●</text>
+  <text class="t" x="1022" y="278" font-size="17" fill="#2e8b4f">00:03</text>
+  <text class="t" x="1022" y="306" font-size="17" fill="#2e8b4f">00:18</text>
+  <text class="t" x="1022" y="334" font-size="17" fill="#2e8b4f">00:33</text>
+  <text class="t" x="1018" y="368" font-size="14" fill="#8a8a90">● = from the sign</text>
+
+  <!-- walk time rule -->
+  <path d="M62 448 C 62 436, 70 430, 84 430 L 560 431 C 574 430, 582 438, 581 450 L 582 552 C 583 566, 574 572, 560 571 L 82 570 C 68 571, 61 564, 62 550 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="470" font-size="21" fill="#1b1b1f">Color = can I still make it</text>
+  <text class="t" x="86" y="500" font-size="17" fill="#c0392b">red: ≤ 4 min, that's my walk. Skip it</text>
+  <text class="t" x="86" y="528" font-size="17" fill="#c07f0d">orange: 4 to 8 min. Leave now</text>
+  <text class="t" x="86" y="556" font-size="17" fill="#2e8b4f">green: there's time</text>
+
+  <path d="M604 480 C 604 470, 611 465, 622 465 L 1000 466 C 1011 465, 1018 472, 1017 482 L 1018 552 C 1019 564, 1011 569, 1000 568 L 620 567 C 609 568, 602 562, 603 550 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <text class="t" x="624" y="500" font-size="18" fill="#33517a">The question isn't "when does it leave"</text>
+  <text class="t" x="624" y="526" font-size="16" fill="#5a7296">it's "should I get up right now"</text>
+  <text class="t" x="624" y="552" font-size="16" fill="#5a7296">walk time is a constant; color answers it</text>
+
+  <text class="t" x="1000" y="600" font-size="18" fill="#8a8a90">reallyniceday.com</text>
+</svg>
+</div>

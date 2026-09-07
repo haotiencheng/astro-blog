@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "落地義大利之後第二件要辦的事就是手機門號。我在米蘭辦了 iliad 的 GIGA 250，一個月 €11.99、250 GB，這篇記錄現場流程、要帶什麼文件、錄影驗證是怎麼回事，還有用了幾天之後才發現的幾個雷。最後也把 iliad、ho.、Very、Kena 跟三大電信攤開來比一比。"
 feature_image: "/assets/posts/italy-iliad-sim/iliad-giga250-plan.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T09:00:00.000Z"
+updated_at: "2026-09-07T09:00:00.000Z"
+created_at: "2026-09-07T09:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

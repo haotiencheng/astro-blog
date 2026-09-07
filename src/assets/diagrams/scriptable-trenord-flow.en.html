@@ -1,0 +1,97 @@
+<style>
+  html, body { margin: 0; padding: 0; }
+  #frame {
+    width: 1200px; height: 630px;
+    background: #fffdf7;
+    font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive;
+    color: #1b1b1f;
+    position: relative;
+  }
+  svg { display: block; }
+  .t { font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive; }
+</style>
+
+<div id="frame">
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b3b40"/>
+    </marker>
+  </defs>
+
+  <text class="t" x="60" y="70" font-size="38" fill="#1b1b1f">Train widget: three APIs make one row</text>
+  <path d="M60 84 C 210 78, 360 90, 690 82" stroke="#e8a33d" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.75"/>
+  <text class="t" x="62" y="116" font-size="20" fill="#6b6b70">Timetable gives the skeleton, the operator's own API gives delay and platform</text>
+
+  <!-- step 1 -->
+  <path d="M62 160 C 62 148, 70 142, 84 142 L 348 143 C 362 142, 370 150, 369 162 L 370 246 C 371 260, 362 266, 348 265 L 82 264 C 68 265, 61 258, 62 244 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="180" font-size="21" fill="#1b1b1f">① Transitous /plan</text>
+  <text class="t" x="86" y="208" font-size="16" fill="#6b6b70">Bovisa → Cadorna departures</text>
+  <text class="t" x="86" y="232" font-size="16" fill="#6b6b70">time, line, and train number</text>
+  <text class="t" x="86" y="256" font-size="16" fill="#c07f0d">needs a named User-Agent</text>
+
+  <path d="M378 200 C 410 194, 424 206, 456 200" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+  <text class="t" x="380" y="182" font-size="15" fill="#8a8a90">train no.</text>
+
+  <!-- step 2 highlight -->
+  <path d="M466 150 C 466 136, 476 129, 492 129 L 830 130 C 846 129, 855 138, 854 152 L 855 268 C 856 284, 846 291, 830 290 L 490 289 C 474 290, 465 282, 466 268 Z"
+        fill="#fdf0d5" stroke="#c98a12" stroke-width="3.4"/>
+  <path d="M472 155 C 472 141, 482 134, 498 134 L 836 135 C 852 134, 861 143, 860 157 L 861 273 C 862 289, 852 296, 836 295 L 496 294 C 480 295, 471 287, 472 273 Z"
+        fill="none" stroke="#c98a12" stroke-width="1.6" opacity="0.5"/>
+  <text class="t" x="494" y="174" font-size="21" fill="#1b1b1f">② Trenord /mia/bff/train/{no.}</text>
+  <text class="t" x="494" y="202" font-size="16" fill="#6b6b70">the response isn't JSON, it's encrypted bytes</text>
+  <text class="t" x="494" y="228" font-size="17" fill="#c07f0d">AES-256-ECB, key sits in the site's own bundle</text>
+  <text class="t" x="494" y="254" font-size="16" fill="#6b6b70">Scriptable has no crypto → decrypt in the script</text>
+  <text class="t" x="494" y="280" font-size="16" fill="#6b6b70">only then: delay, platform, cancelled</text>
+
+  <path d="M864 210 C 896 204, 910 216, 942 210" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- row output -->
+  <path d="M952 156 C 952 144, 960 138, 974 138 L 1130 139 C 1144 138, 1152 146, 1151 158 L 1152 262 C 1153 276, 1144 282, 1130 281 L 972 280 C 958 281, 951 274, 952 260 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4"/>
+  <text class="t" x="972" y="176" font-size="17" fill="#33517a">one row = one train</text>
+  <text class="t" x="972" y="206" font-size="16" fill="#5a7296">S3　23:55　+2</text>
+  <text class="t" x="972" y="232" font-size="16" fill="#5a7296">bin. 6</text>
+  <text class="t" x="968" y="262" font-size="15" fill="#8a8a90">shown time = sched + delay</text>
+
+  <!-- step 3 alerts -->
+  <path d="M62 322 C 62 310, 70 304, 84 304 L 348 305 C 362 304, 370 312, 369 324 L 370 392 C 371 406, 362 412, 348 411 L 82 410 C 68 411, 61 404, 62 390 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="342" font-size="21" fill="#1b1b1f">③ Service alerts API</text>
+  <text class="t" x="86" y="370" font-size="16" fill="#6b6b70">every notice on every line</text>
+  <text class="t" x="86" y="394" font-size="16" fill="#6b6b70">dozens a day, most irrelevant to me</text>
+
+  <path d="M378 360 C 410 354, 424 366, 456 360" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- filter box -->
+  <path d="M466 314 C 466 302, 474 296, 488 296 L 830 297 C 844 296, 852 304, 851 316 L 852 448 C 853 462, 844 468, 830 467 L 486 466 C 472 467, 465 460, 466 446 Z"
+        fill="#fdece9" stroke="#c0392b" stroke-width="2.8"/>
+  <text class="t" x="490" y="334" font-size="20" fill="#c0392b">Four filters, then it earns a line</text>
+  <text class="t" x="490" y="364" font-size="16" fill="#6b6b70">1. severity ≥ 2 (info never interrupts)</text>
+  <text class="t" x="490" y="390" font-size="16" fill="#6b6b70">2. recent, and not voided by a "back to normal"</text>
+  <text class="t" x="490" y="416" font-size="16" fill="#6b6b70">3. the trains or lines it names must be mine</text>
+  <text class="t" x="490" y="442" font-size="16" fill="#6b6b70">4. long Italian text → "where・cause・effect"</text>
+
+  <path d="M860 380 C 892 374, 906 386, 938 380" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <path d="M948 336 C 948 326, 955 321, 966 321 L 1132 322 C 1143 321, 1150 328, 1149 338 L 1150 424 C 1151 436, 1143 441, 1132 440 L 964 439 C 953 440, 946 434, 947 422 Z"
+        fill="#fff3e6" stroke="#c98a12" stroke-width="2.4"/>
+  <text class="t" x="966" y="356" font-size="16" fill="#8a5c0d">⚠️ 23:14</text>
+  <text class="t" x="966" y="384" font-size="16" fill="#a0742a">Milan hub・</text>
+  <text class="t" x="966" y="408" font-size="16" fill="#a0742a">line fault・delays</text>
+  <text class="t" x="962" y="434" font-size="14" fill="#8a8a90">alert costs one train row</text>
+
+  <!-- bottom rule -->
+  <path d="M62 470 C 62 460, 69 455, 80 455 L 380 456 C 391 455, 398 462, 397 472 L 398 546 C 399 558, 391 563, 380 562 L 78 561 C 67 562, 60 556, 61 544 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <text class="t" x="82" y="490" font-size="18" fill="#33517a">Cancelled trains get no row</text>
+  <text class="t" x="82" y="516" font-size="16" fill="#5a7296">just "2 sopp." next to the title</text>
+  <text class="t" x="82" y="540" font-size="16" fill="#5a7296">rows are for trains I can catch</text>
+
+  <text class="t" x="440" y="516" font-size="17" fill="#6b6b70">The widget is eight lines tall.</text>
+  <text class="t" x="440" y="542" font-size="17" fill="#6b6b70">All the logic just decides which eight.</text>
+
+  <text class="t" x="1000" y="600" font-size="18" fill="#8a8a90">reallyniceday.com</text>
+</svg>
+</div>

@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "Since moving to Italy I pay rent and tuition through Wise. Here is how I fund it from Taiwan (an international wire plus a pre-registered transfer account), why the rate beats a normal bank, how the virtual and physical cards work, what the 1% interest actually pays out, and how support handled moving my address from Taiwan to Italy."
 feature_image: "/assets/posts/italy-wise-money/wise-card-hero.webp"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T13:00:00.000Z"
+updated_at: "2026-09-07T13:00:00.000Z"
+created_at: "2026-09-07T13:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

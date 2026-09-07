@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "Half the guides online tell you to email someone, fill in a pile of forms, or queue at an ATM Point. You can just buy the Milan travel pass in the ATM app. Here are the actual steps, how the €22 Under 27 fare works, and what every pass type costs."
 feature_image: "/assets/posts/italy-atm-milano-pass/card-crop.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T11:00:00.000Z"
+updated_at: "2026-09-07T11:00:00.000Z"
+created_at: "2026-09-07T11:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

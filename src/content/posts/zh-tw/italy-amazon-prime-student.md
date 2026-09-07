@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "如果你是學生或年紀在 18 到 24 歲，義大利 Amazon Prime 可以免費試用 90 天。落地之後採購床單、電器這些東西，隔天到貨真的差很多，還附帶 Deliveroo 的會員資格。"
 feature_image: "/assets/posts/italy-amazon-prime-student/prime-signup.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T14:00:00.000Z"
+updated_at: "2026-09-07T14:00:00.000Z"
+created_at: "2026-09-07T14:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

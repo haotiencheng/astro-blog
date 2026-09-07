@@ -82,7 +82,7 @@ const relatedPosts = allPosts
   }))
   .filter((p) => p.score > 0)
   .sort((a, b) => b.score - a.score || new Date(b.post.data.published_at).getTime() - new Date(a.post.data.published_at).getTime())
-  .slice(0, 3)
+  .slice(0, 5)
   .map((p) => p.post);
 
 // Use post.body from content collection — no readFileSync needed

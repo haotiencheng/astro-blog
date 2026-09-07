@@ -6,7 +6,7 @@ excerpt: "稅號是義大利所有行政流程的第一道門檻，居留證、�
 feature_image: "/assets/posts/italy-codice-fiscale/feature-appointment-email.png"
 featured: false
 published_at: "2026-09-05T00:00:00.000Z"
-updated_at: "2026-09-05T00:00:00.000Z"
+updated_at: "2026-09-07T00:00:00.000Z"
 created_at: "2026-09-05T00:00:00.000Z"
 tags:
   - name: "Italy"
@@ -27,7 +27,7 @@ pair_lang: null
 
 ## 如何線上預約
 
-預約網站在這裡：[Prenota un appuntamento — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/prenota-un-appuntamento)
+預約網站在這裡：[Prenota un appuntamento（Agenzia delle Entrate）](https://www.agenziaentrate.gov.it/portale/prenota-un-appuntamento)
 
 **注意：不要切成英文語系**，切換之後預約流程似乎會跳掉，全程維持義大利文比較保險。
 
@@ -92,6 +92,7 @@ pair_lang: null
 - **護照正本**
 - **護照影本**
 - **簽證頁影本**
+- **入學證明**：我帶的是 POLIMI（米蘭理工）發的 visa letter
 - **照片**：2 吋大頭照兩張（我這次沒有用到，但還是建議備著）
 - **居住地址**：我是填宿舍的地址
 - **原子筆**：現場可能要改東西，自己帶一支比較快
@@ -117,5 +118,5 @@ pair_lang: null
 
 ## 參考資料
 
-- [Tax identification number for foreign citizens — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)
-- [義大利稅號 Codice Fiscale 申請教學 — ciaogogowang](https://ciaogogowang.com/2018/10/15/codice_fiscale_italy/)
+- [Tax identification number for foreign citizens（Agenzia delle Entrate）](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)
+- [義大利稅號 Codice Fiscale 申請教學（ciaogogowang）](https://ciaogogowang.com/2018/10/15/codice_fiscale_italy/)

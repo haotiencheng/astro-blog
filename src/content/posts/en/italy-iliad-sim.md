@@ -3,7 +3,7 @@ title: "iliad Italy SIM Guide and Carrier Comparison (Sept 2026)"
 slug: "italy-iliad-sim"
 lang: "en"
 excerpt: "Getting a phone number is the second thing to sort out after landing in Italy. Here is how buying an iliad GIGA 250 SIM in Milan actually went — the documents, the on-camera identity check, and what the plan is like after a week — plus a comparison of iliad, ho., Very, Kena and the big three so you can tell which one fits your situation."
-feature_image: null
+feature_image: "/assets/posts/italy-iliad-sim/iliad-giga250-plan.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -25,6 +25,8 @@ After a bit of research, iliad looked like the friendliest option for a broke st
 
 I went with **GIGA 250**:
 
+![The iliad GIGA 250 offer page](/assets/posts/italy-iliad-sim/iliad-giga250-plan.png "iliad's own GIGA 250 page: 250GB, €11.99 a month *per sempre*, €9.99 activation")
+
 | Item | Detail |
 |---|---|
 | Monthly | €11.99 |
@@ -38,6 +40,23 @@ I went with **GIGA 250**:
 ## Buying it in person
 
 The iliad point we found was tucked inside a Unieuro (an electronics chain). It took us ages to find, and we ended up asking a Decathlon employee for directions. iliad usually operates as a store-within-a-store or a self-service kiosk, so check the exact location on Google Maps before you set out.
+
+We used the iliad Corner inside the Unieuro at Portello. The assistant was friendly, though not much of an English speaker:
+
+<figure class="map-card">
+  <iframe
+    title="Unieuro Portello (iliad Corner)"
+    src="https://www.google.com/maps?q=Unieuro+Portello,+Via+Grosotto+7,+20149+Milano+MI&output=embed"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+  ></iframe>
+  <figcaption>
+    <strong>Unieuro Portello — iliad Corner</strong>
+    <span>Via Grosotto 7, 20149 Milano MI</span>
+    <a href="https://www.google.com/maps/search/?api=1&query=Unieuro+Portello%2C+Via+Grosotto+7%2C+20149+Milano+MI" target="_blank" rel="noopener">Open in Google Maps →</a>
+  </figcaption>
+</figure>
 
 What to bring:
 
@@ -69,14 +88,14 @@ The Italian market has two layers: **three network owners** (TIM, Vodafone, Wind
 
 Here are the main options as of September 2026, all with unlimited calls:
 
-| Carrier | Network | Plan | Monthly | Data in Italy | EU roaming | Activation |
-|---|---|---|---|---|---|---|
-| **iliad** | own | GIGA 250 | €11.99 | 250 GB | 18 GB | €9.99 |
-| **iliad** | own | GIGA 150 | €7.99 | 150 GB | included | €9.99 |
-| **ho.** | Vodafone | 250 GB | €8.95 | 250 GB | included | from €2.99 |
-| **Very** | WindTre | 300 GB | €7.99 | 300 GB | around 20 GB | free SIM |
-| **Kena** | TIM | 200–300 GB | €5.99–7.99 | 200–300 GB | 12–15 GB | varies |
-| **TIM / Vodafone / WindTre** | own | flagship plans | from €15 | varies | varies | varies |
+| Plan (network) | Monthly | Data in Italy | EU roaming | Activation |
+|---|---|---|---|---|
+| **iliad** GIGA 250 (own) | €11.99 | 250 GB | 18 GB | €9.99 |
+| **iliad** GIGA 150 (own) | €7.99 | 150 GB | included | €9.99 |
+| **ho.** 250 GB (Vodafone) | €8.95 | 250 GB | included | from €2.99 |
+| **Very** 300 GB (WindTre) | €7.99 | 300 GB | around 20 GB | free SIM |
+| **Kena** (TIM) | €5.99–7.99 | 200–300 GB | 12–15 GB | varies |
+| **TIM / Vodafone / WindTre** | from €15 | varies | varies | varies |
 
 A few things the table does not show:
 
@@ -92,6 +111,28 @@ A few things the table does not show:
 - **English support is non-negotiable** → no Italian carrier is good here, but the big three's shops are more likely to have an English-speaking assistant; with MVNOs you are largely on Google Translate
 
 One last thing: **every carrier needs your tax code first**, so the order is always tax code, then phone plan. [Here is how to get the tax code](/en/italy-codice-fiscale/).
+
+## An aside: the café next door
+
+We sat down at Ristò right afterwards. The cappuccino is excellent and the yoghurt is worth ordering too — a good stop if you are making the trip out to Portello anyway.
+
+<figure class="place-card">
+  <div class="place-media">
+    <img src="/assets/posts/italy-iliad-sim/risto-breakfast.jpeg" alt="Two cappuccinos, a berry yoghurt and a ham sandwich at Ristò" loading="lazy" decoding="async" />
+    <iframe
+      title="Ristò, Milan"
+      src="https://www.google.com/maps?q=45.4904957,9.1472004&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <figcaption>
+    <strong>Ristò</strong>
+    <span>Right beside Unieuro Portello, a minute on foot</span>
+    <a href="https://www.google.com/maps/place/Rist%C3%B2/@45.4904957,9.1472004,17z" target="_blank" rel="noopener">Open in Google Maps →</a>
+  </figcaption>
+</figure>
 
 ## References
 

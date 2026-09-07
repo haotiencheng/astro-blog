@@ -3,7 +3,7 @@ title: "義大利 iliad 辦卡心得與電信商比較（2026.09）"
 slug: "italy-iliad-sim"
 lang: "zh-tw"
 excerpt: "落地義大利要辦的第二件事就是手機門號。這篇記錄我在米蘭辦 iliad GIGA 250 的完整流程、要帶的文件、現場錄影驗證是怎麼回事，還有實際用了幾天的優缺點；最後把 iliad、ho.、Very、Kena 跟三大電信的方案攤開來比，告訴你什麼情況該選哪一家。"
-feature_image: null
+feature_image: "/assets/posts/italy-iliad-sim/iliad-giga250-plan.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -25,6 +25,8 @@ pair_lang: null
 
 我選的是 **GIGA 250**：
 
+![iliad GIGA 250 方案頁](/assets/posts/italy-iliad-sim/iliad-giga250-plan.png "iliad 官網的 GIGA 250 方案頁：250GB、月費 €11.99「per sempre」、開卡費 €9.99")
+
 | 項目 | 內容 |
 |---|---|
 | 月費 | €11.99 |
@@ -38,6 +40,23 @@ pair_lang: null
 ## 現場辦卡流程
 
 我們找到的 iliad 藏在 Unieuro（電器行）裡面，找了超久，還跑去問迪卡儂的店員。iliad 在義大利多半是這種店中店或自助機台的形式，出發前先用 Google Maps 確認地點會省很多時間。
+
+我們去的是 Portello 這間 Unieuro 裡的 iliad Corner，接待員很親切，但也不太會講英文：
+
+<figure class="map-card">
+  <iframe
+    title="Unieuro Portello（iliad Corner）"
+    src="https://www.google.com/maps?q=Unieuro+Portello,+Via+Grosotto+7,+20149+Milano+MI&output=embed"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+  ></iframe>
+  <figcaption>
+    <strong>Unieuro Portello — iliad Corner</strong>
+    <span>Via Grosotto 7, 20149 Milano MI</span>
+    <a href="https://www.google.com/maps/search/?api=1&query=Unieuro+Portello%2C+Via+Grosotto+7%2C+20149+Milano+MI" target="_blank" rel="noopener">在 Google Maps 開啟 →</a>
+  </figcaption>
+</figure>
 
 需要帶的文件：
 
@@ -69,14 +88,14 @@ pair_lang: null
 
 以下是 2026 年 9 月查到的主要選項（都是含無限通話的方案）：
 
-| 電信商 | 使用網路 | 代表方案 | 月費 | 義大利 GB | 歐盟漫遊 | 開卡費 |
-|---|---|---|---|---|---|---|
-| **iliad** | 自有 | GIGA 250 | €11.99 | 250 GB | 18 GB | €9.99 |
-| **iliad** | 自有 | GIGA 150 | €7.99 | 150 GB | 含漫遊 | €9.99 |
-| **ho.** | Vodafone | 250 GB | €8.95 | 250 GB | 含漫遊 | €2.99 起 |
-| **Very** | WindTre | 300 GB | €7.99 | 300 GB | 約 20 GB | SIM 免費 |
-| **Kena** | TIM | 200–300 GB | €5.99–7.99 | 200–300 GB | 12–15 GB | 依促銷 |
-| **TIM / Vodafone / WindTre** | 自有 | 各家主方案 | €15 起 | 依方案 | 依方案 | 依方案 |
+| 方案（使用網路） | 月費 | 義大利 GB | 歐盟漫遊 | 開卡費 |
+|---|---|---|---|---|
+| **iliad** GIGA 250（自有） | €11.99 | 250 GB | 18 GB | €9.99 |
+| **iliad** GIGA 150（自有） | €7.99 | 150 GB | 含漫遊 | €9.99 |
+| **ho.** 250 GB（Vodafone） | €8.95 | 250 GB | 含漫遊 | €2.99 起 |
+| **Very** 300 GB（WindTre） | €7.99 | 300 GB | 約 20 GB | SIM 免費 |
+| **Kena**（TIM） | €5.99–7.99 | 200–300 GB | 12–15 GB | 依促銷 |
+| **TIM / Vodafone / WindTre** 主方案 | €15 起 | 依方案 | 依方案 | 依方案 |
 
 幾個看表格看不出來的重點：
 
@@ -92,6 +111,28 @@ pair_lang: null
 - **英文支援是硬需求** → 這點所有義大利電信都不理想，但三大電信的門市比較可能遇到會講英文的店員；MVNO 幾乎只能靠 Google 翻譯
 
 補一句：**不論選哪一家，都要先有稅號**，所以順序上一定是稅號 →手機門號。稅號怎麼辦看[這篇](/zh-tw/italy-codice-fiscale/)。
+
+## 題外話：隔壁那間咖啡
+
+辦完卡就在旁邊這間 Ristò 坐下來，cappuccino 超好喝，優格也很不錯。如果你也要跑 Portello 這趟，順路值得停一下。
+
+<figure class="place-card">
+  <div class="place-media">
+    <img src="/assets/posts/italy-iliad-sim/risto-breakfast.jpeg" alt="Ristò 的兩杯 cappuccino、莓果優格與火腿三明治" loading="lazy" decoding="async" />
+    <iframe
+      title="Ristò, Milano"
+      src="https://www.google.com/maps?q=45.4904957,9.1472004&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <figcaption>
+    <strong>Ristò</strong>
+    <span>就在 Unieuro Portello 旁邊，走路一分鐘</span>
+    <a href="https://www.google.com/maps/place/Rist%C3%B2/@45.4904957,9.1472004,17z" target="_blank" rel="noopener">在 Google Maps 開啟 →</a>
+  </figcaption>
+</figure>
 
 ## 參考資料
 

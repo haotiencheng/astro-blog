@@ -92,6 +92,7 @@ Once submitted you get a confirmation email like this one. From there it is just
 - **Passport** (original)
 - **Passport copy**
 - **Copy of your visa page**
+- **Proof of enrolment**: I used the visa letter from POLIMI (Politecnico di Milano)
 - **Photos**: two passport photos (mine were not needed, but bring them anyway)
 - **Your address in Italy**: I used my dorm address
 - **A pen**: something may need correcting on the spot

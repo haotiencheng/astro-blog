@@ -32,6 +32,7 @@ marked.use({
 import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
 import { getReadingTime } from "../../utils/postHelpers";
+import { getViewCounts } from "../../lib/view-counts";
 
 // Detect MDX files at build time via Vite — no runtime fs needed
 const mdxFiles = new Set(
@@ -94,6 +95,8 @@ let Content: any = null;
 let htmlContent = "";
 // Same helper the homepage list uses, so both places show the same number
 const readingTime = getReadingTime(body);
+// Last known count, inlined so the meta row is complete on first paint
+const viewsSeed = (await getViewCounts())[slug] ?? 0;
 
 if (isMdx) {
   const rendered = await render(post);
@@ -118,6 +121,7 @@ if (isMdx) {
   pairSlug={pairSlug}
   pairLang={pairLang}
   readingTime={readingTime}
+  viewsSeed={viewsSeed}
   relatedPosts={relatedPosts}
 >
   {isMdx ? <Content /> : <Fragment set:html={htmlContent} />}

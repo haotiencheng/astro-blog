@@ -5,6 +5,7 @@ import BaseLayout from "./BaseLayout.astro";
 import RelatedPosts from "../components/RelatedPosts.astro";
 import { resolvePostImage } from "../utils/images";
 import { ui } from "../i18n/homepage";
+import { MIN_VIEWS, formatViews } from "../lib/views";
 
 interface Props {
   title: string;
@@ -18,6 +19,8 @@ interface Props {
   pairSlug: string | null;
   pairLang: "zh-tw" | "en" | null;
   readingTime: number;
+  /** Count from the last build; the client fetch corrects it. */
+  viewsSeed?: number;
   relatedPosts: CollectionEntry<"posts">[];
 }
 
@@ -33,8 +36,11 @@ const {
   pairSlug,
   pairLang,
   readingTime,
+  viewsSeed = 0,
   relatedPosts,
 } = Astro.props;
+
+const seedShown = viewsSeed >= MIN_VIEWS;
 
 const t = ui[lang];
 
@@ -173,11 +179,11 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
         <time datetime={publishedAt}>{formattedDate}</time>
         <span aria-hidden="true">·</span>
         <span>{t.readingTimeLabel(readingTime)}</span>
-        <span id="post-views-wrap" class="contents" data-slug={slug} style="display:none">
+        <span id="post-views-wrap" class="contents" data-slug={slug} style={seedShown ? undefined : "display:none"}>
           <span aria-hidden="true">·</span>
           <span class="inline-flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            <span id="post-views" class="font-mono inline-block text-right" style="min-width:3.5ch"></span>
+            <span id="post-views" class="font-mono inline-block text-right" style="min-width:3.5ch">{seedShown ? formatViews(viewsSeed) : ""}</span>
           </span>
         </span>
         {tags.length > 0 && (
@@ -283,22 +289,34 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.36.4/tocbot.min.js"></script>
 
 <script>
+  import { MIN_VIEWS, formatViews } from '../lib/views';
+
   document.addEventListener('DOMContentLoaded', () => {
     // Views counter.
-    // Below MIN_VIEWS the number is noise and reads as "nobody came here", so
-    // the whole block stays hidden. It starts hidden and is revealed after the
-    // fetch, which also keeps the meta row from reflowing mid-load.
-    const MIN_VIEWS = 100;
+    // The build inlines the last known count, so the number is already on the
+    // page; a repeat visitor's localStorage value is fresher still. The fetch
+    // only corrects what is shown, and hides the block below MIN_VIEWS, where
+    // the number is noise and reads as "nobody came here".
     const DEDUP_MS = 24 * 60 * 60 * 1000;
 
     const viewsWrap = document.getElementById('post-views-wrap') as HTMLElement | null;
     const viewsEl = document.getElementById('post-views');
     const slug = viewsWrap?.dataset.slug;
     if (slug && viewsEl) {
-      const fmt = (n: number) =>
-        n >= 1_000_000 ? `${+(n / 1_000_000).toFixed(1)}M`
-        : n >= 1_000   ? `${+(n / 1_000).toFixed(1)}K`
-        : String(n);
+      const show = (count: number) => {
+        if (count < MIN_VIEWS) {
+          viewsWrap.style.display = 'none';
+          return;
+        }
+        viewsEl.textContent = formatViews(count);
+        viewsWrap.style.display = 'contents';
+      };
+
+      const countKey = `views:${slug}`;
+      try {
+        const cached = Number(localStorage.getItem(countKey));
+        if (cached > 0) show(cached);
+      } catch { /* no cache, so the inlined seed stands until the fetch */ }
 
       // A reload inside the dedup window reads the count instead of bumping it.
       // The server dedups too (IP + UA); this just saves the round trip and the
@@ -312,14 +330,13 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
       fetch(`/api/views/${slug}`, { method: counted ? 'GET' : 'POST' })
         .then((r) => r.json() as Promise<{ count: number }>)
         .then(({ count }) => {
-          if (!counted) {
-            try { localStorage.setItem(key, String(Date.now())); } catch { /* ignore */ }
-          }
-          if (count < MIN_VIEWS) return;
-          viewsEl.textContent = fmt(count);
-          viewsWrap.style.display = 'contents';
+          try {
+            if (!counted) localStorage.setItem(key, String(Date.now()));
+            localStorage.setItem(countKey, String(count));
+          } catch { /* ignore */ }
+          show(count);
         })
-        .catch(() => { /* stays hidden */ });
+        .catch(() => { /* keeps whatever number is already on screen */ });
     }
 
     // Code blocks: language label + copy button (hover overlay, no header bar)

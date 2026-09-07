@@ -1,0 +1,147 @@
+---
+title: "用 Scriptable 做 iOS 桌面小工具：米蘭火車與輕軌的即時班次"
+slug: "scriptable-transit-widgets"
+lang: "zh-tw"
+excerpt: "住在米蘭 Bovisa，每天搭 Trenord 從 Bovisa 到 Cadorna。與其開官方 App 等它載入，不如把班次、延誤、月台釘在桌面上。程式是 Claude Code 寫的，我做的是設計：一個只有八行的畫面，要放什麼、什麼顏色、什麼時候該閉嘴。"
+feature_image: "/assets/posts/scriptable-transit-widgets/widgets-home.png"
+featured: false
+published_at: "2026-09-07T00:00:00.000Z"
+updated_at: "2026-09-07T00:00:00.000Z"
+created_at: "2026-09-07T00:00:00.000Z"
+tags:
+  - name: "Development"
+    slug: "development"
+pair_slug: null
+pair_lang: null
+---
+
+因為自己住在米蘭 Bovisa 附近，主要的交通方式就是搭 Trenord 的火車從 Bovisa 到 Cadorna，再轉地鐵或輕軌到市中心各個區域。所以就根據這個需求，丟給 Claude Code 讓他幫我在網路上找到可用的 API，並且串接起來，讓我可以看到接下來火車的班次以及月台、延誤時間等等。甚至有時候出現大問題的時候還會顯示一列警示，這時候我就知道該注意可能沒辦法搭火車之類的情況。
+
+女友住在 Giovenale 附近，所以我也同步做了一個類似的 widget，讓她在搭乘 15 號輕軌時可以一眼就看出班次，不會再看到輕軌從眼前跑走。
+
+![桌面上的兩個 widget](/assets/posts/scriptable-transit-widgets/widgets-home.png "上面是火車，下面是輕軌，放在主畫面往左滑的今日檢視")
+
+程式碼幾乎都是 Claude Code 寫的，所以這篇不太講怎麼寫，講的是我實際在決定的那些事：**一個只有八行的畫面，要放什麼、不放什麼。**
+
+## 為什麼不用官方 App
+
+官方 App 都有，問題是節奏不對：
+
+- 出門前那 10 秒，我要的是「下一班幾點、月台幾號、延不延誤」，不是開 App、等載入、選車站、再選日期
+- Trenord 跟 ATM 都沒有針對「我這條路線」的桌面 widget
+- 我真的會看的資訊只有八行
+
+[Scriptable](https://scriptable.app/) 補的就是這一段：一支 JavaScript 檔案，直接跑在 iOS 的 widget 裡。沒有 Xcode、沒有開發者帳號、沒有上架。
+
+我把它放在主畫面往左滑的**今日檢視**那一頁，跟其他 widget 排在一起。實際使用下來，滑過去的當下它通常就會更新，不用點也不用等，出門前滑一下就知道要不要跑。
+
+## 一個 widget 的組成
+
+![Scriptable widget 的三個部分](/assets/posts/scriptable-transit-widgets/widget-arch.png "資料來源 → 一支腳本 → 桌面")
+
+結構永遠是這三段：抓資料、整理、畫格子。排版是堆疊（stack）模型，跟 SwiftUI 很像；stack 畫不出來的東西（線路色塊、進度條、分隔線）就用 `DrawContext` 畫成圖片再塞回去。
+
+會影響體感的只有一個設定：`widget.refreshAfterDate` 只是「建議」，iOS 會依電量跟使用習慣自己決定何時重跑。所以我另外加了一行，讓點一下 widget 就強制執行：
+
+```js
+widget.url = `scriptable:///run?scriptName=${encodeURIComponent(Script.name())}`
+```
+
+## 設計：八行要放什麼
+
+這是整件事真正花時間的地方。API 回來的資料量遠超過八行，所以每一行都是取捨。
+
+### 顯示的時間是「真的會到的時間」
+
+表定 23:53、誤點 2 分，widget 上寫的是 **23:55**，旁邊才用小字標 `+2`。
+
+出門前我不在乎表定幾點，我在乎它幾點真的會到。誤點的數字留著只是為了讓我判斷這班可不可信，主角是那個時間。
+
+![火車 widget 的資料流](/assets/posts/scriptable-transit-widgets/trenord-flow.png "時刻表給骨架，官方 App 的內部 API 給延誤與月台，公告只留跟我有關的")
+
+### 取消的車不佔行
+
+一開始取消的班次也列出來、標紅字「CANC」。用了兩天就發現這很蠢：那班反正搭不到，卻佔掉一行。
+
+現在取消的車完全不列，只在標題旁邊記一筆「2 sopp.」。四行位置全部留給搭得到的車。
+
+### 顏色代表「我還來不來得及」
+
+輕軌那個 widget 我最喜歡的設計。時間的顏色不是裝飾，是把「走到站牌要 4 分鐘」寫進顯示邏輯：
+
+- **紅**：剩下 ≤ 4 分鐘，這班放棄
+- **橘**：4 到 8 分鐘，現在就要出門
+- **綠**：還有時間
+
+```js
+function minsColor(mins, walk) {
+  if (mins <= walk) return new Color("#FF3B30")
+  if (mins <= walk + 4) return new Color("#FF9500")
+  return new Color("#34C759")
+}
+```
+
+真正想知道的從來不是「幾點發車」，是「我現在該不該起身」。走路時間寫死在設定裡，剩下的交給顏色，掃一眼就有答案。
+
+![輕軌 widget 的合併規則](/assets/posts/scriptable-transit-widgets/tram-live.png "看板知道下一班，時刻表知道之後每一班")
+
+### 警示要嘛有用，要嘛閉嘴
+
+Trenord 每天會發幾十則公告，全塞進去等於沒有。所以疊了幾道濾網，只留下真的會影響我的：
+
+1. 嚴重程度不夠的（info 等級）不打擾
+2. 太舊的不算；如果後面有一則說「已恢復正常」，前面的全部作廢
+3. 公告點名的車次或線路，要跟我當下顯示的那幾班重疊。整條線的公告才無條件算數
+4. 剩下的才翻譯成中文，壓成一行：`⚠️ 23:14 米蘭樞紐・線路故障・誤點`
+
+翻譯沒有接 API。Trenord 的新聞稿格式非常固定，都是「原因 + 影響 + 地點」，用正則對照表離線處理就夠了，不用金鑰也不會失敗。
+
+有警示的時候班次會少列一班，把空間讓給它。**這是刻意的：警示出現代表今天不正常，那它比第四班車重要。**
+
+### 一眼要能分辨的東西才給顏色
+
+線路色塊（S 藍、RE 紅、R 紫）、誤點分鐘（黃 / 橘 / 紅）、來自即時看板的綠點。除此之外全是灰階。
+
+月台號碼刻意做得很淡，因為那是我走到月台前一刻才需要的資訊，不該跟時間搶注意力。
+
+## 資料從哪來（以及通常會卡在哪）
+
+這部分我幾乎沒動手，是丟給 Claude Code 去翻官網前端在打哪些請求、參數怎麼組、回傳長什麼樣。整理出來的結論大概是這樣：
+
+- **時刻表**用 [Transitous](https://transitous.org/)，社群維運的開放大眾運輸路線規劃服務，不用申請金鑰。它會擋泛用的 User-Agent，要自報一個能辨識的名字
+- **火車的延誤跟月台**只有 Trenord 官網自己在用的端點有，而且回傳不是 JSON，整包 payload 是加密的，金鑰寫在官網前端。Scriptable 沒有 `crypto`，所以解密是在腳本裡自己實作的
+- **輕軌的即時等待時間**來自 ATM 站牌那塊電子看板背後的 API，擋在 Akamai 後面，要換成瀏覽器的 UA 加 Referer 才過得去。它只知道「下一班」，所以其餘班次還是得靠時刻表補
+- 兩邊合併時有個狀況要處理：如果看板的等待時間比表定多超過 15 分鐘，那通常不是誤點，是這班被抽掉了、看板顯示的其實是再下一班。這種時候顯示「+18」會誤導，所以不顯示
+
+會卡住的地方幾乎都是同一類：**資料不是沒有，是藏在官方 App 自己在用的介面裡，而且不歡迎你直接拿。** 這種翻找工作交給 AI 效率很高，我只要驗收「這個數字是不是真的」。
+
+## 為什麼測試成本很低：iCloud
+
+這點比想像中重要。Scriptable 的腳本直接存在 iCloud Drive 裡，所以流程是這樣：
+
+1. Claude Code 在 Mac 上改檔案
+2. iCloud 自己同步
+3. iPhone 打開 Scriptable，腳本已經是新版，按執行就看到結果
+
+沒有編譯、沒有連線、沒有安裝、沒有 TestFlight。改一行、滑到手機看一眼、不對再改，這個迴圈幾乎沒有摩擦。也是因為這樣，那些「這行字太大」「這個顏色不夠明顯」「這個資訊根本用不到」的微調才做得下去，而那些微調正好是這種 widget 唯一有價值的部分。
+
+## 最低成本的版本
+
+不是每個 widget 都要解密。回台灣時我做過一個三重運動中心的人數 widget，因為官網就有一支回 JSON 的網址：
+
+```js
+const json = await new Request("http://www.scsports.com.tw/proxy1.php").loadJSON()
+const gym = { current: +json.gym[0], max: +json.gym[1] }
+```
+
+剩下的就是把比例畫成進度條，配「空 / 適中 / 擁擠」三個色塊。從想到到能用大概半小時。要開始的話從這種等級開始就好。
+
+## 想自己做的話
+
+1. App Store 裝 [Scriptable](https://scriptable.app/)（免費）
+2. 先確認資料抓得到：一行 `new Request(url).loadJSON()`，在 App 裡按執行就能看結果
+3. 排版先求有，能跑再談好看
+4. 長按主畫面 → 加入 Scriptable widget → 選你的腳本
+5. Widget Parameter 可以當參數用。我用 `out` / `in` 讓同一支腳本擺兩個 widget，各顯示一個方向
+
+最後一點是我覺得最值得的地方：這些 widget 不通用，也不需要通用。它只服務「我從 Bovisa 到 Cadorna」這一條路線，所以它可以把八行空間用到極致。這種只有一個使用者的軟體，以前不值得花時間寫，現在值得。

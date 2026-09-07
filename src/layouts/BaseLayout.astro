@@ -80,7 +80,9 @@ const editorHref =
       <link rel="alternate" hreflang={h.lang} href={h.url} />
     ))}
     <slot name="head" />
-    <Analytics />
+    {/* Production builds only. The dev server was reporting to GA as well, and
+        localhost accounted for a quarter of the pageviews in the last week. */}
+    {import.meta.env.PROD && <Analytics />}
   </head>
   <body class="bg-white text-gray-900 antialiased">
     <nav class="border-b border-gray-200">

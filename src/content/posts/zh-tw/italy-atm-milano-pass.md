@@ -3,7 +3,7 @@ title: "米蘭 ATM 交通月票：App 直接買，Under 27 只要 22 歐（2026.
 slug: "italy-atm-milano-pass"
 lang: "zh-tw"
 excerpt: "網路上一堆教學叫你寄 email、跑 ATM Point 排隊抽號碼牌，其實米蘭的交通月票在 ATM App 上就能買完。這篇記錄實際步驟、Under 27 的 22 歐票價怎麼算，以及各種票種的官方價格。"
-feature_image: "/assets/posts/italy-atm-milano-pass/card-active.png"
+feature_image: "/assets/posts/italy-atm-milano-pass/card-crop.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -19,7 +19,9 @@ pair_lang: null
 
 我們還跑去實體的 Cadorna ATM Point 排隊，結果警衛拿給我們一張隔好幾天的預約號碼牌 XD 排隊抽號碼牌其實滿好笑的。
 
-![ATM Point 的預約號碼牌](/assets/posts/italy-atm-milano-pass/atm-point-ticket.png "現場排到的 ATM Point 預約，時間排在好幾天後。後來發現 App 就能買，就趕快取消讓給別人")
+因為現場拿到的時間太久，我後來又趕快在 App 上另外約了一個時段。
+
+![ATM Point 的預約畫面](/assets/posts/italy-atm-milano-pass/atm-point-ticket.png "現場拿到的號碼要等很久，所以我趕快在 App 上另外約了一個時間。後來發現 App 直接就能買票，就把這個預約取消讓給別人")
 
 ## 你只需要三樣東西
 
@@ -69,7 +71,7 @@ pair_lang: null
 6. 辦好虛擬卡之後，要再把交通 pass load 進卡裡面。因為稅號會包含你的生日資訊，年齡如果在 Under 27 範圍內，系統就會顯示對應的票價供你購買
 7. 買好之後你的卡片就會顯示 **Available subscriptions** 以及 **Card active** 的圖示
 
-![卡片啟用完成的畫面](/assets/posts/italy-atm-milano-pass/card-active.png "顯示 Card active 就完成了，之後刷卡就是停在這個畫面（卡號與照片已遮蔽）")
+![卡片啟用完成的畫面](/assets/posts/italy-atm-milano-pass/card-active.png "顯示 Card active 就完成了，之後刷卡就是停在這個畫面（卡號與大頭照已遮蔽）")
 
 ## 怎麼刷
 
@@ -77,7 +79,7 @@ pair_lang: null
 
 ## 心得
 
-在 App 上的購買流程清楚又方便，也省了幾趟跑 ATM Point 跟預約的時間。原本以為要預約實體，趕快在 App 上約了一個時間，結果現場警衛給的時間甚至更晚，後來發現可以 App 上買就趕快取消讓給別人辦理了。
+在 App 上的購買流程清楚又方便，也省了幾趟跑 ATM Point 跟預約的時間。原本以為一定要臨櫃辦，所以先在 App 上約了時段（現場警衛給的時間甚至更晚），後來發現票直接在 App 上就買得到，就把預約取消讓給別人辦理了。
 
 ## 參考資料
 

@@ -3,7 +3,7 @@ title: "Milan ATM Travel Pass: Buy It in the App, €22 Under 27 (Sept 2026)"
 slug: "italy-atm-milano-pass"
 lang: "en"
 excerpt: "Half the guides online tell you to email someone, fill in a pile of forms, or queue at an ATM Point. You can just buy the Milan travel pass in the ATM app. Here are the actual steps, how the €22 Under 27 fare works, and what every pass type costs."
-feature_image: "/assets/posts/italy-atm-milano-pass/card-active.png"
+feature_image: "/assets/posts/italy-atm-milano-pass/card-crop.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -19,7 +19,9 @@ There are a lot of odd guides online telling you to email someone, fill in a pil
 
 We did go and queue at the Cadorna ATM Point, and the security guard handed us a booking slip for several days later. Queueing for a ticket to queue is pretty funny in hindsight.
 
-![ATM Point booking slip](/assets/posts/italy-atm-milano-pass/atm-point-ticket.png "The ATM Point booking we got in person, scheduled days out. We cancelled it once we realised the app could do the whole thing")
+Since that slot was so far out, I went and booked an earlier one in the app instead.
+
+![ATM Point booking in the app](/assets/posts/italy-atm-milano-pass/atm-point-ticket.png "The slot I booked in the app after seeing how far out the in-person number was. We cancelled it once we realised the app sells the pass directly")
 
 ## You only need three things
 
@@ -69,7 +71,7 @@ A few things worth knowing:
 6. Once the virtual card exists, load a pass onto it. Since your tax code carries your date of birth, the app shows the Under 27 price automatically if you qualify
 7. After paying, the card shows **Available subscriptions** and a **Card active** badge
 
-![The active card screen](/assets/posts/italy-atm-milano-pass/card-active.png "Card active means you are done. This is also the screen you tap in with (card number and photo redacted)")
+![The active card screen](/assets/posts/italy-atm-milano-pass/card-active.png "Card active means you are done. This is also the screen you tap in with (card number and portrait redacted)")
 
 ## How to tap in
 
@@ -77,7 +79,7 @@ Tapping in is a slightly odd experience: open the app, tap **Wallet**, bring up 
 
 ## Verdict
 
-The in-app flow is clear and quick, and it saves several trips to an ATM Point plus the booking wait. We had already booked an in-person slot, then found the guard's suggested time was even later than the app's, so once we realised the app could do it we cancelled and freed the slot for someone else.
+The in-app flow is clear and quick, and it saves several trips to an ATM Point plus the booking wait. I had assumed a counter visit was mandatory, so I booked a slot in the app (the guard's in-person date was even later), and once it turned out the pass can be bought in the app outright, we cancelled and freed the slot for someone else.
 
 ## References
 

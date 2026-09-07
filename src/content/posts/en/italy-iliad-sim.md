@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "A phone plan is the second thing to sort out after landing in Italy. I went with iliad's GIGA 250, €11.99 a month for 250 GB. Here is how buying it in Milan actually went: the documents, the on-camera check, and the few things I only found out after using it for a week. Then a comparison of iliad, ho., Very, Kena and the big three."
 feature_image: "/assets/posts/italy-iliad-sim/iliad-giga250-plan.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T09:00:00.000Z"
+updated_at: "2026-09-07T09:00:00.000Z"
+created_at: "2026-09-07T09:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

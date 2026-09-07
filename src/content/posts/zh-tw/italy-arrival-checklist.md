@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "稅號、電信、居留證、交通月票，這四件事卡住了每個剛落地的留學生。我跟女友想趕在開學前出去玩，所以把它們壓在三天內處理完。這篇是完整的時間軸、我建議的辦理順序，以及四篇細節教學的入口。"
 feature_image: "/assets/posts/italy-arrival-checklist/arrival-flow.png"
 featured: true
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T12:00:00.000Z"
+updated_at: "2026-09-07T12:00:00.000Z"
+created_at: "2026-09-07T12:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

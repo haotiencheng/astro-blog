@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "來義大利留學之後，我的住宿費、學費都是用 Wise 繳的。這篇講怎麼從台灣一次把錢匯進 Wise（國際電匯加約定帳號的組合）、為什麼匯率比銀行划算、虛擬卡與實體卡怎麼申請、活存利息 1% 的實際狀況，還有把地址從台灣改成義大利時客服的實際反應。"
 feature_image: "/assets/posts/italy-wise-money/wise-card-hero.webp"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T13:00:00.000Z"
+updated_at: "2026-09-07T13:00:00.000Z"
+created_at: "2026-09-07T13:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

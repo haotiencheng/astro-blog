@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "Tax code, phone plan, residence permit, travel pass. These four jobs block every student who has just landed. We wanted to travel before term started, so we compressed them into three days. Here is the timeline, the order I would do it in, and the four detailed guides."
 feature_image: "/assets/posts/italy-arrival-checklist/arrival-flow-en.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T12:00:00.000Z"
+updated_at: "2026-09-07T12:00:00.000Z"
+created_at: "2026-09-07T12:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "Non-EU citizens have 8 days after arriving in Italy to file the residence permit application at a post office. Here is how it went in Milan: getting hold of the kit, what goes in the envelope, paying and filing, including the afternoon the Duomo post office turned us away because the day's quota was full."
 feature_image: "/assets/posts/italy-permesso-di-soggiorno/assicurata-receipt.jpeg"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T10:00:00.000Z"
+updated_at: "2026-09-07T10:00:00.000Z"
+created_at: "2026-09-07T10:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "非歐盟公民入境義大利之後，8 天內要去郵局送出居留證（Permesso di Soggiorno）的申請。這篇記錄我在米蘭領 kit、準備文件、繳費送件的過程，包含大教堂郵局當天名額額滿把我擋下來的插曲，還有哪些地方如果重來一次我會做不一樣。"
 feature_image: "/assets/posts/italy-permesso-di-soggiorno/assicurata-receipt.jpeg"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T10:00:00.000Z"
+updated_at: "2026-09-07T10:00:00.000Z"
+created_at: "2026-09-07T10:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

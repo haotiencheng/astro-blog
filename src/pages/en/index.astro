@@ -1,12 +1,13 @@
 ---
 import { getCollection } from "astro:content";
+import { byNewest } from "../../lib/sort-posts";
 import HomepageLayout from "../../layouts/HomepageLayout.astro";
 import { ui } from "../../i18n/homepage";
 
 const allPosts = await getCollection("posts");
 const langPosts = allPosts
   .filter((p) => p.data.lang === "en")
-  .sort((a, b) => new Date(b.data.published_at).getTime() - new Date(a.data.published_at).getTime());
+  .sort(byNewest);
 
 const featured = langPosts.filter((p) => p.data.featured);
 const carouselPosts = featured.length > 0 ? featured : langPosts.slice(0, 3);

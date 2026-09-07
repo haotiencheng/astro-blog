@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "住在米蘭 Bovisa，每天搭 Trenord 從 Bovisa 到 Cadorna。與其開官方 App 等它載入，不如把班次、延誤、月台釘在桌面上。程式是 Claude Code 寫的，我做的是設計：一個只有八行的畫面，要放什麼、什麼顏色、什麼時候該閉嘴。"
 feature_image: "/assets/posts/scriptable-transit-widgets/widgets-home.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-08T10:00:00.000Z"
+updated_at: "2026-09-08T10:00:00.000Z"
+created_at: "2026-09-08T10:00:00.000Z"
 tags:
   - name: "Development"
     slug: "development"

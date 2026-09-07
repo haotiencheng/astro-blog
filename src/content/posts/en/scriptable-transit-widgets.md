@@ -5,9 +5,9 @@ lang: "en"
 excerpt: "I live near Bovisa in Milan and take the Trenord train to Cadorna every day. Instead of opening the official app and waiting for it to load, I pinned departures, delays and platforms to my home screen. Claude Code wrote the code. What I did was the design: deciding what belongs on a screen that only fits eight lines."
 feature_image: "/assets/posts/scriptable-transit-widgets/widgets-home.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-08T10:00:00.000Z"
+updated_at: "2026-09-08T10:00:00.000Z"
+created_at: "2026-09-08T10:00:00.000Z"
 tags:
   - name: "Development"
     slug: "development"

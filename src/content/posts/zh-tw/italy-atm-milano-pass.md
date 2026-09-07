@@ -5,9 +5,9 @@ lang: "zh-tw"
 excerpt: "網路上一堆教學叫你寄 email、跑 ATM Point 排隊抽號碼牌，其實米蘭的交通月票在 ATM App 上就能買完。這篇記錄實際步驟、Under 27 的 22 歐票價怎麼算，以及各種票種的官方價格。"
 feature_image: "/assets/posts/italy-atm-milano-pass/card-crop.png"
 featured: false
-published_at: "2026-09-07T00:00:00.000Z"
-updated_at: "2026-09-07T00:00:00.000Z"
-created_at: "2026-09-07T00:00:00.000Z"
+published_at: "2026-09-07T11:00:00.000Z"
+updated_at: "2026-09-07T11:00:00.000Z"
+created_at: "2026-09-07T11:00:00.000Z"
 tags:
   - name: "Italy"
     slug: "italy"

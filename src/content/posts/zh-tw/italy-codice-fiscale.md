@@ -27,7 +27,7 @@ pair_lang: null
 
 ## 如何線上預約
 
-預約網站在這裡：[Prenota un appuntamento — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/prenota-un-appuntamento)
+預約網站在這裡：[Prenota un appuntamento（Agenzia delle Entrate）](https://www.agenziaentrate.gov.it/portale/prenota-un-appuntamento)
 
 **注意：不要切成英文語系**，切換之後預約流程似乎會跳掉，全程維持義大利文比較保險。
 
@@ -117,5 +117,5 @@ pair_lang: null
 
 ## 參考資料
 
-- [Tax identification number for foreign citizens — Agenzia delle Entrate](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)
-- [義大利稅號 Codice Fiscale 申請教學 — ciaogogowang](https://ciaogogowang.com/2018/10/15/codice_fiscale_italy/)
+- [Tax identification number for foreign citizens（Agenzia delle Entrate）](https://www.agenziaentrate.gov.it/portale/en/web/english/nse/individuals/tax-identification-number-for-foreign-citizens)
+- [義大利稅號 Codice Fiscale 申請教學（ciaogogowang）](https://ciaogogowang.com/2018/10/15/codice_fiscale_italy/)

@@ -31,6 +31,7 @@ marked.use({
 });
 import { getCollection, render } from "astro:content";
 import PostLayout from "../../layouts/PostLayout.astro";
+import { getReadingTime } from "../../utils/postHelpers";
 
 // Detect MDX files at build time via Vite — no runtime fs needed
 const mdxFiles = new Set(
@@ -91,24 +92,17 @@ const isMdx = mdxFiles.has(`${lang}/${slug}`);
 
 let Content: any = null;
 let htmlContent = "";
-let readingTime = 1;
+// Same helper the homepage list uses, so both places show the same number
+const readingTime = getReadingTime(body);
 
 if (isMdx) {
   const rendered = await render(post);
   Content = rendered.Content;
-  const text = body.replace(/<[^>]+>/g, " ").replace(/[#*`_[\]()!]/g, " ").replace(/\s+/g, " ").trim();
-  readingTime = lang === "zh-tw"
-    ? Math.max(1, Math.round(text.length / 300))
-    : Math.max(1, Math.round(text.split(" ").length / 200));
 } else {
   // Auto-detect: Ghost-migrated posts start with "<" (raw HTML); new posts use Markdown
   const rawHtml = body.startsWith("<") ? body : await marked(body);
   // Demote H1 tags in the content body to H2 — the page <h1> is the post title
   htmlContent = rawHtml.replace(/<h1(\s|>)/gi, "<h2$1").replace(/<\/h1>/gi, "</h2>");
-  const text = htmlContent.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  readingTime = lang === "zh-tw"
-    ? Math.max(1, Math.round(text.length / 300))
-    : Math.max(1, Math.round(text.split(" ").length / 200));
 }
 ---
 

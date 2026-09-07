@@ -1,0 +1,89 @@
+<style>
+  html, body { margin: 0; padding: 0; }
+  #frame {
+    width: 1200px; height: 630px;
+    background: #fffdf7;
+    font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive;
+    color: #1b1b1f;
+    position: relative;
+  }
+  svg { display: block; }
+  .t { font-family: "Chalkboard", "Bradley Hand", "Comic Sans MS", cursive; }
+</style>
+
+<div id="frame">
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3b3b40"/>
+    </marker>
+  </defs>
+
+  <!-- title -->
+  <text class="t" x="60" y="72" font-size="40" fill="#1b1b1f">Landing in Italy: the paperwork</text>
+  <path d="M60 86 C 180 80, 300 92, 424 84" stroke="#e8a33d" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.75"/>
+  <text class="t" x="62" y="118" font-size="21" fill="#6b6b70">Tax code first. Everything else queues behind it</text>
+
+  <!-- step 1: flight -->
+  <path d="M62 178 C 62 166, 70 160, 84 160 L 236 161 C 250 160, 258 168, 257 180 L 258 226 C 259 240, 250 246, 236 245 L 82 244 C 68 245, 61 238, 62 224 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="86" y="198" font-size="22" fill="#1b1b1f">1. Fix your flights</text>
+  <text class="t" x="86" y="226" font-size="17" fill="#6b6b70">Work backwards from this</text>
+
+  <!-- arrow -->
+  <path d="M266 203 C 300 197, 316 209, 348 203" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- step 2: VPN booking -->
+  <path d="M356 178 C 356 166, 364 160, 378 160 L 566 161 C 580 160, 588 168, 587 180 L 588 226 C 589 240, 580 246, 566 245 L 376 244 C 362 245, 355 238, 356 224 Z"
+        fill="#fff8e8" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="380" y="198" font-size="22" fill="#1b1b1f">2. Book over a VPN</text>
+  <text class="t" x="380" y="226" font-size="17" fill="#6b6b70">7 to 14 days before you fly</text>
+
+  <!-- arrow -->
+  <path d="M596 203 C 630 197, 646 209, 678 203" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- step 3: codice fiscale (highlight) -->
+  <path d="M688 168 C 688 154, 698 147, 714 147 L 934 148 C 950 147, 959 156, 958 170 L 959 238 C 960 254, 950 261, 934 260 L 712 259 C 696 260, 687 252, 688 238 Z"
+        fill="#fdf0d5" stroke="#c98a12" stroke-width="3.4"/>
+  <path d="M694 173 C 694 159, 704 152, 720 152 L 940 153 C 956 152, 965 161, 964 175 L 965 243 C 966 259, 956 266, 940 265 L 718 264 C 702 265, 693 257, 694 243 Z"
+        fill="none" stroke="#c98a12" stroke-width="1.6" opacity="0.55"/>
+  <text class="t" x="714" y="192" font-size="24" fill="#1b1b1f">3. Codice Fiscale</text>
+  <text class="t" x="714" y="222" font-size="17" fill="#6b6b70">Same day, and it gates the rest</text>
+  <text class="t" x="714" y="248" font-size="17" fill="#c07f0d">← blocked here, nothing else moves</text>
+
+  <!-- branch lines down -->
+  <path d="M824 268 C 824 300, 700 300, 700 340" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+  <path d="M824 268 C 824 300, 950 300, 950 340" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- step 4a: SIM -->
+  <path d="M566 352 C 566 340, 574 334, 588 334 L 806 335 C 820 334, 828 342, 827 354 L 828 404 C 829 418, 820 424, 806 423 L 586 422 C 572 423, 565 416, 566 402 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="590" y="372" font-size="22" fill="#1b1b1f">4. SIM (iliad)</text>
+  <text class="t" x="590" y="400" font-size="17" fill="#6b6b70">€11.99/month, 250 GB</text>
+
+  <!-- step 4b: travel pass -->
+  <path d="M856 352 C 856 340, 864 334, 878 334 L 1096 335 C 1110 334, 1118 342, 1117 354 L 1118 404 C 1119 418, 1110 424, 1096 423 L 876 422 C 862 423, 855 416, 856 402 Z"
+        fill="#ffffff" stroke="#3b3b40" stroke-width="2.6"/>
+  <text class="t" x="880" y="372" font-size="22" fill="#1b1b1f">5. ATM travel pass</text>
+  <text class="t" x="880" y="400" font-size="17" fill="#6b6b70">€22 if under 27</text>
+
+  <!-- arrow down to permit -->
+  <path d="M690 430 C 660 470, 470 470, 420 500" stroke="#3b3b40" stroke-width="2.6" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- step 5: permit -->
+  <path d="M118 500 C 118 486, 128 479, 144 479 L 404 480 C 420 479, 429 488, 428 502 L 429 566 C 430 582, 420 589, 404 588 L 142 587 C 126 588, 117 580, 118 566 Z"
+        fill="#fdece9" stroke="#c0392b" stroke-width="3"/>
+  <text class="t" x="144" y="524" font-size="23" fill="#1b1b1f">6. Residence permit</text>
+  <text class="t" x="144" y="552" font-size="18" fill="#c0392b">Must be filed within 8 days</text>
+  <text class="t" x="144" y="576" font-size="16" fill="#6b6b70">Post office kit, keep receipts</text>
+
+  <!-- note bubble -->
+  <path d="M492 494 C 492 482, 500 476, 514 476 L 742 477 C 756 476, 764 484, 763 496 L 764 560 C 765 574, 756 580, 742 579 L 512 578 C 498 579, 491 572, 492 558 Z"
+        fill="#f2f7ff" stroke="#4a6fa5" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <text class="t" x="512" y="512" font-size="18" fill="#33517a">Three days is enough</text>
+  <text class="t" x="512" y="538" font-size="16" fill="#5a7296">Landed 24 Aug, all filed by 26 Aug</text>
+  <text class="t" x="512" y="562" font-size="16" fill="#5a7296">Train to Lugano on the 27th</text>
+
+  <text class="t" x="820" y="560" font-size="18" fill="#8a8a90">reallyniceday.com</text>
+</svg>
+</div>

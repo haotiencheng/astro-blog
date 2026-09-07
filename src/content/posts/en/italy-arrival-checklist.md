@@ -3,7 +3,7 @@ title: "Moving to Italy: Clearing the Paperwork in Three Days (Sept 2026)"
 slug: "italy-arrival-checklist"
 lang: "en"
 excerpt: "Tax code, phone plan, residence permit, travel pass. These four jobs block every student who has just landed. We wanted to travel before term started, so we compressed them into three days. Here is the timeline, the order I would do it in, and the four detailed guides."
-feature_image: null
+feature_image: "/assets/posts/italy-arrival-checklist/arrival-flow-en.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -43,49 +43,63 @@ Having been through it once, this is the sequence I would use:
 
 Done in that order, you clear the whole thing quickly and cheaply (the monthly pass being the cheap way to move around while doing it).
 
+![The order of the four jobs](/assets/posts/italy-arrival-checklist/arrival-flow-en.png "The whole sequence on one page: the tax code gates the SIM, the pass and the permit")
+
 The logic is simple: **the tax code gates the other three**. The carrier wants it, the travel pass wants it, and the permit form has a field for it. So book that appointment as early as you can and queue everything else behind it.
 
 ## The four jobs in detail
 
-### 1. Codice Fiscale
+<a class="link-card" href="/en/italy-codice-fiscale/">
+  <img src="/assets/posts/italy-codice-fiscale/feature-appointment-email.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>1. Codice Fiscale</strong>
+    <span>Book online, show up, walk out with it the same day. Every booking screen and what to bring</span>
+  </span>
+</a>
 
-Book online, show up in person, walk out with it the same day. Every booking screen and the documents to bring:
+<a class="link-card" href="/en/italy-iliad-sim/">
+  <img src="/assets/posts/italy-iliad-sim/iliad-giga250-plan.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>2. A phone plan</strong>
+    <span>iliad GIGA 250 at €11.99 for 250 GB, compared against ho., Very, Kena and the big three</span>
+  </span>
+</a>
 
-[Getting an Italian Codice Fiscale →](/en/italy-codice-fiscale/)
+<a class="link-card" href="/en/italy-permesso-di-soggiorno/">
+  <img src="/assets/posts/italy-permesso-di-soggiorno/assicurata-receipt.jpeg" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>3. Permesso di Soggiorno</strong>
+    <span>Filed within 8 days of arrival, and the one most likely to go wrong. We were turned away once</span>
+  </span>
+</a>
 
-### 2. A phone plan
+<a class="link-card" href="/en/italy-atm-milano-pass/">
+  <img src="/assets/posts/italy-atm-milano-pass/card-crop.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>4. The travel pass</strong>
+    <span>No ATM Point visit needed, the app sells it, and the monthly pass is €22 under 27</span>
+  </span>
+</a>
 
-I went with iliad's GIGA 250 at €11.99 for 250 GB. The post also compares iliad against ho., Very, Kena and the big three:
+## Money and everything else
 
-[iliad Italy SIM guide and carrier comparison →](/en/italy-iliad-sim/)
+I pay rent and tuition through Wise, where the rate and the funding costs are easier to control than a bank's. And if you are a student or aged 18 to 24, Amazon Prime is free for 90 days, which is handy for kitting out a room. Both have their own write-ups:
 
-### 3. Permesso di Soggiorno
+<a class="link-card" href="/en/italy-wise-money/">
+  <img src="/assets/posts/italy-wise-money/wise-card.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>Paying tuition and rent in Europe with Wise</strong>
+    <span>Funding it from Taiwan, why the rate beats a bank, the virtual card and the 1% interest</span>
+  </span>
+</a>
 
-Has to be filed within 8 days of arrival, and it is the one most likely to go wrong. We got turned away from the main post office once:
-
-[Applying for an Italian Permesso di Soggiorno →](/en/italy-permesso-di-soggiorno/)
-
-### 4. The travel pass
-
-No need to visit an ATM Point at all, the app sells it, and the monthly pass is €22 if you are under 27:
-
-[Milan ATM travel pass: buy it in the app →](/en/italy-atm-milano-pass/)
-
-## Money: Wise
-
-If you are studying in Italy, Wise is worth having as your European money rail. I pay rent and tuition through it, and money moves in and out fast enough that it has been a good experience.
-
-The usual flow: you or your parents go into a bank branch in Taiwan and set up an **international wire plus a pre-registered transfer account**, which lets you fund Wise in one go. A wire costs somewhere north of NT$1,000 each time, so larger, less frequent transfers work out better. The pre-registered account is what saves you from going back to the counter every time.
-
-On rates, Wise uses the real mid-market rate with transparent fees, so you avoid the chunky fee or the built-in spread a normal bank takes.
-
-[My Wise invite link](https://wise.com/invite/ilpc/haotienc1) (I get a small referral bonus if you sign up through it)
-
-## One extra: 90 days of Amazon Prime for students
-
-Amazon is one of the biggest shopping and delivery platforms in Italy. If you are a student with a university email, or aged 18 to 24, you can get [90 days of Amazon Prime free](https://www.amazon.it/amazonprime?primeCampaignId=studentWlpPrimeRedir&language=en).
-
-I bought a pile of small appliances right after landing, and with Prime most of it arrived the next day. If your dorm room needs sheets or pillows, order them before you move in so you are not hunting for shops in an unfamiliar city on day one.
+<a class="link-card" href="/en/italy-amazon-prime-student/">
+  <img src="/assets/posts/italy-amazon-prime-student/prime-signup.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>90 days of Amazon Prime free for students</strong>
+    <span>Free for students and 18 to 24 year olds, next-day delivery, Deliveroo membership included</span>
+  </span>
+</a>
 
 ## Finally
 

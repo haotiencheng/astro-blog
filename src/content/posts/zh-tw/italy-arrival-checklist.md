@@ -3,7 +3,7 @@ title: "台灣到義大利留學：落地三天搞定所有行政手續（2026.0
 slug: "italy-arrival-checklist"
 lang: "zh-tw"
 excerpt: "稅號、電信、居留證、交通月票，這四件事卡住了每個剛落地的留學生。我跟女友想趕在開學前出去玩，所以把它們壓在三天內處理完。這篇是完整的時間軸、我建議的辦理順序，以及四篇細節教學的入口。"
-feature_image: null
+feature_image: "/assets/posts/italy-arrival-checklist/arrival-flow.png"
 featured: false
 published_at: "2026-09-07T00:00:00.000Z"
 updated_at: "2026-09-07T00:00:00.000Z"
@@ -43,49 +43,63 @@ pair_lang: null
 
 依照這個流程，照理來講可以用最快的效率跟最少的錢（交通月票）解決繁瑣的義大利行政事務。
 
+![四件事的辦理順序](/assets/posts/italy-arrival-checklist/arrival-flow.png "一張圖看完整個順序：稅號卡住的話，電信、月票、居留證都動不了")
+
 順序背後的邏輯很簡單：**稅號是其他三件事的前提**。電信要稅號、交通月票要稅號、居留證表格也要填稅號。所以稅號預約愈早排愈好，其他三件事都排在它後面。
 
 ## 四件事的細節
 
-### 1. 稅號 Codice Fiscale
+<a class="link-card" href="/zh-tw/italy-codice-fiscale/">
+  <img src="/assets/posts/italy-codice-fiscale/feature-appointment-email.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>1. 稅號 Codice Fiscale</strong>
+    <span>線上預約、臨櫃辦理，當天就能拿到。預約每一步的截圖與要帶的文件</span>
+  </span>
+</a>
 
-線上預約、臨櫃辦理，當天就能拿到。詳細的預約每一步截圖、要帶的文件都在這篇：
+<a class="link-card" href="/zh-tw/italy-iliad-sim/">
+  <img src="/assets/posts/italy-iliad-sim/iliad-giga250-plan.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>2. 手機門號</strong>
+    <span>我辦 iliad GIGA 250，月費 €11.99、250 GB。也比較了 ho.、Very、Kena 與三大電信</span>
+  </span>
+</a>
 
-[義大利稅號 Codice Fiscale 申請流程 →](/zh-tw/italy-codice-fiscale/)
+<a class="link-card" href="/zh-tw/italy-permesso-di-soggiorno/">
+  <img src="/assets/posts/italy-permesso-di-soggiorno/assicurata-receipt.jpeg" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>3. 居留證 Permesso di Soggiorno</strong>
+    <span>入境後 8 天內要送出，四件事裡最容易出包的一件，我就被大郵局擋下來過</span>
+  </span>
+</a>
 
-### 2. 手機門號
+<a class="link-card" href="/zh-tw/italy-atm-milano-pass/">
+  <img src="/assets/posts/italy-atm-milano-pass/card-crop.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>4. 交通月票</strong>
+    <span>不用跑 ATM Point，App 上就買得到，27 歲以下月票只要 €22</span>
+  </span>
+</a>
 
-我辦的是 iliad GIGA 250，月費 11.99 歐、250 GB。裡面也把 iliad 跟 ho.、Very、Kena、三大電信的方案做了比較：
+## 錢的部分與其他
 
-[義大利 iliad 辦卡心得與電信商比較 →](/zh-tw/italy-iliad-sim/)
+住宿費、學費我都是用 Wise 繳的，匯率跟入金成本都比銀行好處理；另外如果你是學生或 18 到 24 歲，Amazon Prime 有 90 天免費，落地補貨很好用。這兩件事各自寫成一篇：
 
-### 3. 居留證 Permesso di Soggiorno
+<a class="link-card" href="/zh-tw/italy-wise-money/">
+  <img src="/assets/posts/italy-wise-money/wise-card.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>留學生的歐洲金流：用 Wise 繳學費與房租</strong>
+    <span>從台灣電匯入金的組合拳、匯率為什麼比較好、虛擬卡與活存利息</span>
+  </span>
+</a>
 
-入境後 8 天內要送出，這是四件事裡最容易出包的一件，我就被大郵局擋下來過：
-
-[義大利居留證申請：郵局繳件全流程 →](/zh-tw/italy-permesso-di-soggiorno/)
-
-### 4. 交通月票
-
-不用跑 ATM Point，App 上就能買完，27 歲以下月票只要 22 歐：
-
-[米蘭 ATM 交通月票：App 直接買 →](/zh-tw/italy-atm-milano-pass/)
-
-## 錢的部分：Wise
-
-如果你來義大利留學，滿推薦用 Wise 當作歐洲的金流管道。我的住宿費、學費等等都是用 Wise 繳納的，入帳出帳速度快，體驗都滿不錯的。
-
-主要的流程是：本人或家長去銀行臨櫃申請**國際電匯加上約定帳號轉帳**，這個組合可以讓你一次入金到 Wise 裡。電匯一次的手續費大概一千出頭台幣，所以大額電匯會比較划算；申請約定帳號則是為了之後不用每次都跑臨櫃。
-
-匯率的部分，Wise 用的是真實市場匯率的中間價，手續費也公開透明，不會像一般銀行被收一筆高額手續費或吃掉匯差。
-
-[我的 Wise 邀請連結](https://wise.com/invite/ilpc/haotienc1)（透過連結註冊我會拿到一點回饋）
-
-## 小撇步：Amazon Prime 學生 90 天免費
-
-在義大利 Amazon 應該是前幾大的購物與貨運平台。如果你是學生（有學生信箱）或年紀在 18 到 24 歲，可以[免費試用 Amazon Prime 90 天](https://www.amazon.it/amazonprime?primeCampaignId=studentWlpPrimeRedir&language=en)。
-
-落地之後我馬上買了一些電器，有 Prime 資格很多都是隔天就送到。如果你宿舍缺床單、枕頭這類東西，也建議在辦理入住前就先訂好，這樣落地後就不用在不熟悉的環境裡花力氣採購。
+<a class="link-card" href="/zh-tw/italy-amazon-prime-student/">
+  <img src="/assets/posts/italy-amazon-prime-student/prime-signup.png" alt="" loading="lazy" decoding="async" />
+  <span class="link-card-body">
+    <strong>義大利 Amazon Prime 學生 90 天免費</strong>
+    <span>學生或 18 到 24 歲免費試用 90 天，隔天到貨，還附 Deliveroo 會員</span>
+  </span>
+</a>
 
 ## 最後
 

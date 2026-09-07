@@ -692,6 +692,100 @@ const alternateLocale = pairLang === "en" ? "en_US" : pairLang === "zh-tw" ? "zh
     margin: 1.5em 0;
   }
 
+  /* Wide Markdown tables scroll instead of clipping their last column.
+     Tighter cells so a 6-column comparison still fits the prose width. */
+  :global(.gh-content table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 0.925em;
+  }
+  :global(.gh-content table th),
+  :global(.gh-content table td) {
+    padding-right: 0.7em;
+  }
+  :global(.gh-content table th:last-child),
+  :global(.gh-content table td:last-child) {
+    padding-right: 0;
+  }
+
+  /* Place card: your own photo beside the map */
+  :global(.gh-content .place-card .place-media) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  :global(.gh-content .place-card .place-media img),
+  :global(.gh-content .place-card .place-media iframe) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  @media (max-width: 640px) {
+    :global(.gh-content .place-card .place-media) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Google Maps embeds: <figure class="map-card"> */
+  :global(.gh-content .map-card),
+  :global(.gh-content .place-card) {
+    margin: 2rem 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: #fff;
+  }
+  :global(.gh-content .map-card iframe) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+  :global(.gh-content .map-card figcaption),
+  :global(.gh-content .place-card figcaption) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
+    margin: 0;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: left;
+    color: #6b7280;
+  }
+  :global(.gh-content .map-card figcaption strong),
+  :global(.gh-content .place-card figcaption strong) {
+    color: #111827;
+    font-weight: 600;
+  }
+  :global(.gh-content .map-card figcaption a),
+  :global(.gh-content .place-card figcaption a) {
+    margin-left: auto;
+    white-space: nowrap;
+    color: #2563eb;
+    text-decoration: none;
+  }
+  :global(.gh-content .map-card figcaption a:hover),
+  :global(.gh-content .place-card figcaption a:hover) {
+    text-decoration: underline;
+  }
+  @media (max-width: 480px) {
+    :global(.gh-content .map-card iframe) {
+      aspect-ratio: 4 / 3;
+    }
+    :global(.gh-content .map-card figcaption a),
+    :global(.gh-content .place-card figcaption a) {
+      margin-left: 0;
+    }
+  }
+
   /* Image captions from ![alt](src "caption") */
   :global(.gh-content figure figcaption) {
     margin-top: 0.6rem;

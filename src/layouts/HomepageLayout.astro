@@ -146,7 +146,7 @@ function formatCarouselDate(iso: string) {
         const tag = post.data.tags[0];
         const tagSlugs = post.data.tags.map((t) => t.slug).join(",");
         const d = new Date(post.data.published_at);
-        const readingTime = getReadingTime(post.body, lang);
+        const readingTime = getReadingTime(post.body);
         return (
           <a href={postUrl(post.data.slug)} class="post-row" data-tags={tagSlugs}>
             <div class="row-date">

@@ -6,7 +6,7 @@ excerpt: "稅號是義大利所有行政流程的第一道門檻，居留證、�
 feature_image: "/assets/posts/italy-codice-fiscale/feature-appointment-email.png"
 featured: false
 published_at: "2026-09-05T00:00:00.000Z"
-updated_at: "2026-09-05T00:00:00.000Z"
+updated_at: "2026-09-07T00:00:00.000Z"
 created_at: "2026-09-05T00:00:00.000Z"
 tags:
   - name: "Italy"
@@ -92,6 +92,7 @@ pair_lang: null
 - **護照正本**
 - **護照影本**
 - **簽證頁影本**
+- **入學證明**：我帶的是 POLIMI（米蘭理工）發的 visa letter
 - **照片**：2 吋大頭照兩張（我這次沒有用到，但還是建議備著）
 - **居住地址**：我是填宿舍的地址
 - **原子筆**：現場可能要改東西，自己帶一支比較快
